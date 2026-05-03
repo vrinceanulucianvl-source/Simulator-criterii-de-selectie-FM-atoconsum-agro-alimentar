@@ -1,0 +1,4973 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schema FM Energie · Sector Agricol 2026 | E-Consultants</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap');
+
+/* ═══════════════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════════════ */
+:root {
+  --soil:       #2c1a0e;
+  --bark:       #3d2510;
+  --earth:      #5c3d1e;
+  --clay:       #8b5e3c;
+  --wheat:      #c8943a;
+  --grain:      #e8b84b;
+  --straw:      #f0d080;
+  --parchment:  #fdf6e3;
+  --cream:      #f7eed8;
+  --leaf:       #3a5a2a;
+  --sage:       #5a7a4a;
+  --moss:       #7a9a5a;
+  --meadow:     #a0bc7a;
+  --sky:        #d4e8c0;
+  --terra:      #b85c38;
+  --rust:       #9a3e20;
+  --sun:        #f5c842;
+  --harvest:    #d4800a;
+
+  --text-dark:  #1e1008;
+  --text-mid:   #4a2e10;
+  --text-muted: #7a5a3a;
+  --text-light: #a07850;
+
+  --border-main:  #c8943a;
+  --border-soft:  rgba(200,148,58,0.35);
+  --border-faint: rgba(200,148,58,0.18);
+
+  --shadow-warm: 0 2px 12px rgba(92,61,30,0.15);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  background: var(--soil);
+  font-family: 'Libre Baskerville', Georgia, serif;
+  color: var(--text-dark);
+  min-height: 100vh;
+  padding: 16px;
+  position: relative;
+}
+
+/* ── GRAIN TEXTURE OVERLAY ────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+/* ═══════════════════════════════════════════════════
+   MAIN PAGE CARD
+═══════════════════════════════════════════════════ */
+.page {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1160px;
+  margin: 0 auto;
+  background: var(--parchment);
+  background-image:
+    radial-gradient(ellipse at 20% 0%, rgba(232,184,75,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(58,90,42,0.08) 0%, transparent 50%);
+  border: 3px solid var(--wheat);
+  box-shadow: 0 0 0 8px var(--earth), 0 0 0 10px var(--wheat), 0 20px 60px rgba(0,0,0,0.5);
+  padding: 0;
+  overflow: hidden;
+}
+
+/* decorative top banner */
+.banner-strip {
+  background: var(--leaf);
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0px, transparent 18px,
+    rgba(255,255,255,0.06) 18px, rgba(255,255,255,0.06) 20px
+  );
+  padding: 8px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.banner-text {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--meadow);
+  text-transform: uppercase;
+}
+.banner-badge {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--grain);
+  text-transform: uppercase;
+  border: 1px solid var(--sage);
+  padding: 2px 10px;
+}
+
+/* inner padding wrapper */
+.inner { padding: 36px 44px 48px; }
+
+/* ═══════════════════════════════════════════════════
+   HEADER
+═══════════════════════════════════════════════════ */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--border-main);
+  position: relative;
+}
+/* wheat ear decorations */
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: -12px; left: 50%; transform: translateX(-50%);
+  width: 60px; height: 20px;
+  background: var(--parchment);
+  display: flex; align-items: center; justify-content: center;
+}
+
+.logo-block {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.logo-block img {
+  height: 42px;
+  object-fit: contain;
+  filter: sepia(40%) saturate(80%) brightness(0.7);
+}
+.logo-sep {
+  width: 1px; height: 36px;
+  background: var(--border-main);
+  opacity: 0.5;
+}
+.logo-text {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 7.5px;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  line-height: 1.8;
+}
+
+.header-center { flex: 1; min-width: 260px; text-align: center; }
+
+/* wheat SVG decorative element */
+.wheat-deco {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.wheat-deco svg { opacity: 0.6; }
+.deco-line {
+  flex: 1; max-width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--wheat));
+}
+.deco-line.right { background: linear-gradient(90deg, var(--wheat), transparent); }
+
+.header-center .eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 8px;
+  letter-spacing: 3px;
+  color: var(--harvest);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.header-center h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(20px, 4vw, 32px);
+  font-weight: 900;
+  color: var(--soil);
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.header-center h1 em {
+  font-style: italic;
+  color: var(--leaf);
+}
+.header-center h2 {
+  font-family: 'DM Mono', monospace;
+  font-size: clamp(8px, 1.4vw, 10px);
+  font-weight: 400;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.header-meta {
+  text-align: right;
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 8px;
+  color: var(--text-muted);
+  line-height: 2;
+}
+.header-meta .doc-id {
+  font-size: 10px;
+  color: var(--harvest);
+  letter-spacing: 2px;
+  font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════════════
+   KEY FIGURES BAR  (stamp style)
+═══════════════════════════════════════════════════ */
+.figures-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1.5px solid var(--border-main);
+  margin-bottom: 28px;
+  background: var(--cream);
+}
+.fig-cell {
+  padding: 14px 18px;
+  border-right: 1.5px solid var(--border-soft);
+  position: relative;
+}
+.fig-cell:last-child { border-right: none; }
+.fig-cell::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--leaf);
+  opacity: 0;
+}
+.fig-cell:first-child::before { opacity: 1; }
+.fig-cell:nth-child(2)::before { opacity: 1; background: var(--wheat); }
+.fig-cell:nth-child(3)::before { opacity: 1; background: var(--terra); }
+.fig-cell:nth-child(4)::before { opacity: 1; background: var(--harvest); }
+
+.fig-label {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 7px;
+  letter-spacing: 2px;
+  color: var(--text-light);
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.fig-val {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(13px, 2.2vw, 17px);
+  font-weight: 700;
+  color: var(--soil);
+  line-height: 1.1;
+}
+.fig-sub {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 7px;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+/* ═══════════════════════════════════════════════════
+   SECTION DIVIDER
+═══════════════════════════════════════════════════ */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 28px 0 20px;
+}
+.section-divider .sd-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-main));
+}
+.section-divider .sd-line.right {
+  background: linear-gradient(90deg, var(--border-main), transparent);
+}
+.section-divider .sd-label {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 8px;
+  letter-spacing: 3px;
+  color: var(--harvest);
+  text-transform: uppercase;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ═══════════════════════════════════════════════════
+   MAIN BODY — diagram + specs
+═══════════════════════════════════════════════════ */
+.main-body {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+/* SOLAR DIAGRAM — warm earthy version */
+.diagram-wrap {
+  flex: 1 1 320px;
+  min-width: 0;
+}
+.diagram-wrap svg { width: 100%; height: auto; display: block; }
+.diagram-caption {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 7.5px;
+  letter-spacing: 2px;
+  color: var(--text-light);
+  text-align: center;
+  margin-top: 8px;
+  text-transform: uppercase;
+}
+
+/* SPECS */
+.specs-col {
+  flex: 1 1 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.spec-card {
+  border: 1px solid var(--border-soft);
+  background: var(--cream);
+  padding: 11px 15px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.spec-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px; height: 100%;
+  background: var(--wheat);
+}
+.spec-card.green::before { background: var(--leaf); }
+.spec-card.terra::before { background: var(--terra); }
+.spec-card.harvest::before { background: var(--harvest); }
+
+.sc-label {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 7.5px;
+  letter-spacing: 2px;
+  color: var(--text-light);
+  text-transform: uppercase;
+}
+.sc-val {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(16px, 2.8vw, 20px);
+  font-weight: 700;
+  color: var(--soil);
+  line-height: 1.1;
+}
+.sc-sub {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 7.5px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════════════
+   THREE INSETS
+═══════════════════════════════════════════════════ */
+.insets {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 8px;
+}
+.inset-card {
+  border: 1px solid var(--border-soft);
+  background: var(--cream);
+  padding: 14px;
+  position: relative;
+}
+.inset-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--wheat);
+}
+.inset-card.green::before { background: var(--leaf); }
+.inset-card.terra::before { background: var(--terra); }
+
+.ic-title {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 7.5px;
+  letter-spacing: 2.5px;
+  color: var(--harvest);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--border-faint);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.ic-num {
+  position: absolute;
+  top: 8px; right: 10px;
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 7.5px;
+  color: var(--text-light);
+}
+
+/* flow steps */
+.flow { display: flex; flex-direction: column; gap: 4px; }
+.flow-step {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 8px;
+  color: var(--text-mid);
+  line-height: 1.4;
+}
+.flow-step .seed {
+  width: 7px; height: 7px;
+  background: var(--wheat);
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.flow-step .seed.green { background: var(--leaf); }
+.flow-arrow {
+  font-size: 9px;
+  color: var(--border-main);
+  margin-left: 15px;
+  opacity: 0.5;
+}
+
+/* bar chart */
+.field-chart { display: flex; flex-direction: column; gap: 8px; }
+.field-row { display: flex; align-items: center; gap: 8px; }
+.field-lbl {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 7.5px;
+  color: var(--text-mid);
+  width: 58px;
+  flex-shrink: 0;
+  text-transform: uppercase;
+}
+.field-track {
+  flex: 1; height: 10px;
+  background: rgba(200,148,58,0.1);
+  border: 1px solid var(--border-faint);
+  overflow: hidden;
+  border-radius: 1px;
+}
+.field-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--leaf), var(--wheat));
+  border-radius: 1px;
+}
+.field-val {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 7.5px;
+  color: var(--text-muted);
+  width: 34px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* indicator table */
+.ind-table { display: flex; flex-direction: column; gap: 7px; }
+.ind-row {
+  display: flex; align-items: baseline;
+  border-bottom: 1px dashed var(--border-faint);
+  padding-bottom: 6px;
+  gap: 8px;
+}
+.ind-row:last-child { border-bottom: none; }
+.ind-id {
+  font-family: 'Playfair Display', serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--harvest);
+  width: 26px;
+  flex-shrink: 0;
+}
+.ind-desc {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 7.5px;
+  color: var(--text-mid);
+  flex: 1;
+  line-height: 1.3;
+}
+.ind-unit {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 7.5px;
+  color: var(--wheat);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* sub-label */
+.sub-lbl {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 7px;
+  color: var(--harvest);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 8px 0 5px;
+}
+
+/* ═══════════════════════════════════════════════════
+   CALCULATOR — FIELD NOTEBOOK STYLE
+═══════════════════════════════════════════════════ */
+.calc-intro {
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--text-mid);
+  line-height: 1.7;
+  margin-bottom: 22px;
+  border-left: 3px solid var(--leaf);
+  padding-left: 14px;
+}
+
+/* criterion panels */
+.crit-panel {
+  background: var(--cream);
+  border: 1px solid var(--border-soft);
+  margin-bottom: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.crit-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.crit-panel.c1::before { background: var(--harvest); }
+.crit-panel.c2::before { background: var(--leaf); }
+.crit-panel.c3::before { background: var(--terra); }
+.crit-panel.c4::before { background: var(--wheat); }
+
+.crit-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px 10px;
+  border-bottom: 1px solid var(--border-faint);
+  flex-wrap: wrap;
+  background: rgba(200,148,58,0.04);
+}
+.crit-badge-agro {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--harvest);
+  width: 32px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.crit-name-agro {
+  font-family: 'Libre Baskerville', serif;
+  font-size: clamp(11px, 2vw, 13px);
+  font-weight: 700;
+  color: var(--soil);
+  flex: 1;
+}
+.crit-maxpts-agro {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: var(--text-light);
+  flex-shrink: 0;
+  border: 1px solid var(--border-soft);
+  padding: 3px 10px;
+  background: var(--parchment);
+}
+
+.crit-body {
+  padding: 16px 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: flex-start;
+}
+.crit-controls { flex: 1; min-width: 220px; }
+.crit-result { flex-shrink: 0; }
+
+/* field controls */
+.ctl-lbl {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: var(--harvest);
+  text-transform: uppercase;
+  margin-bottom: 3px;
+  display: block;
+}
+.ctl-sub {
+  font-family: 'Libre Baskerville', serif;
+  font-weight: 700;
+  font-size: 9px;
+  font-style: italic;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  display: block;
+  line-height: 1.5;
+}
+
+/* range slider — earthy */
+.agro-range {
+  width: 100%;
+  height: 5px;
+  accent-color: var(--harvest);
+  cursor: pointer;
+  margin-bottom: 4px;
+}
+.range-readout {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 6px;
+}
+.range-val-agro {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--soil);
+}
+.range-hint {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 8px;
+  color: var(--text-muted);
+}
+
+/* radio options — stamp style */
+.stamp-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+.stamp-opt {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border: 1.5px solid var(--border-soft);
+  background: var(--parchment);
+  padding: 7px 12px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  position: relative;
+}
+.stamp-opt:hover { border-color: var(--wheat); background: var(--cream); }
+.stamp-opt.active {
+  border-color: var(--harvest);
+  background: rgba(200,148,58,0.08);
+}
+.stamp-opt input { display: none; }
+.stamp-check {
+  width: 10px; height: 10px;
+  border: 1.5px solid var(--clay);
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.stamp-opt.active .stamp-check {
+  border-color: var(--harvest);
+  background: var(--harvest);
+}
+.stamp-opt.active .stamp-check::after {
+  content: '';
+  width: 4px; height: 4px;
+  background: white;
+  border-radius: 50%;
+}
+.stamp-lbl {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 8.5px;
+  color: var(--text-mid);
+}
+.stamp-opt.active .stamp-lbl { color: var(--soil); font-weight: 500; }
+
+/* formula note */
+.field-note {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 7.5px;
+  color: var(--text-light);
+  background: rgba(200,148,58,0.06);
+  border: 1px dashed var(--border-soft);
+  border-left: 3px solid var(--border-main);
+  padding: 8px 12px;
+  margin-top: 10px;
+  line-height: 1.8;
+  letter-spacing: 0.3px;
+}
+
+/* score display — wax seal style */
+.seal {
+  width: 88px; height: 88px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--wheat), var(--harvest));
+  border: 3px solid var(--earth);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(92,61,30,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+  position: relative;
+}
+.seal::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.25);
+}
+.seal.zero {
+  background: radial-gradient(circle at 35% 35%, var(--clay), var(--earth));
+}
+.seal-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 900;
+  color: white;
+  line-height: 1;
+}
+.seal-of {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 8px;
+  color: rgba(255,255,255,0.75);
+  letter-spacing: 1px;
+}
+
+/* ═══════════════════════════════════════════════════
+   RESULTS — HARVEST REPORT STYLE
+═══════════════════════════════════════════════════ */
+.harvest-report {
+  background: var(--soil);
+  border: 2px solid var(--wheat);
+  padding: 24px 28px;
+  position: relative;
+  margin-top: 8px;
+  color: var(--straw);
+}
+.harvest-report::before {
+  content: '◆ RAPORT EVALUARE ◆';
+  position: absolute;
+  top: -10px; left: 50%; transform: translateX(-50%);
+  background: var(--wheat);
+  color: var(--soil);
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 3px;
+  padding: 2px 14px;
+  white-space: nowrap;
+}
+
+.report-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(200,148,58,0.3);
+}
+.report-lbl {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 8px;
+  letter-spacing: 3px;
+  color: var(--grain);
+  text-transform: uppercase;
+}
+.total-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.total-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 52px;
+  font-weight: 900;
+  color: var(--grain);
+  line-height: 1;
+  transition: color 0.3s;
+}
+.total-denom {
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  color: rgba(232,184,75,0.6);
+}
+
+/* breakdown */
+.report-bars {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.rbar-item { display: flex; flex-direction: column; gap: 5px; }
+.rbar-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.rbar-name {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 8px;
+  color: var(--grain);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.rbar-pts {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--straw);
+}
+.rbar-track {
+  height: 8px;
+  background: rgba(200,148,58,0.12);
+  border: 1px solid rgba(200,148,58,0.2);
+  overflow: hidden;
+  border-radius: 1px;
+}
+.rbar-fill {
+  height: 100%;
+  border-radius: 1px;
+  transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.rbar-fill.c1 { background: linear-gradient(90deg, var(--harvest), var(--grain)); }
+.rbar-fill.c2 { background: linear-gradient(90deg, var(--leaf), var(--moss)); }
+.rbar-fill.c3 { background: linear-gradient(90deg, var(--rust), var(--terra)); }
+.rbar-fill.c4 { background: linear-gradient(90deg, var(--wheat), var(--straw)); }
+
+/* verdict */
+.verdict-agro {
+  font-family: 'Libre Baskerville', serif;
+  font-weight: 700;
+  font-size: 11px;
+  font-style: italic;
+  line-height: 1.7;
+  padding: 12px 16px;
+  border: 1px solid;
+  color: var(--straw);
+  margin-top: 4px;
+}
+.verdict-agro.good { border-color: var(--moss); background: rgba(58,90,42,0.2); color: var(--meadow); }
+.verdict-agro.mid  { border-color: rgba(200,148,58,0.4); background: rgba(200,148,58,0.08); color: var(--grain); }
+.verdict-agro.bad  { border-color: rgba(184,92,56,0.4); background: rgba(184,92,56,0.1); color: var(--terra); }
+
+.calc-note-agro {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 7.5px;
+  color: rgba(200,148,58,0.45);
+  line-height: 1.8;
+  border-top: 1px dashed rgba(200,148,58,0.2);
+  padding-top: 12px;
+  margin-top: 14px;
+  letter-spacing: 0.3px;
+}
+
+/* ═══════════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════════ */
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 16px;
+  border-top: 2px solid var(--border-main);
+}
+.footer-logo img {
+  height: 28px;
+  object-fit: contain;
+  filter: sepia(60%) saturate(60%) brightness(0.65);
+}
+.footer-mid {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: clamp(6px, 1.2vw, 8px);
+  color: var(--text-light);
+  letter-spacing: 2px;
+  text-align: center;
+  text-transform: uppercase;
+  flex: 1;
+  min-width: 180px;
+  line-height: 2;
+}
+.footer-right {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 8px;
+  color: var(--text-muted);
+  text-align: right;
+  line-height: 1.9;
+}
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .inner { padding: 24px 22px 36px; }
+  .header { flex-direction: column; }
+  .header-center { text-align: left; min-width: unset; width: 100%; }
+  .header-meta { text-align: left; }
+  .figures-bar { grid-template-columns: repeat(2, 1fr); }
+  .fig-cell:nth-child(2) { border-right: none; }
+  .fig-cell:nth-child(3) { border-top: 1.5px solid var(--border-soft); }
+  .fig-cell:nth-child(4) { border-top: 1.5px solid var(--border-soft); border-right: none; }
+  .main-body { flex-direction: column; }
+  .insets { grid-template-columns: 1fr; }
+  .footer { flex-direction: column; align-items: flex-start; }
+  .footer-mid, .footer-right { text-align: left; }
+}
+
+@media (max-width: 600px) {
+  body { padding: 8px; }
+  .page { box-shadow: 0 0 0 4px var(--earth), 0 0 0 6px var(--wheat); }
+  .banner-strip { padding: 6px 16px; }
+  .inner { padding: 18px 16px 28px; }
+  .figures-bar { grid-template-columns: 1fr 1fr; }
+  .crit-head { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .crit-result { width: 100%; display: flex; }
+  .seal { width: 72px; height: 72px; }
+  .seal-num { font-size: 22px; }
+  .total-num { font-size: 40px; }
+  .report-bars { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 380px) {
+  .figures-bar { grid-template-columns: 1fr; }
+  .fig-cell { border-right: none !important; border-top: 1.5px solid var(--border-soft); }
+  .fig-cell:first-child { border-top: none; }
+  .report-bars { grid-template-columns: 1fr; }
+}
+
+/* ═══ EFFECTS ═══════════════════════════════════════ */
+
+/* ── INTRO LOADER ───────────────────────────────── */
+#loader {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--soil);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 20px;
+  transition: opacity 0.7s ease;
+}
+#loader.hide { opacity: 0; pointer-events: none; }
+.loader-sun {
+  width: 60px; height: 60px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #f5c842, #d4800a);
+  animation: loaderPulse 1.2s ease-in-out infinite;
+  box-shadow: 0 0 0 0 rgba(245,200,66,0.5);
+}
+@keyframes loaderPulse {
+  0%   { transform: scale(1);    box-shadow: 0 0 0 0 rgba(245,200,66,0.6); }
+  50%  { transform: scale(1.15); box-shadow: 0 0 0 20px rgba(245,200,66,0); }
+  100% { transform: scale(1);    box-shadow: 0 0 0 0 rgba(245,200,66,0); }
+}
+.loader-text {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 4px; text-transform: uppercase;
+  color: var(--wheat); opacity: 0.7;
+  animation: blink 1.2s step-end infinite;
+}
+@keyframes blink { 50% { opacity: 0.2; } }
+.loader-bar-wrap {
+  width: 200px; height: 3px;
+  background: rgba(200,148,58,0.2); border-radius: 2px; overflow: hidden;
+}
+.loader-bar {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--harvest), var(--grain));
+  border-radius: 2px;
+  animation: loadBar 1.6s ease forwards;
+}
+@keyframes loadBar { to { width: 100%; } }
+
+/* ── PAGE ENTRANCE ──────────────────────────────── */
+.page { opacity: 1; transform: translateY(0); }
+.page.visible { opacity: 1; transform: translateY(0); }
+
+/* ── PARTICLES CANVAS ───────────────────────────── */
+#particles-canvas {
+  position: fixed; inset: 0; pointer-events: none;
+  z-index: 0; opacity: 0.55;
+}
+
+/* ── SCROLL REVEAL ──────────────────────────────── */
+.reveal {
+  opacity: 1; transform: translateY(0);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── SPEC CARD HOVER ────────────────────────────── */
+.spec-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  cursor: default;
+}
+.spec-card:hover {
+  transform: translateX(4px);
+  box-shadow: -4px 0 16px rgba(200,148,58,0.18);
+  border-color: var(--wheat);
+}
+
+/* ── INSET CARD HOVER ───────────────────────────── */
+.inset-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.inset-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(200,148,58,0.18);
+}
+
+/* ── CRIT PANEL HOVER ───────────────────────────── */
+.crit-panel {
+  transition: box-shadow 0.2s ease;
+}
+.crit-panel:hover {
+  box-shadow: 0 4px 20px rgba(200,148,58,0.15);
+}
+
+/* ── COUNTER ANIMATE ────────────────────────────── */
+.count-up { display: inline; }
+
+/* ── ANIMATED RBAR FILLS ────────────────────────── */
+.rbar-fill {
+  width: 0% !important;
+  transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+}
+.rbar-fill.animated { width: var(--target-w) !important; }
+
+/* ── SOLAR SVG ANIMATIONS ───────────────────────── */
+@keyframes sunRotate {
+  from { transform-origin: 230px 40px; transform: rotate(0deg); }
+  to   { transform-origin: 230px 40px; transform: rotate(360deg); }
+}
+@keyframes sunPulse {
+  0%,100% { r: 26; opacity: 0.7; }
+  50%      { r: 30; opacity: 1;   }
+}
+@keyframes irradianceFlow {
+  0%   { stroke-dashoffset: 20; opacity: 0.3; }
+  50%  { opacity: 0.85; }
+  100% { stroke-dashoffset: 0;  opacity: 0.3; }
+}
+@keyframes panelShimmer {
+  0%   { opacity: 0.1; }
+  50%  { opacity: 0.4; }
+  100% { opacity: 0.1; }
+}
+@keyframes panelWave {
+  0%,100% { fill: rgba(200,148,58,0.12); }
+  50%     { fill: rgba(245,200,66,0.30); }
+}
+@keyframes energyFlow {
+  0%   { stroke-dashoffset: 30; }
+  100% { stroke-dashoffset: 0;  }
+}
+@keyframes batteryCharge {
+  0%   { width: 4px;  fill: #3a5a2a; }
+  40%  { width: 28px; fill: #5a8a2a; }
+  70%  { width: 52px; fill: #7ab83a; }
+  100% { width: 72px; fill: #a0d050; }
+}
+@keyframes batteryPulse {
+  0%,100% { opacity: 0.6; }
+  50%     { opacity: 1.0; }
+}
+@keyframes farmGlow {
+  0%,100% { filter: drop-shadow(0 0 0px rgba(90,122,74,0)); }
+  50%     { filter: drop-shadow(0 0 6px rgba(90,122,74,0.5)); }
+}
+@keyframes dcLineFlow {
+  0%   { stroke-dashoffset: 16; }
+  100% { stroke-dashoffset: 0;  }
+}
+@keyframes wheatSway {
+  0%,100% { transform: rotate(-2deg); transform-origin: 14px 26px; }
+  50%     { transform: rotate(2deg);  transform-origin: 14px 26px; }
+}
+
+/* apply to SVG elements by id/class */
+#sun-outer   { animation: sunPulse 3s ease-in-out infinite; }
+#sun-rays    { animation: sunRotate 12s linear infinite; }
+.irr-line    {
+  stroke-dasharray: 6 4;
+  animation: irradianceFlow 1.8s ease-in-out infinite;
+}
+.irr-line:nth-child(2) { animation-delay: 0.3s; }
+.irr-line:nth-child(3) { animation-delay: 0.6s; }
+.panel-cell  { animation: panelWave 3s ease-in-out infinite; }
+.panel-cell:nth-child(odd)  { animation-delay: 0.2s; }
+.panel-cell:nth-child(3n)   { animation-delay: 0.5s; }
+.panel-cell:nth-child(4n)   { animation-delay: 0.8s; }
+#dc-line     { stroke-dasharray: 8 4; animation: dcLineFlow 1s linear infinite; }
+#batt-fill   { animation: batteryCharge 3s ease-in-out infinite alternate; }
+#batt-box    { animation: batteryPulse 2.5s ease-in-out infinite; }
+#farm-group  { animation: farmGlow 3s ease-in-out infinite; }
+#wheat-svg   { animation: wheatSway 3s ease-in-out infinite; }
+
+/* ── HOVER ON SEALS ─────────────────────────────── */
+.seal {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: default;
+}
+.seal:hover {
+  transform: scale(1.08) rotate(-3deg);
+  box-shadow: 0 8px 24px rgba(92,61,30,0.4);
+}
+
+/* ── HARVEST REPORT SHIMMER ─────────────────────── */
+@keyframes reportShimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.harvest-report::after {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,0.04) 40%,
+    rgba(255,255,255,0.08) 50%,
+    rgba(255,255,255,0.04) 60%,
+    transparent 100%);
+  background-size: 400px 100%;
+  animation: reportShimmer 4s ease-in-out infinite;
+}
+
+/* ═══ INTERACTIVE DIAGRAM TOOLTIP ══════════════ */
+.svg-tooltip {
+  position: absolute;
+  background: var(--soil);
+  border: 1.5px solid var(--wheat);
+  color: var(--straw);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; font-weight: 700;
+  padding: 10px 14px;
+  border-radius: 4px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  transform: translateY(6px);
+  z-index: 100;
+  max-width: 200px;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+.svg-tooltip.show { opacity: 1; transform: translateY(0); }
+.svg-tooltip .tt-title { color: var(--grain); font-size: 12px; margin-bottom: 4px; }
+.svg-tooltip .tt-val   { color: var(--wheat); font-size: 15px; font-weight: 700; }
+
+.diagram-wrap { position: relative; }
+
+/* clickable SVG areas */
+.svg-clickable { cursor: pointer; transition: opacity 0.2s; }
+.svg-clickable:hover { opacity: 0.85; }
+
+/* ═══ WHEAT FIELD FOOTER ANIMATION ═══════════ */
+.wheat-field {
+  width: 100%; height: 80px;
+  overflow: hidden;
+  position: relative;
+  margin-top: 0;
+  opacity: 0.7;
+}
+.wheat-field canvas { width: 100%; height: 100%; display: block; }
+
+/* ═══ SOLAR CYCLE SLIDER ════════════════════ */
+
+.solar-cycle-wrap::before {
+  content: 'CICLU SOLAR ZI / PRODUCȚIE';
+  position: absolute; top: -9px; left: 20px;
+  background: var(--cream);
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 2.5px; color: var(--harvest);
+  padding: 0 8px; text-transform: uppercase;
+}
+
+
+.prod-indicator span { color: var(--wheat); }
+
+/* ═══ ROMANIA MAP ════════════════════════════ */
+
+
+
+
+.map-tooltip.show { opacity: 1; }
+
+
+/* ═══ RADAR CHART ════════════════════════════ */
+.radar-section {
+  display: flex; flex-wrap: wrap; gap: 24px;
+  align-items: flex-start;
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid var(--border-soft);
+  background: var(--cream);
+  position: relative;
+}
+.radar-section::before {
+  content: 'ANALIZĂ VIZUALĂ PUNCTAJ';
+  position: absolute; top: -9px; left: 20px;
+  background: var(--cream);
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 2.5px; color: var(--harvest);
+  padding: 0 8px; text-transform: uppercase;
+}
+.radar-canvas-wrap { flex: 0 0 220px; }
+.radar-canvas-wrap canvas { width: 100%; height: auto; }
+.radar-stats {
+  flex: 1; min-width: 200px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.radar-stat-row {
+  display: flex; justify-content: space-between;
+  align-items: center; padding: 6px 0;
+  border-bottom: 1px dashed var(--border-faint);
+}
+.radar-stat-row:last-child { border-bottom: none; }
+.rs-name { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 700; color: var(--text-mid); }
+.rs-bar-wrap { flex: 1; margin: 0 12px; height: 8px; background: rgba(200,148,58,0.1); border-radius: 4px; overflow: hidden; }
+.rs-bar { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--harvest), var(--grain)); transition: width 0.5s ease; }
+.rs-val { font-family: 'Playfair Display', serif; font-size: 13px; font-weight: 700; color: var(--soil); min-width: 50px; text-align: right; }
+
+/* comparison badge */
+.compare-badge {
+  display: inline-block;
+  font-family: 'DM Mono', monospace; font-size: 9px; font-weight: 700;
+  padding: 2px 8px; border-radius: 3px; margin-left: 6px;
+}
+.compare-badge.ahead { background: rgba(58,90,42,0.15); color: var(--moss); }
+.compare-badge.behind { background: rgba(184,92,56,0.12); color: var(--terra); }
+
+/* ═══ EXPORT PDF BUTTON ══════════════════════ */
+.export-row {
+  display: flex; justify-content: flex-end;
+  margin-top: 16px;
+}
+.btn-export {
+  font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  background: var(--leaf);
+  color: var(--straw);
+  border: 2px solid var(--sage);
+  padding: 10px 24px; cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  display: flex; align-items: center; gap: 8px;
+}
+.btn-export:hover {
+  background: var(--sage);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(58,90,42,0.3);
+}
+.btn-export:active { transform: translateY(0); }
+.btn-export svg { flex-shrink: 0; }
+
+@media (max-width: 600px) {
+  .radar-canvas-wrap { flex: none; width: 100%; max-width: 220px; margin: 0 auto; }
+  .romania-wrap { padding: 16px 14px 12px; }
+}
+
+
+
+/* ═══ CURSOR PERSONALIZAT ══════════════════════ */
+/* cursor personalizat doar pe desktop */
+@media (hover: hover) and (pointer: fine) {
+  * { cursor: none !important; }
+}
+#sun-cursor {
+  position: fixed;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #f5e060, #e8a020);
+  box-shadow: 0 0 8px 3px rgba(245,200,66,0.5), 0 0 18px 6px rgba(245,180,30,0.2);
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.08s ease, width 0.15s ease, height 0.15s ease;
+  mix-blend-mode: normal;
+}
+#sun-cursor.clicking {
+  width: 30px; height: 30px;
+  box-shadow: 0 0 14px 6px rgba(245,200,66,0.7), 0 0 30px 12px rgba(245,180,30,0.3);
+}
+#sun-cursor-trail {
+  position: fixed;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(245,200,66,0.35);
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.18s ease;
+}
+
+/* ═══ RIPPLE GLOBAL ════════════════════════════ */
+.global-ripple {
+  position: fixed;
+  border-radius: 50%;
+  background: rgba(245,200,66,0.18);
+  pointer-events: none;
+  z-index: 9998;
+  transform: scale(0);
+  animation: globalRippleAnim 0.7s ease-out forwards;
+}
+@keyframes globalRippleAnim {
+  to { transform: scale(1); opacity: 0; }
+}
+
+/* ═══ TYPING EFFECT TITLE ══════════════════════ */
+.header-center h1 .typed-text { display: inline; }
+.header-center h1 .typed-cursor {
+  display: inline-block;
+  width: 3px; height: 0.85em;
+  background: var(--harvest);
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: cursorBlink 0.7s step-end infinite;
+}
+@keyframes cursorBlink { 50% { opacity: 0; } }
+
+/* ═══ CONTOARE ANIMATE ═════════════════════════ */
+.fig-val .count-anim { display: inline; }
+
+/* ═══ BUTOANE DIAGRAMA ═════════════════════════ */
+.diagram-btns {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  margin-top: 10px; justify-content: center;
+}
+.diag-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  border: 1.5px solid var(--border-main);
+  background: var(--cream);
+  color: var(--harvest);
+  padding: 8px 18px; cursor: pointer !important;
+  transition: all 0.2s ease;
+  display: flex; align-items: center; gap: 7px;
+  position: relative; overflow: hidden;
+}
+.diag-btn:hover {
+  background: var(--leaf);
+  color: var(--straw);
+  border-color: var(--sage);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(58,90,42,0.25);
+}
+.diag-btn:active { transform: translateY(0); }
+.diag-btn.active-state {
+  background: var(--soil);
+  color: var(--grain);
+  border-color: var(--wheat);
+}
+.diag-btn .btn-icon { font-size: 14px; }
+
+/* ═══ SISTEM PORNIT — overlay animat ═══════════ */
+@keyframes bootCell {
+  0%   { fill: rgba(200,148,58,0.05); }
+  30%  { fill: rgba(245,200,66,0.55); }
+  60%  { fill: rgba(245,200,66,0.35); }
+  100% { fill: rgba(245,200,66,0.22); }
+}
+@keyframes bootFlow {
+  0%   { stroke-dashoffset: 60; opacity: 0; }
+  100% { stroke-dashoffset: 0;  opacity: 1; }
+}
+@keyframes bootBatt {
+  0%   { width: 0px; }
+  100% { width: 72px; }
+}
+@keyframes bootFarm {
+  0%   { filter: drop-shadow(0 0 0px rgba(90,122,74,0)); }
+  100% { filter: drop-shadow(0 0 10px rgba(90,122,74,0.8)); }
+}
+.system-booted .panel-cell {
+  animation: bootCell 0.4s ease forwards !important;
+}
+.system-off .panel-cell {
+  fill: rgba(60,60,60,0.15) !important;
+  animation: none !important;
+}
+
+/* ═══ ZI / NOAPTE ══════════════════════════════ */
+.night-mode #main-svg rect[x="0"][y="0"] {
+  fill: rgba(15,20,35,0.85) !important;
+}
+.night-mode .panel-cell {
+  fill: rgba(40,40,60,0.2) !important;
+  animation: none !important;
+}
+.night-mode #dc-line { opacity: 0.2 !important; }
+.night-mode .irr-line { opacity: 0.05 !important; }
+
+/* ═══ SEAL FLY ANIMATION ═══════════════════════ */
+@keyframes sealFly {
+  0%   { transform: scale(1) rotate(0deg); }
+  25%  { transform: scale(0.3) rotate(-180deg) translateY(-30px); opacity: 0; }
+  50%  { transform: scale(0.3) rotate(180deg)  translateY(-30px); opacity: 0; }
+  75%  { transform: scale(1.2) rotate(5deg);   opacity: 1; }
+  100% { transform: scale(1)   rotate(0deg);   opacity: 1; }
+}
+.seal.fly-anim {
+  animation: sealFly 0.55s cubic-bezier(0.4,0,0.2,1) !important;
+}
+
+
+/* ═══ SLIDER MW PUTERE ═════════════════════ */
+.mw-slider-wrap {
+  margin: 12px 0 4px;
+  padding: 14px 16px 12px;
+  background: var(--cream);
+  border: 1px solid var(--border-soft);
+  position: relative;
+}
+.mw-slider-wrap::before {
+  content: 'PUTERE INSTALATĂ — AJUSTEAZĂ VIZUAL';
+  position: absolute; top: -9px; left: 14px;
+  background: var(--cream);
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; font-weight: 700;
+  letter-spacing: 2px; color: var(--harvest);
+  padding: 0 6px; text-transform: uppercase;
+}
+.mw-slider-row {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+}
+.mw-range {
+  flex: 1; min-width: 160px;
+  height: 5px; accent-color: var(--harvest); cursor: pointer;
+}
+.mw-val-display {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px; font-weight: 900;
+  color: var(--soil); min-width: 80px;
+}
+.mw-stats {
+  display: flex; gap: 18px; flex-wrap: wrap;
+  margin-top: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; font-weight: 700;
+  color: var(--text-muted);
+}
+.mw-stat-val { color: var(--harvest); }
+
+/* ═══ TOOLTIP LINII ENERGIE ════════════════ */
+.line-tooltip {
+  position: absolute;
+  background: var(--soil);
+  border: 1.5px solid var(--wheat);
+  color: var(--straw);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; font-weight: 700;
+  padding: 8px 12px; border-radius: 3px;
+  pointer-events: none; opacity: 0;
+  transition: opacity 0.18s ease;
+  z-index: 200; white-space: nowrap;
+  line-height: 1.7;
+}
+.line-tooltip.show { opacity: 1; }
+.line-tooltip .lt-title { color: var(--grain); font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; }
+.line-tooltip .lt-val   { color: var(--wheat); font-size: 16px; font-weight: 900; }
+.lt-flow-dot {
+  display: inline-block; width: 7px; height: 7px;
+  border-radius: 50%; margin-right: 5px;
+  animation: ltFlowPulse 0.6s ease-in-out infinite alternate;
+}
+@keyframes ltFlowPulse { from { opacity:0.4; transform:scale(0.8); } to { opacity:1; transform:scale(1.2); } }
+
+/* clickable line overlay */
+.line-hit {
+  stroke: transparent; stroke-width: 16px;
+  cursor: pointer !important; fill: none;
+}
+
+/* ═══ SHAKE NEELIGIBIL ═════════════════════ */
+@keyframes shakeRed {
+  0%,100% { transform: translateX(0); }
+  10%,30%,50%,70%,90% { transform: translateX(-6px); }
+  20%,40%,60%,80%     { transform: translateX(6px); }
+}
+.crit-panel.neeligibil {
+  animation: shakeRed 0.5s ease;
+  border-color: rgba(184,60,60,0.6) !important;
+  box-shadow: 0 0 0 2px rgba(184,60,60,0.2), 0 0 18px rgba(184,60,60,0.15);
+}
+.crit-panel.neeligibil .crit-head {
+  background: rgba(184,60,60,0.08) !important;
+}
+.neeligibil-banner {
+  display: none;
+  background: rgba(184,60,60,0.12);
+  border: 1.5px solid rgba(184,60,60,0.4);
+  border-left: 4px solid #b83c3c;
+  padding: 10px 14px;
+  margin: 8px 0 0;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; font-weight: 700;
+  color: #c85050; line-height: 1.7;
+  animation: fadeInBanner 0.3s ease;
+}
+@keyframes fadeInBanner {
+  from { opacity:0; transform:translateY(-6px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.neeligibil-banner.show { display: block; }
+.neeligibil-banner strong { color: #d45050; }
+
+
+/* ═══ LINIE DESCĂRCARE NOAPTE ══════════════ */
+#night-discharge-line {
+  display: none;
+  pointer-events: none;
+}
+#night-discharge-line.show { display: block; }
+
+@keyframes nightFlow {
+  0%   { stroke-dashoffset: 24; }
+  100% { stroke-dashoffset: 0;  }
+}
+@keyframes nightGlow {
+  0%,100% { filter: drop-shadow(0 0 2px rgba(160,208,80,0.4)); }
+  50%     { filter: drop-shadow(0 0 8px rgba(160,208,80,0.9)); }
+}
+.night-flow-line {
+  stroke: #a0d050;
+  stroke-width: 2.2;
+  stroke-dasharray: 8 4;
+  fill: none;
+  animation: nightFlow 0.8s linear infinite, nightGlow 2s ease-in-out infinite;
+}
+#night-discharge-label {
+  display: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; font-weight: 700;
+  fill: #a0d050; opacity: 0.9;
+  pointer-events: none;
+}
+#night-discharge-label.show { display: block; }
+
+/* stinge DC line și raze în noapte */
+.night-mode #dc-line { opacity: 0 !important; transition: opacity 0.6s ease; }
+.night-mode .irr-line { opacity: 0 !important; }
+.night-mode #sun-rays { opacity: 0 !important; }
+/* bateria pulsează mai intens noaptea — descărcare */
+@keyframes battDischarge {
+  0%   { width: 72px; fill: #a0d050; }
+  85%  { width: 8px;  fill: #e8c050; }
+  100% { width: 72px; fill: #a0d050; }
+}
+.night-mode #batt-fill { animation: battDischarge 4s ease-in-out infinite !important; }
+
+
+/* ═══ INFOGRAFIC CIRCULAR HEADER ═══════════════ */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.header-infographic {
+  flex: 0 0 auto;
+  width: 200px;
+  height: 200px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* cercul exterior rotitor */
+.inf-ring-outer {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(200,148,58,0.25);
+  animation: infRingRotate 20s linear infinite;
+}
+@keyframes infRingRotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* cercul interior pulsant */
+.inf-center {
+  position: relative;
+  z-index: 2;
+  width: 68px; height: 68px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 35%, rgba(245,200,66,0.18), rgba(92,61,30,0.08));
+  border: 1.5px solid rgba(200,148,58,0.35);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 2px;
+  animation: infCenterPulse 3s ease-in-out infinite;
+}
+@keyframes infCenterPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(200,148,58,0); }
+  50%     { box-shadow: 0 0 0 8px rgba(200,148,58,0.08); }
+}
+.inf-center-icon { font-size: 22px; line-height: 1; }
+.inf-center-lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 7px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--harvest); text-align: center;
+  line-height: 1.3;
+}
+
+/* nodurile fazelor */
+.inf-node {
+  position: absolute;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 3px;
+  border: 2px solid rgba(200,148,58,0.2);
+  background: var(--cream);
+  transition: all 0.4s ease;
+  cursor: default;
+}
+.inf-node.active {
+  border-color: var(--wheat);
+  background: rgba(200,148,58,0.1);
+  box-shadow: 0 0 16px rgba(200,148,58,0.3);
+  transform: scale(1.12);
+}
+.inf-node-icon { font-size: 18px; line-height: 1; }
+.inf-node-lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 6px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: var(--text-muted); text-align: center;
+  line-height: 1.2; opacity: 0.8;
+}
+.inf-node.active .inf-node-lbl { color: var(--harvest); opacity: 1; }
+
+/* pozițiile nodurilor: sus, dreapta, jos, stânga */
+.inf-node-top    { top: 0;   left: 50%; transform: translateX(-50%); }
+.inf-node-right  { right: 0; top: 50%;  transform: translateY(-50%); }
+.inf-node-bottom { bottom: 0;left: 50%; transform: translateX(-50%); }
+.inf-node-left   { left: 0;  top: 50%;  transform: translateY(-50%); }
+
+.inf-node-top.active    { transform: translateX(-50%) scale(1.12); }
+.inf-node-right.active  { transform: translateY(-50%) scale(1.12); }
+.inf-node-bottom.active { transform: translateX(-50%) scale(1.12); }
+.inf-node-left.active   { transform: translateY(-50%) scale(1.12); }
+
+/* săgețile SVG pe cerc */
+.inf-arrows {
+  position: absolute; inset: 0;
+  pointer-events: none;
+}
+
+/* label sub infografic */
+.inf-caption {
+  position: absolute;
+  bottom: -20px; left: 50%;
+  transform: translateX(-50%);
+  font-family: 'DM Mono', monospace;
+  font-size: 7px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text-muted); white-space: nowrap;
+  opacity: 0.6;
+}
+
+/* arc animat activ */
+.inf-arc {
+  stroke-dasharray: 60 240;
+  stroke-dashoffset: 0;
+  stroke: var(--wheat);
+  stroke-width: 2;
+  fill: none;
+  transition: stroke-dashoffset 0.4s ease, opacity 0.3s;
+  opacity: 0;
+}
+.inf-arc.active { opacity: 1; }
+
+@media (max-width: 700px) {
+  .header-infographic { width: 150px; height: 150px; }
+}
+
+
+/* ═══ BUTON MUTE ════════════════════════════════ */
+#sound-toggle {
+  position: fixed;
+  bottom: 22px; right: 22px;
+  z-index: 9990;
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-main);
+  background: var(--cream);
+  color: var(--harvest);
+  font-size: 18px;
+  cursor: pointer !important;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(92,61,30,0.2);
+  transition: all 0.2s ease;
+  opacity: 0.85;
+}
+#sound-toggle:hover {
+  transform: scale(1.1);
+  opacity: 1;
+  box-shadow: 0 6px 20px rgba(92,61,30,0.3);
+}
+#sound-toggle.muted { opacity: 0.45; }
+
+
+/* ═══ FONT BOOST GLOBAL — lizibilitate ══════════
+   Toate textele mici crescute cu ~30-40%
+════════════════════════════════════════════════ */
+
+/* banner strip */
+.banner-text  { font-size: 11px !important; letter-spacing: 2px !important; }
+.banner-badge { font-size: 11px !important; }
+
+/* header */
+.logo-text         { font-size: 10px !important; line-height: 2 !important; }
+.eyebrow           { font-size: 11px !important; letter-spacing: 2px !important; }
+.header-center h1  { font-size: clamp(26px, 5vw, 42px) !important; }
+.header-center h2  { font-size: clamp(12px, 2vw, 15px) !important; }
+.header-meta       { font-size: 12px !important; line-height: 2.1 !important; }
+.header-meta .doc-id { font-size: 14px !important; }
+
+/* figures bar */
+.fig-label { font-size: 11px !important; letter-spacing: 1.5px !important; }
+.fig-val   { font-size: clamp(22px, 4vw, 32px) !important; }
+.fig-sub   { font-size: 11px !important; }
+
+/* spec cards */
+.sc-label { font-size: 11px !important; }
+.sc-val   { font-size: clamp(18px, 3vw, 26px) !important; }
+.sc-sub   { font-size: 11px !important; }
+
+/* section dividers */
+.section-divider .sd-label { font-size: 12px !important; letter-spacing: 2px !important; }
+
+/* diagram caption */
+.diagram-caption { font-size: 11px !important; }
+
+/* mw slider stats */
+.mw-slider-wrap::before { font-size: 10px !important; }
+.mw-stats  { font-size: 11px !important; }
+.mw-val-display { font-size: 30px !important; }
+
+/* inset cards */
+.ic-title { font-size: 11px !important; }
+.ic-num   { font-size: 11px !important; }
+.flow-step { font-size: 12px !important; line-height: 1.7 !important; }
+.field-lbl { font-size: 11px !important; }
+.field-val { font-size: 11px !important; }
+.ind-desc  { font-size: 11px !important; line-height: 1.6 !important; }
+.ind-unit  { font-size: 11px !important; }
+.sub-lbl   { font-size: 11px !important; }
+
+/* calc intro */
+.calc-intro { font-size: 15px !important; }
+
+/* crit panels */
+.crit-name-agro  { font-size: clamp(14px, 2.5vw, 16px) !important; }
+.crit-maxpts-agro { font-size: 12px !important; }
+.ctl-lbl   { font-size: 12px !important; }
+.ctl-sub   { font-size: 12px !important; line-height: 1.7 !important; }
+.range-hint { font-size: 12px !important; }
+.range-val-agro { font-size: 18px !important; }
+.stamp-lbl  { font-size: 12px !important; }
+
+/* field note */
+.field-note { font-size: 12px !important; line-height: 1.9 !important; }
+.neeligibil-banner { font-size: 12px !important; }
+
+/* seal */
+.seal-num { font-size: clamp(24px, 4vw, 36px) !important; }
+.seal-of  { font-size: 10px !important; }
+
+/* harvest report */
+.report-lbl   { font-size: 12px !important; }
+.total-score  { font-size: clamp(52px, 8vw, 72px) !important; }
+.total-denom  { font-size: 20px !important; }
+.rbar-name    { font-size: 12px !important; }
+.rbar-pts     { font-size: 13px !important; }
+.verdict-agro { font-size: 14px !important; }
+.calc-note-agro { font-size: 11px !important; }
+
+/* radar */
+.rs-name { font-size: 12px !important; }
+.rs-val  { font-size: 15px !important; }
+
+/* footer */
+.footer-mid   { font-size: clamp(10px, 1.5vw, 12px) !important; }
+.footer-right { font-size: 12px !important; }
+
+/* mw slider wrap label */
+.mw-stats .mw-stat-val { font-size: 11px !important; }
+
+/* diagram btns */
+.diag-btn { font-size: 11px !important; padding: 10px 22px !important; }
+
+/* infographic */
+.inf-node-lbl   { font-size: 8px !important; }
+.inf-center-lbl { font-size: 8px !important; }
+.inf-caption    { font-size: 8px !important; }
+
+/* radar stats extra label */
+#rstat-total { font-size: 38px !important; }
+
+
+/* ═══ RADAR SECTION REDESIGN ════════════════════ */
+.radar-section {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 28px;
+  align-items: start;
+  margin-top: 20px;
+  padding: 24px;
+  border: 1px solid var(--border-soft);
+  background: var(--cream);
+  position: relative;
+}
+@media (max-width: 650px) {
+  .radar-section { grid-template-columns: 1fr; }
+  .radar-canvas-wrap { margin: 0 auto; }
+}
+.radar-section::before {
+  content: 'ANALIZĂ VIZUALĂ PUNCTAJ';
+  position: absolute; top: -10px; left: 20px;
+  background: var(--cream);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 2.5px; color: var(--harvest);
+  padding: 0 8px; text-transform: uppercase;
+}
+.radar-canvas-wrap {
+  flex: none;
+  width: 260px;
+  position: relative;
+}
+.radar-canvas-wrap canvas {
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+  cursor: crosshair;
+}
+.radar-hover-tip {
+  position: absolute;
+  background: var(--soil);
+  border: 1px solid var(--wheat);
+  color: var(--grain);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; font-weight: 700;
+  padding: 6px 12px; border-radius: 3px;
+  pointer-events: none; opacity: 0;
+  transition: opacity 0.15s;
+  white-space: nowrap; z-index: 10;
+}
+.radar-hover-tip.show { opacity: 1; }
+
+/* stat rows mai mari */
+.radar-stats { display: flex; flex-direction: column; gap: 14px; justify-content: center; }
+.radar-stat-row {
+  display: flex; align-items: center;
+  padding: 8px 12px;
+  border: 1px solid var(--border-faint);
+  background: rgba(200,148,58,0.03);
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+  cursor: default;
+}
+.radar-stat-row:hover {
+  background: rgba(200,148,58,0.08);
+  border-color: var(--border-soft);
+  transform: translateX(3px);
+}
+.rs-name { font-size: 12px !important; min-width: 130px; }
+.rs-bar-wrap {
+  flex: 1; margin: 0 14px;
+  height: 10px;
+  background: rgba(200,148,58,0.1);
+  border: 1px solid rgba(200,148,58,0.2);
+  border-radius: 3px; overflow: hidden;
+}
+.rs-bar {
+  height: 100%; border-radius: 3px;
+  background: linear-gradient(90deg, var(--harvest), var(--grain));
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+  position: relative;
+}
+.rs-bar::after {
+  content: '';
+  position: absolute; top:0; right:0; bottom:0; width:3px;
+  background: rgba(255,255,255,0.4);
+}
+.rs-val { font-size: 16px !important; min-width: 55px; text-align: right; }
+
+/* c3 bar colore verde când activ */
+#rs-c3 { background: linear-gradient(90deg, #3a5a2a, #7ab83a) !important; }
+
+
+/* ═══ LINKEDIN BUTTON ═══════════════════════════ */
+.linkedin-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 28px 0 0;
+  padding: 22px 0 0;
+  border-top: 1px dashed rgba(200,148,58,0.25);
+}
+.linkedin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  background: linear-gradient(135deg, #0a66c2 0%, #004182 100%);
+  color: #fff;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 4px;
+  cursor: pointer !important;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 18px rgba(10,102,194,0.35);
+}
+.linkedin-btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg,
+    transparent 0%, rgba(255,255,255,0.12) 45%,
+    rgba(255,255,255,0.2) 50%, transparent 100%);
+  background-size: 300% 100%;
+  background-position: -100% 0;
+  transition: background-position 0.5s ease;
+}
+.linkedin-btn:hover::before {
+  background-position: 200% 0;
+}
+.linkedin-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(10,102,194,0.5);
+}
+.linkedin-btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 14px rgba(10,102,194,0.4);
+}
+.linkedin-icon {
+  width: 28px; height: 28px;
+  background: #fff;
+  border-radius: 5px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.linkedin-icon svg { display: block; }
+.linkedin-text {
+  display: flex; flex-direction: column; gap: 2px;
+}
+.linkedin-text-top {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  opacity: 0.75; line-height: 1;
+}
+.linkedin-text-main {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px; font-weight: 700;
+  line-height: 1.1;
+}
+.linkedin-arrow {
+  font-size: 20px; opacity: 0.8;
+  transition: transform 0.2s ease;
+}
+.linkedin-btn:hover .linkedin-arrow {
+  transform: translateX(5px);
+}
+
+
+</style>
+
+</head>
+<body>
+
+<div id="sun-cursor"></div>
+<button id="sound-toggle" title="Sunet on/off" onclick="toggleSound()">🔊</button>
+<div id="sun-cursor-trail"></div>
+<!-- particles -->
+<canvas id="particles-canvas"></canvas>
+
+<div class="page">
+
+  <!-- top banner strip -->
+  <div class="banner-strip">
+    <span class="banner-text">Fondul pentru Modernizare · Tranziția către Neutralitate Climatică · 2026</span>
+    <span class="banner-badge">FM-ENERGIE-V7</span>
+  </div>
+
+  <div class="inner">
+
+    <!-- ══ HEADER ══ -->
+    <div class="header">
+      <div class="logo-block">
+        <img src="https://e-consultants.ro/wp-content/uploads/2022/03/1Asset-3.png"
+             alt="e-consultants" onerror="this.style.display='none'">
+        <div class="logo-sep"></div>
+        <img src="https://e-consultants.ro/wp-content/uploads/2025/02/1Asset-5.png"
+             alt="Think Blu" onerror="this.style.display='none'">
+        <div class="logo-sep"></div>
+        <div class="logo-text">DIVIZIA DE<br>CONSULTANȚĂ A<br>THINK BLU® SOLUTION</div>
+      </div>
+
+
+      <!-- ══ INFOGRAFIC CIRCULAR ══ -->
+      <div class="header-infographic" id="header-infographic">
+
+        <!-- inel exterior decorativ -->
+        <div class="inf-ring-outer"></div>
+
+        <!-- săgeți SVG pe arc -->
+        <svg class="inf-arrows" viewBox="0 0 200 200">
+          <defs>
+            <marker id="inf-arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 Z" fill="rgba(200,148,58,0.7)"/>
+            </marker>
+          </defs>
+          <!-- cerc de referință r=74, cx=100,cy=100 -->
+          <!-- arc sus→dreapta (Producție→Stocare) -->
+          <path id="inf-arc-1" class="inf-arc"
+            d="M100,26 A74,74 0 0,1 174,100"
+            marker-end="url(#inf-arr)"/>
+          <!-- arc dreapta→jos (Stocare→Consum) -->
+          <path id="inf-arc-2" class="inf-arc"
+            d="M174,100 A74,74 0 0,1 100,174"
+            marker-end="url(#inf-arr)"/>
+          <!-- arc jos→stânga (Consum→CO₂) -->
+          <path id="inf-arc-3" class="inf-arc"
+            d="M100,174 A74,74 0 0,1 26,100"
+            marker-end="url(#inf-arr)"/>
+          <!-- arc stânga→sus (CO₂→Producție) -->
+          <path id="inf-arc-4" class="inf-arc"
+            d="M26,100 A74,74 0 0,1 100,26"
+            marker-end="url(#inf-arr)"/>
+        </svg>
+
+        <!-- centru -->
+        <div class="inf-center">
+          <span class="inf-center-icon" id="inf-center-icon">⚡</span>
+          <span class="inf-center-lbl" id="inf-center-lbl">Sistem<br>Fotovoltaic</span>
+        </div>
+
+        <!-- nodul SUS: Producție -->
+        <div class="inf-node inf-node-top active" id="inf-n1">
+          <span class="inf-node-icon">☀</span>
+          <span class="inf-node-lbl">Producție</span>
+        </div>
+
+        <!-- nodul DREAPTA: Stocare -->
+        <div class="inf-node inf-node-right" id="inf-n2">
+          <span class="inf-node-icon">🔋</span>
+          <span class="inf-node-lbl">Stocare</span>
+        </div>
+
+        <!-- nodul JOS: Consum -->
+        <div class="inf-node inf-node-bottom" id="inf-n3">
+          <span class="inf-node-icon">🏭</span>
+          <span class="inf-node-lbl">Consum</span>
+        </div>
+
+        <!-- nodul STÂNGA: CO₂ -->
+        <div class="inf-node inf-node-left" id="inf-n4">
+          <span class="inf-node-icon">🌿</span>
+          <span class="inf-node-lbl">CO₂ redus</span>
+        </div>
+
+        <div class="inf-caption">Ciclu energetic solar</div>
+      </div>
+
+      <div class="header-center">
+        <div class="wheat-deco">
+          <div class="deco-line"></div>
+          <svg id="wheat-svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <!-- wheat ear SVG -->
+            <line x1="14" y1="26" x2="14" y2="6" stroke="#c8943a" stroke-width="1.2"/>
+            <ellipse cx="14" cy="8"  rx="3.5" ry="2" fill="#c8943a" opacity="0.7" transform="rotate(-30 14 8)"/>
+            <ellipse cx="14" cy="8"  rx="3.5" ry="2" fill="#c8943a" opacity="0.7" transform="rotate(30 14 8)"/>
+            <ellipse cx="14" cy="13" rx="3.5" ry="2" fill="#c8943a" opacity="0.6" transform="rotate(-30 14 13)"/>
+            <ellipse cx="14" cy="13" rx="3.5" ry="2" fill="#c8943a" opacity="0.6" transform="rotate(30 14 13)"/>
+            <ellipse cx="14" cy="18" rx="3.5" ry="2" fill="#c8943a" opacity="0.5" transform="rotate(-30 14 18)"/>
+            <ellipse cx="14" cy="18" rx="3.5" ry="2" fill="#c8943a" opacity="0.5" transform="rotate(30 14 18)"/>
+            <line x1="10" y1="24" x2="14" y2="26" stroke="#c8943a" stroke-width="1" opacity="0.5"/>
+            <line x1="18" y1="24" x2="14" y2="26" stroke="#c8943a" stroke-width="1" opacity="0.5"/>
+          </svg>
+          <div class="deco-line right"></div>
+        </div>
+        <div class="eyebrow">Schemă Ajutor de Stat · Sectorul Agricol & Industria Alimentară</div>
+        <h1 id="main-title" style="visibility:hidden">Schema Energie Solară<br><em>Sector Agricol și Alimentar</em></h1>
+        <h2>Producere · Autoconsum · Stocare · Sesiunea 2026</h2>
+      </div>
+
+      <div class="header-meta">
+        <div class="doc-id">OMADR Nr. 70/2023</div>
+        <div>R(UE) 651/2014 · Art. 41</div>
+        <div>MADR / AFIR</div>
+        <div>Versiunea 7 · 2026</div>
+      </div>
+    </div>
+
+    <!-- ══ FIGURES BAR ══ -->
+    <div class="figures-bar reveal">
+      <div class="fig-cell">
+        <div class="fig-label">Buget total schemă</div>
+        <div class="fig-val"><span class="count-anim" data-val="500000000" data-suffix=" €">500.000.000 €</span></div>
+        <div class="fig-sub">Perioadă 2023–2028</div>
+      </div>
+      <div class="fig-cell">
+        <div class="fig-label">Alocare sesiune 2026</div>
+        <div class="fig-val"><span class="count-anim" data-val="200000000" data-suffix=" €">200.000.000 €</span></div>
+        <div class="fig-sub">100M ≤1MW · 100M &gt;1MW</div>
+      </div>
+      <div class="fig-cell">
+        <div class="fig-label">Intensitate ajutor</div>
+        <div class="fig-val">100% nerambursabil</div>
+        <div class="fig-sub">Din costurile eligibile</div>
+      </div>
+      <div class="fig-cell">
+        <div class="fig-label">Plafon per beneficiar</div>
+        <div class="fig-val"><span class="count-anim" data-val="20000000" data-suffix=" €">20.000.000 €</span></div>
+        <div class="fig-sub">Curs BCE · 1 ian. contract</div>
+      </div>
+    </div>
+
+    <!-- ══ DIAGRAM + SPECS ══ -->
+    <div class="section-divider">
+      <div class="sd-line"></div>
+      <div class="sd-label">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <circle cx="6" cy="6" r="5" stroke="#c8943a" stroke-width="1"/>
+          <circle cx="6" cy="6" r="2" fill="#c8943a"/>
+        </svg>
+        Schema tehnică
+      </div>
+      <div class="sd-line right"></div>
+    </div>
+
+    <div class="main-body reveal reveal-delay-1">
+
+      <!-- DIAGRAM SVG — warm agricultural palette -->
+      <div class="diagram-wrap">
+        <svg id="main-svg" viewBox="0 0 460 410" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <defs>
+            <marker id="arr-w" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+              <path d="M0,0 L7,3.5 L0,7 Z" fill="#c8943a" opacity="0.9"/>
+            </marker>
+            <marker id="arr-g" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+              <path d="M0,0 L7,3.5 L0,7 Z" fill="#5a7a4a" opacity="0.7"/>
+            </marker>
+            <marker id="arr-faint" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+              <path d="M0,0 L7,3.5 L0,7 Z" fill="#8b5e3c" opacity="0.5"/>
+            </marker>
+            <!-- shimmer gradient for panels -->
+            <linearGradient id="panelShine" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%"   stop-color="#f5c842" stop-opacity="0.05"/>
+              <stop offset="50%"  stop-color="#f5c842" stop-opacity="0.25"/>
+              <stop offset="100%" stop-color="#e8b84b" stop-opacity="0.05"/>
+            </linearGradient>
+            <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"   stop-color="#f5c842" stop-opacity="0.9"/>
+              <stop offset="60%"  stop-color="#e8b84b" stop-opacity="0.5"/>
+              <stop offset="100%" stop-color="#f5c842" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="glow-sun">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="glow-batt">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+
+          <!-- SKY BACKGROUND -->
+          <rect x="0" y="0" width="460" height="185" rx="2" fill="rgba(212,232,192,0.22)"/>
+
+          <!-- ══ ANIMATED SUN ══ -->
+          <g filter="url(#glow-sun)">
+            <circle id="sun-outer" cx="230" cy="40" r="26"
+              fill="rgba(245,200,66,0.15)" stroke="#f5c842" stroke-width="1.5"/>
+            <!-- rotating rays -->
+            <g id="sun-rays" stroke="#e8b84b" stroke-width="1.2" opacity="0.55">
+              <line x1="230" y1="14" x2="230" y2="8"/>
+              <line x1="230" y1="66" x2="230" y2="72"/>
+              <line x1="204" y1="40" x2="198" y2="40"/>
+              <line x1="256" y1="40" x2="262" y2="40"/>
+              <line x1="212" y1="22" x2="208" y2="18"/>
+              <line x1="248" y1="22" x2="252" y2="18"/>
+              <line x1="212" y1="58" x2="208" y2="62"/>
+              <line x1="248" y1="58" x2="252" y2="62"/>
+            </g>
+            <circle cx="230" cy="40" r="16" fill="rgba(245,200,66,0.3)" stroke="#e8b84b" stroke-width="1.5"/>
+            <circle cx="230" cy="40" r="8"  fill="#f5c842" opacity="0.9"/>
+          </g>
+          <text x="230" y="82" font-family="DM Mono" font-size="7.5" fill="#c8943a"
+            text-anchor="middle" letter-spacing="2" opacity="0.85" font-weight="700">SOARE · ENERGIE SOLARĂ</text>
+
+          <!-- ══ ANIMATED IRRADIANCE ARROWS ══ -->
+          <g>
+            <line class="irr-line" x1="230" y1="68" x2="230" y2="90"
+              stroke="#f5c842" stroke-width="2.2" stroke-dasharray="6 4" marker-end="url(#arr-w)"/>
+            <line class="irr-line" x1="165" y1="74" x2="145" y2="90"
+              stroke="#f5c842" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#arr-w)" style="animation-delay:0.3s"/>
+            <line class="irr-line" x1="295" y1="74" x2="315" y2="90"
+              stroke="#f5c842" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#arr-w)" style="animation-delay:0.6s"/>
+          </g>
+
+          <!-- GROUND / SOIL -->
+          <line x1="20" y1="225" x2="440" y2="225" stroke="#5c3d1e" stroke-width="1" opacity="0.3" stroke-dasharray="4 3"/>
+          <rect x="20" y="225" width="420" height="28" fill="rgba(92,61,30,0.08)" rx="1"/>
+          <text x="440" y="223" font-family="DM Mono" font-size="7" fill="#8b5e3c" text-anchor="end" opacity="0.5" font-weight="700">NIVEL SOL</text>
+
+          <!-- ══ ANIMATED SOLAR PANELS ══ -->
+          <!-- outer frame -->
+          <rect x="60" y="96" width="340" height="120" rx="2"
+            stroke="#c8943a" stroke-width="1.5" fill="rgba(200,148,58,0.04)"/>
+          <!-- grid lines -->
+          <g stroke="#8b5e3c" stroke-width="0.7" opacity="0.45">
+            <line x1="116" y1="96" x2="116" y2="216"/>
+            <line x1="172" y1="96" x2="172" y2="216"/>
+            <line x1="228" y1="96" x2="228" y2="216"/>
+            <line x1="284" y1="96" x2="284" y2="216"/>
+            <line x1="340" y1="96" x2="340" y2="216"/>
+            <line x1="60" y1="125" x2="400" y2="125"/>
+            <line x1="60" y1="154" x2="400" y2="154"/>
+            <line x1="60" y1="183" x2="400" y2="183"/>
+          </g>
+          <!-- animated cells — pulsing yellow glow -->
+          <g class="panel-cells" stroke="#c8943a" stroke-width="0.6">
+            <rect class="panel-cell" x="63"  y="99"  width="50" height="23" fill="rgba(200,148,58,0.15)" style="animation-delay:0s"/>
+            <rect class="panel-cell" x="119" y="99"  width="50" height="23" fill="rgba(200,148,58,0.15)" style="animation-delay:0.25s"/>
+            <rect class="panel-cell" x="175" y="99"  width="50" height="23" fill="rgba(200,148,58,0.15)" style="animation-delay:0.5s"/>
+            <rect class="panel-cell" x="231" y="99"  width="50" height="23" fill="rgba(200,148,58,0.15)" style="animation-delay:0.75s"/>
+            <rect class="panel-cell" x="287" y="99"  width="50" height="23" fill="rgba(200,148,58,0.15)" style="animation-delay:1.0s"/>
+            <rect class="panel-cell" x="343" y="99"  width="50" height="23" fill="rgba(200,148,58,0.15)" style="animation-delay:1.25s"/>
+            <rect class="panel-cell" x="63"  y="128" width="50" height="23" fill="rgba(200,148,58,0.15)" style="animation-delay:0.15s"/>
+            <rect class="panel-cell" x="119" y="128" width="50" height="23" fill="rgba(200,148,58,0.15)" style="animation-delay:0.4s"/>
+            <rect class="panel-cell" x="175" y="128" width="50" height="23" fill="rgba(200,148,58,0.15)" style="animation-delay:0.65s"/>
+            <rect class="panel-cell" x="231" y="128" width="50" height="23" fill="rgba(200,148,58,0.15)" style="animation-delay:0.9s"/>
+            <rect class="panel-cell" x="287" y="128" width="50" height="23" fill="rgba(200,148,58,0.15)" style="animation-delay:1.15s"/>
+            <rect class="panel-cell" x="343" y="128" width="50" height="23" fill="rgba(200,148,58,0.15)" style="animation-delay:1.4s"/>
+            <rect class="panel-cell" x="63"  y="157" width="50" height="23" fill="rgba(200,148,58,0.15)" style="animation-delay:0.3s"/>
+            <rect class="panel-cell" x="119" y="157" width="50" height="23" fill="rgba(200,148,58,0.15)" style="animation-delay:0.55s"/>
+            <rect class="panel-cell" x="175" y="157" width="50" height="23" fill="rgba(200,148,58,0.15)" style="animation-delay:0.8s"/>
+            <rect class="panel-cell" x="231" y="157" width="50" height="23" fill="rgba(200,148,58,0.15)" style="animation-delay:1.05s"/>
+            <rect class="panel-cell" x="287" y="157" width="50" height="23" fill="rgba(200,148,58,0.15)" style="animation-delay:1.3s"/>
+            <rect class="panel-cell" x="343" y="157" width="50" height="23" fill="rgba(200,148,58,0.15)" style="animation-delay:1.55s"/>
+            <rect class="panel-cell" x="63"  y="186" width="50" height="23" fill="rgba(200,148,58,0.15)" style="animation-delay:0.45s"/>
+            <rect class="panel-cell" x="119" y="186" width="50" height="23" fill="rgba(200,148,58,0.15)" style="animation-delay:0.7s"/>
+            <rect class="panel-cell" x="175" y="186" width="50" height="23" fill="rgba(200,148,58,0.15)" style="animation-delay:0.95s"/>
+            <rect class="panel-cell" x="231" y="186" width="50" height="23" fill="rgba(200,148,58,0.15)" style="animation-delay:1.2s"/>
+            <rect class="panel-cell" x="287" y="186" width="50" height="23" fill="rgba(200,148,58,0.15)" style="animation-delay:1.45s"/>
+            <rect class="panel-cell" x="343" y="186" width="50" height="23" fill="rgba(200,148,58,0.15)" style="animation-delay:1.7s"/>
+          </g>
+          <!-- shimmer overlay on full panel -->
+          <rect x="60" y="96" width="340" height="120" rx="2" fill="url(#panelShine)" opacity="0.6"/>
+          <!-- reflection diagonals -->
+          <g stroke="#f5c842" stroke-width="0.5" opacity="0.2">
+            <line x1="63"  y1="99"  x2="113" y2="122"/>
+            <line x1="119" y1="99"  x2="169" y2="122"/>
+            <line x1="175" y1="99"  x2="225" y2="122"/>
+            <line x1="231" y1="99"  x2="281" y2="122"/>
+            <line x1="287" y1="99"  x2="337" y2="122"/>
+            <line x1="343" y1="99"  x2="393" y2="122"/>
+          </g>
+          <text x="230" y="226" font-family="DM Mono" font-size="8" fill="#5c3d1e"
+            text-anchor="middle" letter-spacing="1.5" opacity="0.85" font-weight="700">PANOURI FOTOVOLTAICE · TABLOU SOLAR</text>
+
+          <!-- dimension -->
+          <line x1="60" y1="238" x2="400" y2="238" stroke="#8b5e3c" stroke-width="0.8"
+            marker-start="url(#arr-faint)" marker-end="url(#arr-faint)" opacity="0.45"/>
+          <g stroke="#8b5e3c" stroke-width="0.8" opacity="0.35">
+            <line x1="60"  y1="234" x2="60"  y2="242"/>
+            <line x1="230" y1="236" x2="230" y2="240"/>
+            <line x1="400" y1="234" x2="400" y2="242"/>
+          </g>
+          <text x="230" y="250" font-family="DM Mono" font-size="7" fill="#8b5e3c"
+            text-anchor="middle" opacity="0.55" font-weight="700">PUTERE INSTALATĂ  ≤ 1 MW  SAU  &gt; 1 MW</text>
+
+          <!-- ══ ANIMATED DC LINE panels → inverter ══ -->
+          <line id="dc-line" x1="230" y1="216" x2="230" y2="268"
+            stroke="#e8b84b" stroke-width="2" stroke-dasharray="8 4"
+            marker-end="url(#arr-w)" opacity="0.85"/>
+          <text x="244" y="246" font-family="DM Mono" font-size="7.5"
+            fill="#c8943a" opacity="0.7" font-weight="700">DC ↓</text>
+
+          <!-- DC line hit area -->
+          <line class="line-hit" id="dc-hit" x1="230" y1="216" x2="230" y2="268"/>
+          <!-- INVERTER -->
+          <rect x="170" y="268" width="120" height="48" rx="2"
+            stroke="#c8943a" stroke-width="1.5" fill="rgba(200,148,58,0.12)"/>
+          <rect x="170" y="268" width="120" height="7" fill="rgba(200,148,58,0.3)" rx="2"/>
+          <text x="230" y="287" font-family="DM Mono" font-size="8.5" fill="#5c3d1e"
+            text-anchor="middle" letter-spacing="2" font-weight="700">INVERTOR</text>
+          <text x="230" y="300" font-family="DM Mono" font-size="7.5" fill="#8b5e3c"
+            text-anchor="middle" font-weight="700">DC → AC</text>
+          <text x="230" y="311" font-family="DM Mono" font-size="6.5" fill="#c8943a"
+            text-anchor="middle" opacity="0.75" font-weight="700">CAEN 3512</text>
+
+          <!-- AC line inverter → farm -->
+          <line x1="170" y1="292" x2="134" y2="292" stroke="#5a7a4a"
+            stroke-width="2" marker-end="url(#arr-g)" opacity="0.85"/>
+          <text x="148" y="284" font-family="DM Mono" font-size="7.5"
+            fill="#5a7a4a" opacity="0.8" font-weight="700">AC ←</text>
+
+          <!-- AC line hit area -->
+          <line class="line-hit" id="ac-hit" x1="170" y1="292" x2="100" y2="292"/>
+          <!-- batt line hit area -->
+          <line class="line-hit" id="batt-hit" x1="290" y1="292" x2="338" y2="292"/>
+
+          <!-- ══ LINIE DESCĂRCARE NOAPTE (baterie → fermă) ══ -->
+          <g id="night-discharge-line">
+            <!-- traseu: baterie → invertor → fermă -->
+            <polyline class="night-flow-line"
+              points="338,289 230,289 134,292"/>
+            <!-- săgeată spre fermă -->
+            <polygon id="night-arrow" points="134,286 122,292 134,298" fill="#a0d050" opacity="0.9"/>
+            <!-- punct animat care curge -->
+            <circle id="night-dot" cx="338" cy="289" r="4" fill="#a0d050" opacity="0.9">
+              <animateMotion dur="1.8s" repeatCount="indefinite">
+                <mpath href="#night-path-ref"/>
+              </animateMotion>
+            </circle>
+            <path id="night-path-ref" d="M338,289 L230,289 L134,292" fill="none" stroke="none"/>
+          </g>
+          <text id="night-discharge-label" x="228" y="282">⚡ ENERGIE STOCATĂ → CONSUM</text>
+          <!-- ══ ANIMATED BATTERY ══ -->
+          <g id="batt-box" filter="url(#glow-batt)">
+            <!-- battery outer shell -->
+            <rect x="338" y="264" width="90" height="50" rx="3"
+              stroke="#7ab83a" stroke-width="1.8" fill="rgba(60,90,30,0.15)"/>
+            <!-- battery terminal nub -->
+            <rect x="428" y="277" width="6" height="12" rx="1"
+              fill="#7ab83a" opacity="0.7"/>
+            <!-- battery fill (animated charging) -->
+            <clipPath id="batt-clip">
+              <rect x="342" y="268" width="82" height="42" rx="2"/>
+            </clipPath>
+            <rect id="batt-fill" x="342" y="268" width="4" height="42" rx="2"
+              fill="#a0d050" clip-path="url(#batt-clip)"/>
+            <!-- battery level marks -->
+            <g stroke="rgba(120,180,60,0.4)" stroke-width="0.8">
+              <line x1="362" y1="270" x2="362" y2="308"/>
+              <line x1="382" y1="270" x2="382" y2="308"/>
+              <line x1="402" y1="270" x2="402" y2="308"/>
+            </g>
+            <!-- lightning bolt icon -->
+            <text x="383" y="291" font-family="DM Mono" font-size="16"
+              fill="#a0d050" text-anchor="middle" opacity="0.85">⚡</text>
+            <text x="383" y="306" font-family="DM Mono" font-size="7.5"
+              fill="#7ab83a" text-anchor="middle" font-weight="700">STOCARE</text>
+            <text x="383" y="317" font-family="DM Mono" font-size="6.5"
+              fill="#a0d050" text-anchor="middle" opacity="0.65" font-weight="700">BATERII</text>
+          </g>
+          <!-- energy flow line from inverter to battery -->
+          <line x1="290" y1="292" x2="338" y2="292"
+            stroke="#7ab83a" stroke-width="1.2" stroke-dasharray="4 3"
+            marker-end="url(#arr-g)" opacity="0.6"/>
+          <text x="308" y="284" font-family="DM Mono" font-size="7"
+            fill="#5a7a4a" opacity="0.65" font-weight="700">≥75%</text>
+
+          <!-- ══ FARM / CONSUMER ══ -->
+          <g id="farm-group">
+            <rect x="20" y="264" width="114" height="50" rx="2"
+              stroke="#5a7a4a" stroke-width="1.5" fill="rgba(90,122,74,0.1)"/>
+            <polyline points="30,303 30,278 77,262 124,278 124,303"
+              stroke="#5a7a4a" stroke-width="1.3"
+              fill="rgba(90,122,74,0.14)" opacity="0.85"/>
+            <rect x="66" y="284" width="22" height="19" rx="1"
+              stroke="#5a7a4a" stroke-width="0.9"
+              fill="rgba(90,122,74,0.18)" opacity="0.75"/>
+            <line x1="77" y1="284" x2="77" y2="303"
+              stroke="#5a7a4a" stroke-width="0.6" opacity="0.5"/>
+            <text x="77" y="319" font-family="DM Mono" font-size="7"
+              fill="#3a5a2a" text-anchor="middle" opacity="0.9" font-weight="700">FERMĂ / PROCESATOR</text>
+            <text x="77" y="330" font-family="DM Mono" font-size="6.5"
+              fill="#5a7a4a" text-anchor="middle" opacity="0.65" font-weight="700">CONSUM MIN. 70%</text>
+          </g>
+
+          <!-- GRID surplus -->
+          <rect x="170" y="350" width="120" height="34" rx="2"
+            stroke="#8b5e3c" stroke-width="0.8" fill="none" stroke-dasharray="4 2"/>
+          <text x="230" y="366" font-family="DM Mono" font-size="7.5"
+            fill="#8b5e3c" text-anchor="middle" opacity="0.65" font-weight="700">REȚEA NAȚIONALĂ</text>
+          <text x="230" y="378" font-family="DM Mono" font-size="6.5"
+            fill="#8b5e3c" text-anchor="middle" opacity="0.45" font-weight="700">SURPLUS ≤ 30%</text>
+          <line x1="230" y1="316" x2="230" y2="350"
+            stroke="#8b5e3c" stroke-width="0.8"
+            stroke-dasharray="3 3" marker-end="url(#arr-faint)" opacity="0.4"/>
+
+          <!-- callout dot -->
+          <circle cx="393" cy="98" r="3.5" fill="#c8943a" opacity="0.7"/>
+          <line x1="396" y1="98" x2="418" y2="85"
+            stroke="#c8943a" stroke-width="0.8" opacity="0.5"/>
+          <text x="420" y="83" font-family="DM Mono" font-size="7"
+            fill="#c8943a" opacity="0.7" font-weight="700">MODUL PV</text>
+
+          <!-- scale bar -->
+          <line x1="60" y1="398" x2="400" y2="398"
+            stroke="#8b5e3c" stroke-width="0.5" opacity="0.28"/>
+          <text x="230" y="406" font-family="DM Mono" font-size="7"
+            fill="#8b5e3c" text-anchor="middle" opacity="0.32" font-weight="700">DIAGRAMĂ SCHEMATICĂ · SCARĂ ILUSTRATIVĂ</text>
+        </svg>
+        <div class="diagram-caption">◆ Sistem fotovoltaic pentru autoconsum agricol și procesare alimentară ◆</div>
+
+        <div class="mw-slider-wrap">
+          <div class="mw-slider-row">
+            <input type="range" class="mw-range" id="mw-slider" min="0.1" max="2" step="0.05" value="0.5">
+            <span class="mw-val-display"><span id="mw-val">0,50</span> <span style="font-size:14px;opacity:0.6">MW</span></span>
+          </div>
+          <div class="mw-stats">
+            <span>Celule active: <span class="mw-stat-val" id="mw-cells">12 / 24</span></span>
+            <span>Producție est.: <span class="mw-stat-val" id="mw-prod">600 MWh/an</span></span>
+            <span>Ajutor max.: <span class="mw-stat-val" id="mw-grant">325.000 €</span></span>
+            <span>Tip: <span class="mw-stat-val" id="mw-type">≤ 1 MW</span></span>
+          </div>
+        </div>
+        <div class="diagram-btns">
+          <button class="diag-btn" id="btn-boot" onclick="bootSystem()">
+            <span class="btn-icon">⚡</span> Pornește sistemul
+          </button>
+          <button class="diag-btn" id="btn-daynight" onclick="toggleDayNight()">
+            <span class="btn-icon" id="dn-icon">🌙</span>
+            <span id="dn-label">Mod Noapte</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- SPECS -->
+      <div class="specs-col">
+        <div class="spec-card harvest">
+          <div class="sc-label">Ajutor / MW (≤ 1 MW)</div>
+          <div class="sc-val">650.000 €</div>
+          <div class="sc-sub">100% costuri eligibile · nerambursabil</div>
+        </div>
+        <div class="spec-card harvest">
+          <div class="sc-label">Ajutor / MW (&gt; 1 MW)</div>
+          <div class="sc-val">550.000 €</div>
+          <div class="sc-sub">100% costuri eligibile · nerambursabil</div>
+        </div>
+        <div class="spec-card green">
+          <div class="sc-label">Autoconsum minim</div>
+          <div class="sc-val">≥ 70%</div>
+          <div class="sc-sub">Din producția anuală a centralei finanțate</div>
+        </div>
+        <div class="spec-card green">
+          <div class="sc-label">Energie stocată din instalație proprie</div>
+          <div class="sc-val">≥ 75%</div>
+          <div class="sc-sub">Stocare min. 12 min la putere nominală</div>
+        </div>
+        <div class="spec-card terra">
+          <div class="sc-label">Durată implementare</div>
+          <div class="sc-val">22 luni</div>
+          <div class="sc-sub">Finalizare max. 31.12.2028 · max 5 cereri</div>
+        </div>
+        <div class="spec-card">
+          <div class="sc-label">Prefinanțare disponibilă</div>
+          <div class="sc-val">≤ 30%</div>
+          <div class="sc-sub">Cu scrisoare garanție bancară irevocabilă</div>
+        </div>
+        <div class="spec-card">
+          <div class="sc-label">Factor CO₂ (ANRE ref.)</div>
+          <div class="sc-val">0,6119</div>
+          <div class="sc-sub">tone CO₂/MWh · surse fosile · bază I.2</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ THREE INSETS ══ -->
+    <div class="section-divider">
+      <div class="sd-line"></div>
+      <div class="sd-label">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <rect x="1" y="1" width="10" height="10" stroke="#c8943a" stroke-width="1"/>
+          <rect x="4" y="4" width="4" height="4" fill="#c8943a"/>
+        </svg>
+        Studii de detaliu
+      </div>
+      <div class="sd-line right"></div>
+    </div>
+
+    <div class="insets reveal reveal-delay-2">
+      <!-- INS-01 -->
+      <div class="inset-card">
+        <div class="ic-num">01</div>
+        <div class="ic-title">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <circle cx="5" cy="5" r="4" stroke="#c8943a" stroke-width="1"/>
+            <circle cx="5" cy="5" r="1.5" fill="#c8943a"/>
+          </svg>
+          Etape de implementare
+        </div>
+        <div class="flow">
+          <div class="flow-step"><div class="seed"></div>Publicare AFIR · deschidere sesiune</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><div class="seed"></div>Depunere Cerere Finanțare online</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><div class="seed"></div>Verificare conformitate administrativă</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><div class="seed"></div>Verificare eligibilitate solicitant &amp; investiție</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><div class="seed"></div>Evaluare tehnico-economică · scorare</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><div class="seed"></div>Raport Eligibilitate + Scorare AFIR</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><div class="seed"></div>Contestații · termen 5 zile lucrătoare</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><div class="seed"></div>Raport Final Selecție · Contractare</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><div class="seed green"></div>Implementare · Plăți · Monitorizare 5 ani</div>
+        </div>
+      </div>
+
+      <!-- INS-02 -->
+      <div class="inset-card green">
+        <div class="ic-num">02</div>
+        <div class="ic-title">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <rect x="1" y="1" width="8" height="8" stroke="#c8943a" stroke-width="1"/>
+            <rect x="3" y="3" width="4" height="4" fill="#c8943a"/>
+          </svg>
+          Grilă scorare (max 100 pct)
+        </div>
+        <div class="field-chart">
+          <div class="field-row">
+            <div class="field-lbl">C1 Ajutor</div>
+            <div class="field-track"><div class="field-fill" style="width:70%; background:linear-gradient(90deg,#d4800a,#e8b84b)"></div></div>
+            <div class="field-val">70 pct</div>
+          </div>
+          <div class="field-row">
+            <div class="field-lbl">C2 Auto%</div>
+            <div class="field-track"><div class="field-fill" style="width:10%; background:linear-gradient(90deg,#3a5a2a,#7a9a5a)"></div></div>
+            <div class="field-val">10 pct</div>
+          </div>
+          <div class="field-row">
+            <div class="field-lbl">C3 Stocare</div>
+            <div class="field-track"><div class="field-fill" style="width:10%; background:linear-gradient(90deg,#9a3e20,#b85c38)"></div></div>
+            <div class="field-val">10 pct</div>
+          </div>
+          <div class="field-row">
+            <div class="field-lbl">C4 CAEN</div>
+            <div class="field-track"><div class="field-fill" style="width:10%; background:linear-gradient(90deg,#8b5e3c,#c8943a)"></div></div>
+            <div class="field-val">10 pct</div>
+          </div>
+        </div>
+        <div class="sub-lbl" style="margin-top:12px;">Punctaj C2 – Autoconsum</div>
+        <div class="flow">
+          <div class="flow-step"><div class="seed green"></div>&gt;90%–100% autoconsum → 10 pct</div>
+          <div class="flow-step"><div class="seed green"></div>&gt;80%–90% autoconsum → 5 pct</div>
+          <div class="flow-step"><div class="seed"></div>&gt;70%–80% autoconsum → 0 pct</div>
+        </div>
+        <div class="sub-lbl">Punctaj C4 – Domeniu CAEN</div>
+        <div class="flow">
+          <div class="flow-step"><div class="seed green"></div>OUAI / FOUAI → 10 pct</div>
+          <div class="flow-step"><div class="seed green"></div>CAEN 01 – Agricultură → 7 pct</div>
+          <div class="flow-step"><div class="seed"></div>CAEN 10 – Ind. alimentară → 5 pct</div>
+          <div class="flow-step"><div class="seed"></div>CAEN 11 – Băuturi → 2 pct</div>
+        </div>
+      </div>
+
+      <!-- INS-03 -->
+      <div class="inset-card terra">
+        <div class="ic-num">03</div>
+        <div class="ic-title">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <polygon points="5,1 9,9 1,9" stroke="#c8943a" stroke-width="1" fill="none"/>
+            <circle cx="5" cy="6.5" r="1.5" fill="#c8943a"/>
+          </svg>
+          Indicatori obligatorii
+        </div>
+        <div class="ind-table">
+          <div class="ind-row">
+            <div class="ind-id">I.1</div>
+            <div class="ind-desc">Capacitate operațională instalată</div>
+            <div class="ind-unit">MW</div>
+          </div>
+          <div class="ind-row">
+            <div class="ind-id">I.2</div>
+            <div class="ind-desc">Reducere gaze efect de seră (anual)</div>
+            <div class="ind-unit">t CO₂/an</div>
+          </div>
+          <div class="ind-row">
+            <div class="ind-id">I.3</div>
+            <div class="ind-desc">Producție medie anuală regenerabilă</div>
+            <div class="ind-unit">MWh/an</div>
+          </div>
+          <div class="ind-row">
+            <div class="ind-id">I.4</div>
+            <div class="ind-desc">Producție totală referință (20 ani)</div>
+            <div class="ind-unit">MWh</div>
+          </div>
+          <div class="ind-row">
+            <div class="ind-id">I.5</div>
+            <div class="ind-desc">% producție consum propriu (min 70%)</div>
+            <div class="ind-unit">%</div>
+          </div>
+          <div class="ind-row">
+            <div class="ind-id">I.6</div>
+            <div class="ind-desc">Factor capacitate centrală solară</div>
+            <div class="ind-unit">%</div>
+          </div>
+        </div>
+        <div class="sub-lbl" style="margin-top:10px;">Note de calcul</div>
+        <div class="flow">
+          <div class="flow-step"><div class="seed"></div>Formulă consum: I – C ≤ 30% P</div>
+          <div class="flow-step"><div class="seed"></div>Min utilizare anuală solar: 1000 h</div>
+          <div class="flow-step"><div class="seed"></div>Durata analiză: 20 ani referință</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SOLAR CYCLE + MAP ══ -->
+    <div class="reveal reveal-delay-2">
+
+
+
+
+
+
+    <!-- ══ WHEAT FIELD ANIMATION ══ -->
+    <div class="wheat-field">
+      <canvas id="wheat-canvas"></canvas>
+    </div>
+
+        <!-- ══ CALCULATOR ══ -->
+    <div class="reveal reveal-delay-1" id="calc-reveal">
+    <div class="section-divider">
+      <div class="sd-line"></div>
+      <div class="sd-label">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <rect x="1" y="1" width="10" height="10" rx="1" stroke="#c8943a" stroke-width="1"/>
+          <line x1="4" y1="6" x2="8" y2="6" stroke="#c8943a" stroke-width="1"/>
+          <line x1="6" y1="4" x2="6" y2="8" stroke="#c8943a" stroke-width="1"/>
+        </svg>
+        Calculator interactiv punctaj
+      </div>
+      <div class="sd-line right"></div>
+    </div>
+
+<div class="calc-intro">
+      Completează datele proiectului tău pentru a calcula scorul total estimat (0–100 puncte),
+      conform grilei de evaluare tehnico-economică din Ghidul Solicitantului V7/2026.
+      Fiecare câmp corespunde unui criteriu de selecție aplicat de AFIR în procedura de ofertare concurențială.
+    </div>
+
+    <!-- C1 -->
+    <div class="crit-panel c1">
+      <div class="crit-head">
+        <span class="crit-badge-agro">C1</span>
+        <span class="crit-name-agro">Cuantum ajutor de stat solicitat per MW instalat de producție</span>
+        <span class="crit-maxpts-agro">MAX 70 PCT</span>
+      </div>
+      <div class="crit-body">
+        <div class="crit-controls">
+          <span class="ctl-lbl">Capacitate instalată — tip proiect</span>
+          <span class="ctl-sub">Determină plafonul maxim €/MW aplicabil sesiunii 2026</span>
+          <div class="stamp-grid">
+            <div class="stamp-opt active" id="opt-small" onclick="selectOpt('cap','small',this)">
+              <input type="radio" name="cap" value="small" checked>
+              <div class="stamp-check"></div>
+              <span class="stamp-lbl">≤ 1 MW · plafon 650.000 €/MW</span>
+            </div>
+            <div class="stamp-opt" id="opt-large" onclick="selectOpt('cap','large',this)">
+              <input type="radio" name="cap" value="large">
+              <div class="stamp-check"></div>
+              <span class="stamp-lbl">&gt; 1 MW · plafon 550.000 €/MW</span>
+            </div>
+          </div>
+          <div style="margin-top:14px;">
+            <span class="ctl-lbl">Ajutor solicitat (€/MW)</span>
+            <span class="ctl-sub">Suma nerambursabilă cerută per MW instalat · cu cât e mai mică față de plafon, cu atât scorul C1 e mai mare</span>
+            <input type="range" class="agro-range" id="aid-slider" min="0" max="650000" step="5000" value="500000">
+            <div class="range-readout">
+              <span class="range-val-agro" id="aid-val">500.000 €</span>
+              <span class="range-hint" id="aid-pct">77% din plafon</span>
+            </div>
+          </div>
+          <div class="field-note" id="c1-formula">
+            FORMULĂ C1: y = (MAX − x) × 70 / (MAX − MIN)<br>
+            MAX aplicabil: 650.000 €/MW · Ajutor cerut (x): 500.000 €/MW<br>
+            ⚠ Scorul exact se stabilește după închiderea sesiunii prin compararea tuturor ofertelor.
+          </div>
+        </div>
+        <div class="crit-result">
+          <div class="seal" id="seal-c1">
+            <span class="seal-num" id="c1-score">54</span>
+            <span class="seal-of">/ 70 pct</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C2 -->
+    <div class="crit-panel c2">
+      <div class="crit-head">
+        <span class="crit-badge-agro">C2</span>
+        <span class="crit-name-agro">Procentul de autoconsum din energia produsă</span>
+        <span class="crit-maxpts-agro">MAX 10 PCT</span>
+      </div>
+      <div class="crit-body">
+        <div class="crit-controls">
+          <span class="ctl-lbl">Autoconsum estimat anual</span>
+          <span class="ctl-sub">Energia utilizată exclusiv pentru activitate CAEN eligibil, raportat la producția totală a centralei. Minimum 70% obligatoriu pentru eligibilitate.</span>
+          <input type="range" class="agro-range" id="auto-slider" min="70" max="100" step="1" value="85">
+          <div class="range-readout">
+            <span class="range-val-agro" id="auto-val">85%</span>
+            <span class="range-hint" id="auto-hint">Interval 80–90% → 5 pct</span>
+          </div>
+          <div class="field-note">
+            &gt; 90%–100% autoconsum → 10 pct &nbsp;|&nbsp; &gt; 80%–90% → 5 pct &nbsp;|&nbsp; &gt; 70%–80% → 0 pct<br>
+            ATENȚIE: autoconsum &lt; 70% → proiect declarat NEELIGIBIL (excludere, nu 0 pct)
+          </div>
+          <div class="neeligibil-banner" id="neeligibil-banner">
+            ⛔ <strong>PROIECT NEELIGIBIL</strong> — Autoconsumul minim obligatoriu este <strong>70%</strong> din producția anuală.<br>
+            Creșteți procentul de autoconsum peste 70% pentru a putea depune cererea de finanțare.
+          </div>
+          <div style="display:none">
+          </div>
+        </div></div>
+        <div class="crit-result">
+          <div class="seal" id="seal-c2">
+            <span class="seal-num" id="c2-score">5</span>
+            <span class="seal-of">/ 10 pct</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C3 -->
+    <div class="crit-panel c3">
+      <div class="crit-head">
+        <span class="crit-badge-agro">C3</span>
+        <span class="crit-name-agro">Proiect cu capacitate de stocare a energiei electrice</span>
+        <span class="crit-maxpts-agro">MAX 10 PCT</span>
+      </div>
+      <div class="crit-body">
+        <div class="crit-controls">
+          <span class="ctl-lbl">Investiția include baterii de stocare?</span>
+          <span class="ctl-sub">Condiție: capacitate ≥ 0,2 MWh per MW instalat (stocare 12 min la putere nominală) · energia stocată provine ≥ 75% din producție proprie · stocare ≤ putere instalată</span>
+          <div class="stamp-grid">
+            <div class="stamp-opt" id="opt-stor-y" onclick="selectOpt('stor','yes',this)">
+              <input type="radio" name="stor" value="yes">
+              <div class="stamp-check"></div>
+              <span class="stamp-lbl">Da — stocare inclusă → 10 pct</span>
+            </div>
+            <div class="stamp-opt active" id="opt-stor-n" onclick="selectOpt('stor','no',this)">
+              <input type="radio" name="stor" value="no" checked>
+              <div class="stamp-check"></div>
+              <span class="stamp-lbl">Nu — fără stocare → 0 pct</span>
+            </div>
+          </div>
+          <div class="field-note">
+            Exemplu: 1 MW instalat → min 0,2 MWh stocare &nbsp;|&nbsp; 0,5 MW → min 0,1 MWh &nbsp;|&nbsp; 2 MW → min 0,4 MWh<br>
+            Capacitate stocare în baterii ≤ capacitatea totală de producere a centralei
+          </div>
+        </div>
+        <div class="crit-result">
+          <div class="seal zero" id="seal-c3">
+            <span class="seal-num" id="c3-score">0</span>
+            <span class="seal-of">/ 10 pct</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C4 -->
+    <div class="crit-panel c4">
+      <div class="crit-head">
+        <span class="crit-badge-agro">C4</span>
+        <span class="crit-name-agro">Domeniul de activitate al solicitantului (cod CAEN)</span>
+        <span class="crit-maxpts-agro">MAX 10 PCT</span>
+      </div>
+      <div class="crit-body">
+        <div class="crit-controls">
+          <span class="ctl-lbl">Codul CAEN principal înscris în statut</span>
+          <span class="ctl-sub">Se verifică prin Certificat constatator ONRC și Actul constitutiv/Statut valabil la data depunerii</span>
+          <div class="stamp-grid">
+            <div class="stamp-opt" id="opt-ouai" onclick="selectOpt('caen','10',this)">
+              <input type="radio" name="caen" value="10">
+              <div class="stamp-check"></div>
+              <span class="stamp-lbl">OUAI / FOUAI – Irigații → 10 pct</span>
+            </div>
+            <div class="stamp-opt active" id="opt-c01" onclick="selectOpt('caen','7',this)">
+              <input type="radio" name="caen" value="7" checked>
+              <div class="stamp-check"></div>
+              <span class="stamp-lbl">CAEN 01 – Agricultură → 7 pct</span>
+            </div>
+            <div class="stamp-opt" id="opt-c10" onclick="selectOpt('caen','5',this)">
+              <input type="radio" name="caen" value="5">
+              <div class="stamp-check"></div>
+              <span class="stamp-lbl">CAEN 10 – Industrie alimentară → 5 pct</span>
+            </div>
+            <div class="stamp-opt" id="opt-c11" onclick="selectOpt('caen','2',this)">
+              <input type="radio" name="caen" value="2">
+              <div class="stamp-check"></div>
+              <span class="stamp-lbl">CAEN 11 – Fabricare băuturi → 2 pct</span>
+            </div>
+          </div>
+          <div class="field-note">
+            Criteriu de departajare la egalitate: valoarea eligibilă a proiectului (€) în ordine crescătoare.<br>
+            La contractare: CAEN 3512 – Producție energie electrică din resurse regenerabile obligatoriu în statut.
+          </div>
+        </div>
+        <div class="crit-result">
+          <div class="seal" id="seal-c4">
+            <span class="seal-num" id="c4-score">7</span>
+            <span class="seal-of">/ 10 pct</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HARVEST REPORT -->
+    <div class="harvest-report reveal reveal-delay-3">
+      <div class="report-top">
+        <div>
+          <div class="report-lbl">◆ Punctaj total estimat — proiectul tău</div>
+          <div style="font-family:'DM Mono',monospace;font-size:8px;color:rgba(232,184,75,0.5);margin-top:4px;">Grilă evaluare tehnico-economică FM-ENERGIE V7/2026</div>
+        </div>
+        <div class="total-wrap">
+          <span class="total-num" id="total-score">66</span>
+          <span class="total-denom">/ 100</span>
+        </div>
+      </div>
+
+      <div class="report-bars">
+        <div class="rbar-item">
+          <div class="rbar-head">
+            <span class="rbar-name">C1 · Ajutor/MW</span>
+            <span class="rbar-pts" id="rb-c1">54~ / 70</span>
+          </div>
+          <div class="rbar-track"><div class="rbar-fill c1" id="bar-c1" style="width:77%"></div></div>
+        </div>
+        <div class="rbar-item">
+          <div class="rbar-head">
+            <span class="rbar-name">C2 · Autoconsum</span>
+            <span class="rbar-pts" id="rb-c2">5 / 10</span>
+          </div>
+          <div class="rbar-track"><div class="rbar-fill c2" id="bar-c2" style="width:50%"></div></div>
+        </div>
+        <div class="rbar-item">
+          <div class="rbar-head">
+            <span class="rbar-name">C3 · Stocare</span>
+            <span class="rbar-pts" id="rb-c3">0 / 10</span>
+          </div>
+          <div class="rbar-track"><div class="rbar-fill c3" id="bar-c3" style="width:0%"></div></div>
+        </div>
+        <div class="rbar-item">
+          <div class="rbar-head">
+            <span class="rbar-name">C4 · CAEN</span>
+            <span class="rbar-pts" id="rb-c4">7 / 10</span>
+          </div>
+          <div class="rbar-track"><div class="rbar-fill c4" id="bar-c4" style="width:70%"></div></div>
+        </div>
+      </div>
+
+      <div class="verdict-agro mid" id="verdict">
+        Scor mediu — poți îmbunătăți prin includerea stocării (+10 pct C3) și creșterea autoconsumului
+        peste 90% (+5–10 pct C2). Factorul decisiv rămâne C1: reducând ajutorul solicitat per MW față de
+        plafonul sesiunii, crești semnificativ competitivitatea față de ceilalți aplicanți.
+      </div>
+
+      <!-- RADAR CHART + COMPARISON -->
+      <div class="radar-section">
+        <!-- RADAR CANVAS -->
+        <div class="radar-canvas-wrap">
+          <canvas id="radar-canvas" width="260" height="260"
+            role="img" aria-label="Grafic radar punctaj proiect"></canvas>
+          <div class="radar-hover-tip" id="radar-hover-tip"></div>
+        </div>
+
+        <!-- STAT ROWS -->
+        <div class="radar-stats">
+          <div style="font-family:'DM Mono',monospace;font-size:11px;font-weight:700;
+            letter-spacing:2px;color:var(--grain);text-transform:uppercase;margin-bottom:4px;">
+            Proiectul tău vs. Maxim posibil
+          </div>
+
+          <div class="radar-stat-row" data-crit="c1">
+            <span class="rs-name">C1 · Ajutor/MW</span>
+            <div class="rs-bar-wrap">
+              <div class="rs-bar" id="rs-c1" style="width:77%"></div>
+            </div>
+            <span class="rs-val">
+              <span id="rstat-c1">54</span>
+              <span style="font-size:11px;opacity:0.45;font-family:'DM Mono',monospace">/70</span>
+            </span>
+          </div>
+
+          <div class="radar-stat-row" data-crit="c2">
+            <span class="rs-name">C2 · Autoconsum</span>
+            <div class="rs-bar-wrap">
+              <div class="rs-bar" id="rs-c2" style="width:50%;
+                background:linear-gradient(90deg,#3a5a2a,#7ab83a)"></div>
+            </div>
+            <span class="rs-val">
+              <span id="rstat-c2">5</span>
+              <span style="font-size:11px;opacity:0.45;font-family:'DM Mono',monospace">/10</span>
+            </span>
+          </div>
+
+          <div class="radar-stat-row" data-crit="c3">
+            <span class="rs-name">C3 · Stocare</span>
+            <div class="rs-bar-wrap">
+              <div class="rs-bar" id="rs-c3" style="width:0%"></div>
+            </div>
+            <span class="rs-val">
+              <span id="rstat-c3">0</span>
+              <span style="font-size:11px;opacity:0.45;font-family:'DM Mono',monospace">/10</span>
+            </span>
+          </div>
+
+          <div class="radar-stat-row" data-crit="c4">
+            <span class="rs-name">C4 · CAEN</span>
+            <div class="rs-bar-wrap">
+              <div class="rs-bar" id="rs-c4" style="width:70%;
+                background:linear-gradient(90deg,#8b5e3c,#c8943a)"></div>
+            </div>
+            <span class="rs-val">
+              <span id="rstat-c4">7</span>
+              <span style="font-size:11px;opacity:0.45;font-family:'DM Mono',monospace">/10</span>
+            </span>
+          </div>
+
+          <!-- TOTAL -->
+          <div style="margin-top:8px;padding:14px 12px;
+            border-top:2px solid rgba(200,148,58,0.25);
+            background:rgba(200,148,58,0.04);">
+            <div style="font-family:'DM Mono',monospace;font-size:11px;font-weight:700;
+              color:var(--grain);letter-spacing:2px;text-transform:uppercase;
+              margin-bottom:6px;">Scor total estimat</div>
+            <div style="display:flex;align-items:baseline;gap:10px;">
+              <span style="font-family:'Playfair Display',serif;font-size:42px;
+                font-weight:900;color:var(--grain);line-height:1;
+                transition:color 0.4s" id="rstat-total">66</span>
+              <span style="font-family:'DM Mono',monospace;font-size:16px;
+                font-weight:700;color:rgba(232,184,75,0.5)">/100</span>
+              <span class="compare-badge" id="compare-badge">— vs max</span>
+            </div>
+            <!-- mini progress bar total -->
+            <div style="margin-top:10px;height:8px;background:rgba(200,148,58,0.1);
+              border-radius:4px;overflow:hidden;border:1px solid rgba(200,148,58,0.2)">
+              <div id="rs-total-bar" style="height:100%;border-radius:4px;
+                background:linear-gradient(90deg,var(--leaf),var(--wheat),var(--harvest));
+                width:66%;transition:width 0.5s ease"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;
+              font-family:'DM Mono',monospace;font-size:9px;font-weight:700;
+              color:rgba(200,148,58,0.4);margin-top:4px;">
+              <span>0</span><span>25</span><span>50</span><span>75</span><span>100</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EXPORT PDF -->
+      <div class="export-row">
+        <button class="btn-export" id="btn-export-pdf" onclick="exportPDF()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <rect x="2" y="1" width="9" height="12" rx="1" stroke="currentColor" stroke-width="1.2"/>
+            <line x1="4" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1"/>
+            <line x1="4" y1="7.5" x2="9" y2="7.5" stroke="currentColor" stroke-width="1"/>
+            <line x1="4" y1="10" x2="7" y2="10" stroke="currentColor" stroke-width="1"/>
+            <path d="M10 9 L14 9 L14 15 L10 15 Z" fill="currentColor" opacity="0.3"/>
+            <path d="M12 7 L12 13 M10 11 L12 13 L14 11" stroke="currentColor" stroke-width="1.2"/>
+          </svg>
+          Exportă Raport PDF
+        </button>
+      </div>
+
+            <div class="calc-note-agro">
+        ⚠ NOTĂ METODOLOGICĂ C1: Scorul pentru criteriul C1 (70 pct) se calculează exclusiv de sistemul informatic AFIR
+        după închiderea sesiunii de depunere, prin compararea valorilor ajutor/MW din întreaga populație eligibilă.
+        Proiectul cu valoarea minimă primește 70 pct, cel cu valoarea maximă 0 pct.
+        Valorile intermediare se calculează liniar: ax + b = y (coeficienți calculați din min/max sesiune).
+        Scorul C1 afișat mai sus este o estimare relativă față de plafon — nu reprezintă scorul final AFIR.
+      </div>
+    </div>
+
+
+
+    <!-- ══ LINKEDIN CTA ══ -->
+    <div class="linkedin-wrap">
+      <a class="linkedin-btn" id="linkedin-btn"
+         href="https://www.linkedin.com/in/lucian-vrînceanu-7913a8173"
+         target="_blank" rel="noopener noreferrer"
+         onclick="openLinkedIn(event)">
+        <div class="linkedin-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#0a66c2">
+            <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/>
+          </svg>
+        </div>
+        <div class="linkedin-text">
+          <span class="linkedin-text-top">Consultant Fonduri Europene</span>
+          <span class="linkedin-text-main">Lucian Vrînceanu</span>
+        </div>
+        <span class="linkedin-arrow">→</span>
+      </a>
+    </div>
+
+    <!-- ══ FOOTER ══ -->
+    <div class="footer">
+      <div class="footer-logo">
+        <img src="https://e-consultants.ro/wp-content/uploads/2022/03/1Asset-3.png"
+             alt="e-consultants" onerror="this.style.display='none'">
+      </div>
+      <div class="footer-mid">
+        ◆ FM-ENERGIE V7 · MADR / AFIR · Schema Ajutor de Stat ◆<br>
+        Fondul pentru Modernizare · Tranziția către Neutralitate Climatică · 2026
+      </div>
+      <div class="footer-right">
+        office@e-consultants.ro · +40 740 013 477<br>
+        Str. Prunului 19, Sântana de Mureș, Mureș<br>
+        www.e-consultants.ro
+      </div>
+    </div>
+
+  </div><!-- /inner -->
+</div><!-- /page -->
+
+<script>
+(function(){
+  function fmt(n){ return n.toLocaleString('ro-RO'); }
+
+  /* radio stamp selection */
+  window.selectOpt = function(name, val, el){
+    document.querySelectorAll('[id^="opt-"]').forEach(function(d){
+      if(d.querySelector('input[name="'+name+'"]')) d.classList.remove('active');
+    });
+    el.classList.add('active');
+    el.querySelector('input').checked = true;
+    update();
+  };
+
+  function getC1(){
+    var cap = document.querySelector('input[name=cap]:checked').value;
+    var maxV = cap==='small' ? 650000 : 550000;
+    var slider = document.getElementById('aid-slider');
+    if(parseInt(slider.max) !== maxV){ slider.max = maxV; if(parseInt(slider.value)>maxV) slider.value=maxV; }
+    var v = parseInt(slider.value);
+    document.getElementById('aid-val').textContent = fmt(v)+' €';
+    var pctOfMax = Math.round(v/maxV*100);
+    document.getElementById('aid-pct').textContent = pctOfMax+'% din plafon';
+    document.getElementById('c1-formula').innerHTML =
+      'FORMULĂ C1: y = (MAX \u2212 x) \u00d7 70 / (MAX \u2212 MIN)<br>'+
+      'MAX aplicabil: '+fmt(maxV)+' \u20ac/MW \u00b7 Ajutor cerut (x): '+fmt(v)+' \u20ac/MW<br>'+
+      '\u26a0 Scorul exact se stabile\u015fte dup\u0103 \u00eenchiderea sesiunii prin compararea tuturor ofertelor.';
+    return Math.max(0, Math.round((1 - v/maxV)*70));
+  }
+
+  function getC2(){
+    var v = parseInt(document.getElementById('auto-slider').value);
+    document.getElementById('auto-val').textContent = v+'%';
+    var hint = v>90 ? 'Interval >90% \u2192 10 pct (maxim)' : v>80 ? 'Interval 80\u201390% \u2192 5 pct' : 'Interval 70\u201380% \u2192 0 pct';
+    document.getElementById('auto-hint').textContent = hint;
+    return v>90 ? 10 : v>80 ? 5 : 0;
+  }
+
+  function getC3(){ return document.querySelector('input[name=stor]:checked').value==='yes' ? 10 : 0; }
+  function getC4(){ return parseInt(document.querySelector('input[name=caen]:checked').value); }
+
+  function setSeal(id, score, isZero){
+    var el = document.getElementById(id);
+    el.className = 'seal'+(isZero?' zero':'');
+  }
+
+  function update(){
+    var c1=getC1(), c2=getC2(), c3=getC3(), c4=getC4();
+    var total = c1+c2+c3+c4;
+
+    document.getElementById('c1-score').textContent = c1;
+    document.getElementById('c2-score').textContent = c2;
+    document.getElementById('c3-score').textContent = c3;
+    document.getElementById('c4-score').textContent = c4;
+    setSeal('seal-c1', c1, c1===0);
+    setSeal('seal-c2', c2, c2===0);
+    setSeal('seal-c3', c3, c3===0);
+    setSeal('seal-c4', c4, c4===0);
+
+    var tEl = document.getElementById('total-score');
+    tEl.textContent = total;
+    tEl.style.color = total>=70 ? '#a0bc7a' : total>=50 ? '#e8b84b' : '#b85c38';
+
+    document.getElementById('rb-c1').textContent = c1+'~ / 70';
+    document.getElementById('rb-c2').textContent = c2+' / 10';
+    document.getElementById('rb-c3').textContent = c3+' / 10';
+    document.getElementById('rb-c4').textContent = c4+' / 10';
+
+    document.getElementById('bar-c1').style.width = Math.round(c1/70*100)+'%';
+    document.getElementById('bar-c2').style.width = Math.round(c2/10*100)+'%';
+    document.getElementById('bar-c3').style.width = Math.round(c3/10*100)+'%';
+    document.getElementById('bar-c4').style.width = Math.round(c4/10*100)+'%';
+
+    var vEl = document.getElementById('verdict');
+    if(total>=80){
+      vEl.className='verdict-agro good';
+      vEl.textContent='Scor excelent — proiectul tău este bine poziționat competitiv. Asigură-te că documentația este completă și că ajutorul solicitat/MW este cel mai mic posibil pentru a maximiza scorul C1 față de ceilalți aplicanți din sesiune. Monitorizează constant consumul real pentru a respecta pragul de 70% autoconsum.';
+    } else if(total>=50){
+      vEl.className='verdict-agro mid';
+      vEl.textContent='Scor mediu — poți îmbunătăți prin includerea stocării (+10 pct C3) și creșterea autoconsumului peste 90% (+5–10 pct C2). Factorul decisiv rămâne C1: reducând ajutorul solicitat per MW față de plafonul sesiunii, crești semnificativ competitivitatea față de ceilalți aplicanți.';
+    } else {
+      vEl.className='verdict-agro bad';
+      vEl.textContent='Scor redus — 70% din punctaj provine din C1. Revizuiește bugetul proiectului pentru a reduce cât mai mult ajutorul solicitat per MW. Adaugă stocare (+10 pct C3), crește autoconsumul estimat peste 90% (+10 pct C2) și verifică dacă CAEN-ul principal al societății este corect înregistrat.';
+    }
+  }
+
+  document.getElementById('aid-slider').addEventListener('input', update);
+  document.getElementById('auto-slider').addEventListener('input', update);
+  update();
+})();
+
+/* ════════════════════════════════════════════════════
+   EFFECTS ENGINE
+════════════════════════════════════════════════════ */
+(function(){
+
+  /* ── LOADER — robust pentru mobil/WhatsApp/Gmail ── */
+  /* ── No loader — pagina vizibilă direct ── */
+  /* Animație fade-in subtilă doar pe desktop */
+  (function(){
+    var page = document.querySelector('.page');
+    if(page && window.innerWidth > 768){
+      page.style.opacity = '0';
+      page.style.transform = 'translateY(16px)';
+      page.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+      setTimeout(function(){
+        page.style.opacity = '1';
+        page.style.transform = 'translateY(0)';
+      }, 100);
+    }
+  })();
+
+  /* ── PARTICLES ──────────────────────────────────── */
+  var canvas = document.getElementById('particles-canvas');
+  var ctx = canvas ? canvas.getContext('2d') : null;
+  var particles = [];
+
+  function resizeCanvas(){
+    if(!canvas) return;
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  function Particle(){
+    this.reset = function(){
+      this.x    = Math.random() * canvas.width;
+      this.y    = Math.random() * canvas.height;
+      this.r    = Math.random() * 2.5 + 0.5;
+      this.vx   = (Math.random() - 0.5) * 0.4;
+      this.vy   = -(Math.random() * 0.6 + 0.2);
+      this.life = Math.random();
+      this.maxLife = Math.random() * 0.4 + 0.3;
+      this.color = Math.random() > 0.5
+        ? 'rgba(200,148,58,'
+        : 'rgba(58,90,42,';
+    };
+    this.reset();
+    this.y = Math.random() * canvas.height;
+  }
+
+  if(ctx){
+    for(var i=0; i<60; i++){ particles.push(new Particle()); }
+
+    function animateParticles(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      particles.forEach(function(p){
+        p.x  += p.vx;
+        p.y  += p.vy;
+        p.life += 0.004;
+        var alpha = p.life < p.maxLife/2
+          ? p.life/(p.maxLife/2) * 0.35
+          : (1 - (p.life-p.maxLife/2)/(p.maxLife/2)) * 0.35;
+        if(alpha < 0 || p.y < -10){ p.reset(); return; }
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fillStyle = p.color + Math.max(0,alpha).toFixed(2) + ')';
+        ctx.fill();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+  }
+
+  /* ── SCROLL REVEAL ──────────────────────────────── */
+  var reveals = document.querySelectorAll('.reveal');
+  function checkReveals(){
+    var wh = window.innerHeight;
+    reveals.forEach(function(el){
+      var rect = el.getBoundingClientRect();
+      if(rect.top < wh * 0.92){
+        el.classList.add('visible');
+      }
+    });
+  }
+  window.addEventListener('scroll', checkReveals, {passive:true});
+  setTimeout(checkReveals, 2000);
+
+  /* ── ANIMATED COUNTERS ──────────────────────────── */
+  function animateCounter(el, target, suffix, duration){
+    var start = 0;
+    var step  = target / (duration / 16);
+    function tick(){
+      start += step;
+      if(start >= target){ el.textContent = target.toLocaleString('ro-RO') + (suffix||''); return; }
+      el.textContent = Math.floor(start).toLocaleString('ro-RO') + (suffix||'');
+      requestAnimationFrame(tick);
+    }
+    tick();
+  }
+
+  /* ── RBAR ANIMATED FILLS ────────────────────────── */
+  function animateBars(){
+    document.querySelectorAll('.rbar-fill').forEach(function(bar){
+      var w = bar.style.width || '0%';
+      bar.style.setProperty('--target-w', w);
+      bar.style.width = '0%';
+      setTimeout(function(){
+        bar.style.width = w;
+      }, 300);
+    });
+  }
+
+  /* ── INTERSECT: trigger counters & bars when report visible ── */
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          animateBars();
+          io.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.3});
+    var hr = document.querySelector('.harvest-report');
+    if(hr) io.observe(hr);
+  }
+
+  /* ── SPEC CARD: ripple on click ─────────────────── */
+  document.querySelectorAll('.spec-card').forEach(function(card){
+    card.addEventListener('click', function(e){
+      var ripple = document.createElement('span');
+      var rect   = card.getBoundingClientRect();
+      ripple.style.cssText =
+        'position:absolute;border-radius:50%;background:rgba(200,148,58,0.25);'+
+        'width:6px;height:6px;transform:scale(0);'+
+        'transition:transform 0.5s ease,opacity 0.5s ease;opacity:1;'+
+        'top:'+(e.clientY-rect.top-3)+'px;left:'+(e.clientX-rect.left-3)+'px;'+
+        'pointer-events:none;';
+      card.appendChild(ripple);
+      requestAnimationFrame(function(){
+        ripple.style.transform = 'scale(40)';
+        ripple.style.opacity   = '0';
+      });
+      setTimeout(function(){ card.removeChild(ripple); }, 600);
+    });
+  });
+
+  /* ── SEAL: bounce on score change ───────────────── */
+  document.querySelectorAll('.seal').forEach(function(seal){
+    var obs = new MutationObserver(function(){
+      seal.style.transform = 'scale(1.15) rotate(-4deg)';
+      setTimeout(function(){ seal.style.transform = ''; }, 300);
+    });
+    obs.observe(seal.querySelector('.seal-num'), {childList:true, characterData:true, subtree:true});
+  });
+
+})();
+
+/* ════════════════════════════════════════════════
+   INTERACTIVE SVG DIAGRAM
+════════════════════════════════════════════════ */
+(function(){
+  var svg   = document.getElementById('main-svg');
+  var tt    = null;
+  var wrap  = document.querySelector('.diagram-wrap');
+  if(!svg || !wrap) return;
+
+  tt = document.createElement('div');
+  tt.className = 'svg-tooltip';
+  wrap.style.position = 'relative';
+  wrap.appendChild(tt);
+
+  function showTip(el, html, event){
+    tt.innerHTML = html;
+    tt.classList.add('show');
+    positionTip(event);
+  }
+  function hideTip(){ tt.classList.remove('show'); }
+  function positionTip(e){
+    var r = wrap.getBoundingClientRect();
+    var x = e.clientX - r.left + 12;
+    var y = e.clientY - r.top  - 10;
+    if(x + 220 > wrap.offsetWidth) x = x - 240;
+    tt.style.left = x + 'px';
+    tt.style.top  = y + 'px';
+  }
+  wrap.addEventListener('mousemove', function(e){ if(tt.classList.contains('show')) positionTip(e); });
+
+  /* ── PANELS clickable ─────────────────────────── */
+  var panelCells = svg.querySelectorAll('.panel-cell');
+  var panelGroup = svg.querySelector('.panel-cells');
+  var panelActive = false;
+  var panelArea = svg.querySelector('rect[x="60"][y="96"]');
+
+  // make panel area clickable
+  if(panelArea){
+    panelArea.style.cursor = 'pointer';
+    panelArea.addEventListener('click', function(e){
+      panelActive = !panelActive;
+      if(panelActive){
+        panelCells.forEach(function(c){ c.style.animationDuration = '0.6s'; });
+        var mwVal = document.getElementById('aid-slider') ? (650000 - parseInt(document.getElementById('aid-slider').value||500000))/10000 + 0.5 : 0.8;
+        showTip(panelArea,
+          '<div class="tt-title">⚡ TABLOU FOTOVOLTAIC</div>'+
+          '<div class="tt-val">'+(Math.round(mwVal*100)/100).toFixed(2)+' MW putere nominală</div>'+
+          '<div style="font-size:10px;margin-top:4px;opacity:0.7">24 module active · producție maximă</div>'+
+          '<div style="font-size:10px;opacity:0.7">Randament estimat: ~88%</div>',
+          e);
+      } else {
+        panelCells.forEach(function(c){ c.style.animationDuration = '3s'; });
+        hideTip();
+      }
+    });
+    panelArea.addEventListener('mouseenter', function(e){
+      svg.querySelectorAll('.panel-cell').forEach(function(c){ c.style.animationDuration='0.8s'; });
+    });
+    panelArea.addEventListener('mouseleave', function(){
+      if(!panelActive) svg.querySelectorAll('.panel-cell').forEach(function(c){ c.style.animationDuration='3s'; });
+    });
+  }
+
+  /* ── BATTERY clickable ────────────────────────── */
+  var battBox = svg.getElementById ? svg.getElementById('batt-box') : null;
+  if(!battBox) battBox = document.getElementById('batt-box');
+  var battCharge = 0;
+  var battDir = 1;
+  var battInterval = null;
+
+  if(battBox){
+    battBox.style.cursor = 'pointer';
+    battBox.addEventListener('click', function(e){
+      // toggle charge/discharge animation
+      clearInterval(battInterval);
+      var fill = document.getElementById('batt-fill');
+      battDir = -battDir;
+      if(battDir < 0){
+        // discharge
+        showTip(battBox,
+          '<div class="tt-title">🔋 DESCĂRCARE BATERIE</div>'+
+          '<div class="tt-val" id="batt-pct-tt">100%</div>'+
+          '<div style="font-size:10px;margin-top:4px;opacity:0.7">Energie stocată → Fermă</div>'+
+          '<div style="font-size:10px;opacity:0.7">Consum: ~0.2 MWh stocat</div>',
+          e);
+        battCharge = 100;
+        battInterval = setInterval(function(){
+          battCharge -= 1.5;
+          if(battCharge <= 0){ battCharge = 0; clearInterval(battInterval); hideTip(); battDir = 1; }
+          if(fill){ fill.style.width = (battCharge/100*72) + 'px'; }
+          var pctEl = document.getElementById('batt-pct-tt');
+          if(pctEl) pctEl.textContent = Math.round(battCharge) + '%';
+        }, 60);
+      } else {
+        hideTip();
+      }
+    });
+    battBox.addEventListener('mouseenter', function(e){
+      if(battDir > 0)
+        showTip(battBox,
+          '<div class="tt-title">🔋 STOCARE ENERGIE</div>'+
+          '<div class="tt-val">≥ 75% din instalație proprie</div>'+
+          '<div style="font-size:10px;margin-top:4px;opacity:0.7">Click pentru simulare descărcare</div>',
+          e);
+    });
+    battBox.addEventListener('mouseleave', function(){ if(battDir>0) hideTip(); });
+  }
+
+  /* ── FARM clickable ───────────────────────────── */
+  var farmGroup = document.getElementById('farm-group');
+  if(farmGroup){
+    farmGroup.style.cursor = 'pointer';
+    farmGroup.addEventListener('click', function(e){
+      var autoSlider = document.getElementById('auto-slider');
+      var autoPct    = autoSlider ? parseInt(autoSlider.value) : 85;
+      var aidSlider  = document.getElementById('aid-slider');
+      var mw         = aidSlider ? Math.max(0.1, (650000-parseInt(aidSlider.value))/200000+0.3) : 0.8;
+      var annualProd = Math.round(mw * 1200);
+      var consumed   = Math.round(annualProd * autoPct/100);
+      showTip(farmGroup,
+        '<div class="tt-title">🏚 FERMĂ / PROCESATOR</div>'+
+        '<div class="tt-val">'+autoPct+'% autoconsum</div>'+
+        '<div style="font-size:10px;margin-top:5px;opacity:0.8">Producție anuală: ~'+annualProd.toLocaleString('ro-RO')+' MWh</div>'+
+        '<div style="font-size:10px;opacity:0.8">Consum propriu: ~'+consumed.toLocaleString('ro-RO')+' MWh</div>'+
+        '<div style="font-size:10px;opacity:0.8">CAEN eligibil: 01 / 10 / 11</div>',
+        e);
+    });
+    farmGroup.addEventListener('mouseleave', hideTip);
+  }
+
+})();
+
+
+
+/* ════════════════════════════════════════════════
+   WHEAT FIELD ANIMATION
+════════════════════════════════════════════════ */
+(function(){
+  var canvas = document.getElementById('wheat-canvas');
+  if(!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var stalks = [];
+  var W, H;
+
+  function resize(){
+    W = canvas.width  = canvas.parentElement.offsetWidth || 800;
+    H = canvas.height = 80;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function Stalk(){
+    this.x = Math.random()*2000;
+    this.baseY = H;
+    this.height = 30 + Math.random()*22;
+    this.phase  = Math.random()*Math.PI*2;
+    this.speed  = 0.012 + Math.random()*0.01;
+    this.sway   = 3 + Math.random()*4;
+    this.color  = Math.random() > 0.5 ? '#c8943a' : '#8b5e3c';
+    this.alpha  = 0.35 + Math.random()*0.45;
+    this.segments = 3 + Math.floor(Math.random()*2);
+  }
+
+  for(var i=0; i<120; i++) stalks.push(new Stalk());
+
+  var t = 0;
+  function drawStalk(s){
+    var windAngle = Math.sin(t*s.speed + s.phase) * s.sway * (Math.PI/180);
+    var tipX = s.x + Math.sin(windAngle)*s.height*0.6;
+    var tipY = s.baseY - s.height;
+    ctx.beginPath();
+    ctx.moveTo(s.x, s.baseY);
+    // bezier curve for natural sway
+    ctx.bezierCurveTo(
+      s.x + Math.sin(windAngle)*s.height*0.2, s.baseY - s.height*0.3,
+      s.x + Math.sin(windAngle)*s.height*0.45, s.baseY - s.height*0.7,
+      tipX, tipY
+    );
+    ctx.strokeStyle = s.color;
+    ctx.globalAlpha = s.alpha;
+    ctx.lineWidth   = 1.2;
+    ctx.stroke();
+    // ear
+    ctx.beginPath();
+    ctx.arc(tipX, tipY-4, 2.5, 0, Math.PI*2);
+    ctx.fillStyle = s.color;
+    ctx.fill();
+    // side kernels
+    for(var k=0; k<3; k++){
+      var ky = tipY - k*4;
+      var kx = tipX + (k%2===0?-3:3);
+      ctx.beginPath();
+      ctx.ellipse(kx, ky, 1.5, 2.5, windAngle, 0, Math.PI*2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function animate(){
+    ctx.clearRect(0,0,W,H);
+    t++;
+    stalks.forEach(function(s){
+      // scroll stalks left
+      s.x -= 0.2;
+      if(s.x < -10){ s.x = W + 10; }
+      if(s.x >= 0 && s.x <= W) drawStalk(s);
+    });
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+
+
+/* ════════════════════════════════════════════════
+   RADAR CHART (Canvas)
+════════════════════════════════════════════════ */
+(function(){
+  var canvas = document.getElementById('radar-canvas');
+  if(!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var SIZE = 260;
+  canvas.width = SIZE; canvas.height = SIZE;
+  var cx = SIZE/2, cy = SIZE/2, R = 105;
+
+  var axes = ['C1 Ajutor', 'C2 Auto%', 'C3 Stocare', 'C4 CAEN'];
+  var maxVals = [70, 10, 10, 10];
+
+  window.drawRadar = function(vals){
+    ctx.clearRect(0,0,SIZE,SIZE);
+    var n = axes.length;
+
+    // background polygons
+    for(var ring=1; ring<=5; ring++){
+      ctx.beginPath();
+      for(var i=0; i<n; i++){
+        var angle = (i/n)*Math.PI*2 - Math.PI/2;
+        var r = R*(ring/5);
+        var x = cx + Math.cos(angle)*r;
+        var y = cy + Math.sin(angle)*r;
+        if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      }
+      ctx.closePath();
+      ctx.strokeStyle = 'rgba(200,148,58,'+(0.08+ring*0.04)+')';
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+      if(ring===5){
+        ctx.fillStyle='rgba(200,148,58,0.04)'; ctx.fill();
+      }
+    }
+
+    // axis lines
+    for(var i=0; i<n; i++){
+      var angle = (i/n)*Math.PI*2 - Math.PI/2;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(cx+Math.cos(angle)*R, cy+Math.sin(angle)*R);
+      ctx.strokeStyle='rgba(200,148,58,0.25)'; ctx.lineWidth=0.8; ctx.stroke();
+    }
+
+    // MAX polygon (background)
+    ctx.beginPath();
+    for(var i=0; i<n; i++){
+      var angle = (i/n)*Math.PI*2 - Math.PI/2;
+      var x = cx + Math.cos(angle)*R;
+      var y = cy + Math.sin(angle)*R;
+      if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+    ctx.fillStyle='rgba(200,148,58,0.08)'; ctx.fill();
+    ctx.strokeStyle='rgba(200,148,58,0.3)'; ctx.lineWidth=1; ctx.stroke();
+
+    // VALUES polygon
+    ctx.beginPath();
+    for(var i=0; i<n; i++){
+      var angle = (i/n)*Math.PI*2 - Math.PI/2;
+      var frac = vals[i]/maxVals[i];
+      var x = cx + Math.cos(angle)*R*frac;
+      var y = cy + Math.sin(angle)*R*frac;
+      if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+    ctx.fillStyle='rgba(58,90,42,0.35)'; ctx.fill();
+    ctx.strokeStyle='#7a9a5a'; ctx.lineWidth=2; ctx.stroke();
+
+    // dots
+    for(var i=0; i<n; i++){
+      var angle = (i/n)*Math.PI*2 - Math.PI/2;
+      var frac = vals[i]/maxVals[i];
+      var x = cx + Math.cos(angle)*R*frac;
+      var y = cy + Math.sin(angle)*R*frac;
+      ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2);
+      ctx.fillStyle='#c8943a'; ctx.fill();
+    }
+
+    // axis labels
+    ctx.font = 'bold 9px DM Mono';
+    ctx.fillStyle = 'rgba(200,148,58,0.8)';
+    ctx.textAlign = 'center';
+    for(var i=0; i<axes.length; i++){
+      var angle = (i/n)*Math.PI*2 - Math.PI/2;
+      var lx = cx + Math.cos(angle)*(R+18);
+      var ly = cy + Math.sin(angle)*(R+18);
+      var lines = axes[i].split(' ');
+      lines.forEach(function(line,li){ ctx.fillText(line, lx, ly + li*10 - (lines.length-1)*5); });
+    }
+  };
+
+  window.drawRadar([54, 5, 0, 7]);
+
+  // hover pe canvas → tooltip cu detalii axă
+  var radarCv = document.getElementById('radar-canvas');
+  var radarTip = document.getElementById('radar-hover-tip');
+  var axNames = ['C1 · Ajutor/MW (max 70 pct)','C2 · Autoconsum (max 10 pct)',
+                 'C3 · Stocare (max 10 pct)','C4 · CAEN (max 10 pct)'];
+  var axMax   = [70,10,10,10];
+  var lastRadarVals = [54,5,0,7];
+
+  // patch drawRadar să salveze vals
+  var _origDR = window.drawRadar;
+  window.drawRadar = function(vals){
+    lastRadarVals = vals;
+    _origDR(vals);
+  };
+
+  if(radarCv && radarTip){
+    radarCv.addEventListener('mousemove', function(e){
+      var rect = radarCv.getBoundingClientRect();
+      var mx = (e.clientX - rect.left) / rect.width  * 260;
+      var my = (e.clientY - rect.top)  / rect.height * 260;
+      var cx = 130, cy = 130, R = 105;
+      var n = 4;
+      var bestDist = 30, bestIdx = -1;
+      for(var i=0;i<n;i++){
+        var angle = (i/n)*Math.PI*2 - Math.PI/2;
+        var frac  = lastRadarVals[i]/axMax[i];
+        var px = cx + Math.cos(angle)*R*frac;
+        var py = cy + Math.sin(angle)*R*frac;
+        var d  = Math.sqrt((mx-px)*(mx-px)+(my-py)*(my-py));
+        if(d < bestDist){ bestDist=d; bestIdx=i; }
+      }
+      if(bestIdx>=0){
+        radarTip.innerHTML = axNames[bestIdx]+'<br>Scor: <strong>'+
+          lastRadarVals[bestIdx]+'</strong> / '+axMax[bestIdx]+' pct';
+        radarTip.style.left = (e.clientX - radarCv.getBoundingClientRect().left + 10)+'px';
+        radarTip.style.top  = (e.clientY - radarCv.getBoundingClientRect().top  - 35)+'px';
+        radarTip.classList.add('show');
+      } else {
+        radarTip.classList.remove('show');
+      }
+    });
+    radarCv.addEventListener('mouseleave', function(){
+      radarTip.classList.remove('show');
+    });
+  }
+
+  // hover pe stat-rows → highlight pe radar
+  document.querySelectorAll('.radar-stat-row').forEach(function(row, i){
+    row.addEventListener('mouseenter', function(){
+      var vals = lastRadarVals.slice();
+      // highlight: mărim valoarea hover cu 20% vizual pe radar
+      var highlightVals = vals.map(function(v,j){ return j===i ? Math.min(axMax[j], v*1.0) : v*0.5; });
+      _origDR(highlightVals);
+    });
+    row.addEventListener('mouseleave', function(){
+      _origDR(lastRadarVals);
+    });
+  });
+})();
+
+/* hook radar into calculator update — polling direct */
+(function(){
+  var lastVals = [-1,-1,-1,-1];
+
+  function syncRadar(){
+    var ids = ['c1-score','c2-score','c3-score','c4-score'];
+    var maxs = [70,10,10,10];
+    var vals = ids.map(function(id){
+      return parseInt((document.getElementById(id)||{}).textContent)||0;
+    });
+    var changed = vals.some(function(v,i){ return v !== lastVals[i]; });
+    if(!changed) return;
+    lastVals = vals.slice();
+
+    var tot = vals.reduce(function(a,b){ return a+b; }, 0);
+
+    // radar chart
+    if(window.drawRadar) window.drawRadar(vals);
+
+    // stat rows + bars
+    ['c1','c2','c3','c4'].forEach(function(k,i){
+      var el  = document.getElementById('rstat-'+k);
+      var bar = document.getElementById('rs-'+k);
+      if(el)  el.textContent  = vals[i];
+      if(bar) bar.style.width = (vals[i]/maxs[i]*100)+'%';
+    });
+
+    // total
+    var rt = document.getElementById('rstat-total');
+    if(rt) rt.textContent = tot;
+
+    // badge
+    var cb = document.getElementById('compare-badge');
+    if(cb){
+      var diff = 100 - tot;
+      cb.textContent = diff===0 ? '✓ MAX!' : '-'+diff+' vs max';
+      cb.className = 'compare-badge ' + (diff<=20?'ahead':'behind');
+    }
+
+    // bara totală
+    var tb = document.getElementById('rs-total-bar');
+    if(tb) tb.style.width = tot + '%';
+
+    // culoare scor total
+    var rt2 = document.getElementById('rstat-total');
+    if(rt2) rt2.style.color = tot>=70?'#7ab83a':tot>=50?'var(--grain)':'#b85c38';
+  }
+
+  // poll la fiecare 80ms — suficient de rapid, nu costisitor
+  setInterval(syncRadar, 80);
+})();
+
+/* ════════════════════════════════════════════════
+   EXPORT PDF
+════════════════════════════════════════════════ */
+window.exportPDF = function(){
+  var btn = document.getElementById('btn-export-pdf');
+  if(btn){ btn.textContent = '⏳ Se generează...'; btn.disabled = true; }
+
+  var c1 = document.getElementById('c1-score')  ? document.getElementById('c1-score').textContent  : '—';
+  var c2 = document.getElementById('c2-score')  ? document.getElementById('c2-score').textContent  : '—';
+  var c3 = document.getElementById('c3-score')  ? document.getElementById('c3-score').textContent  : '—';
+  var c4 = document.getElementById('c4-score')  ? document.getElementById('c4-score').textContent  : '—';
+  var tot= document.getElementById('total-score')? document.getElementById('total-score').textContent: '—';
+  var aidVal = document.getElementById('aid-val') ? document.getElementById('aid-val').textContent : '—';
+  var autoVal= document.getElementById('auto-val')? document.getElementById('auto-val').textContent: '—';
+  var caenEl = document.querySelector('input[name=caen]:checked');
+  var caenLbl= caenEl ? caenEl.closest('.stamp-opt').querySelector('.stamp-lbl').textContent : '—';
+  var storEl = document.querySelector('input[name=stor]:checked');
+  var storLbl= storEl ? storEl.closest('.stamp-opt').querySelector('.stamp-lbl').textContent : '—';
+  var verdictEl = document.getElementById('verdict');
+  var verdText  = verdictEl ? verdictEl.textContent.trim() : '';
+
+  var now = new Date();
+  var dateStr = now.toLocaleDateString('ro-RO', {day:'2-digit',month:'long',year:'numeric'});
+
+  var html = '<!DOCTYPE html><html lang="ro"><head><meta charset="UTF-8">'+
+    '<title>Raport Evaluare FM-ENERGIE V7 · E-Consultants</title>'+
+    '<style>'+
+      '@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@400;500&display=swap");'+
+      'body{margin:0;padding:32px 40px;font-family:"DM Mono",monospace;background:#fdf6e3;color:#2c1a0e;}'+
+      'h1{font-family:"Playfair Display",serif;font-size:28px;color:#2c1a0e;margin:0 0 4px}'+
+      'h2{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:3px;color:#d4800a;text-transform:uppercase;margin:0 0 24px;font-weight:400}'+
+      '.header-line{border-bottom:2px solid #c8943a;margin-bottom:24px;padding-bottom:12px;}'+
+      '.badge{display:inline-block;background:#3a5a2a;color:#d4e8c0;font-size:9px;font-weight:700;letter-spacing:2px;padding:3px 10px;text-transform:uppercase;margin-bottom:16px;}'+
+      '.section{margin-bottom:20px;}'+
+      '.section-title{font-size:9px;font-weight:700;letter-spacing:2.5px;color:#d4800a;text-transform:uppercase;border-bottom:1px solid rgba(200,148,58,0.3);padding-bottom:6px;margin-bottom:12px;}'+
+      '.row{display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px dashed rgba(200,148,58,0.15);}'+
+      '.row:last-child{border-bottom:none;}'+
+      '.row-lbl{font-size:10px;font-weight:700;color:#4a2e10;}'+
+      '.row-val{font-family:"Playfair Display",serif;font-size:16px;font-weight:700;color:#2c1a0e;}'+
+      '.row-max{font-size:9px;color:#7a5a3a;}'+
+      '.total-box{background:#2c1a0e;color:#e8b84b;padding:16px 20px;margin-top:16px;display:flex;justify-content:space-between;align-items:baseline;}'+
+      '.total-num{font-family:"Playfair Display",serif;font-size:52px;font-weight:900;line-height:1;}'+
+      '.total-lbl{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;}'+
+      '.verdict-box{margin-top:12px;padding:10px 14px;border-left:3px solid #c8943a;background:rgba(200,148,58,0.06);font-size:10px;font-weight:700;line-height:1.6;color:#4a2e10;}'+
+      '.footer{margin-top:28px;padding-top:12px;border-top:1px solid rgba(200,148,58,0.4);display:flex;justify-content:space-between;font-size:8px;font-weight:700;color:#7a5a3a;letter-spacing:1px;}'+
+      '.input-row{display:flex;justify-content:space-between;font-size:9px;font-weight:700;padding:4px 0;border-bottom:1px dashed rgba(200,148,58,0.1);color:#4a2e10;}'+
+      '.input-lbl{color:#a07850;}'+
+    '</style></head><body>'+
+    '<div class="header-line">'+
+      '<div class="badge">FM-ENERGIE-V7 · 2026</div>'+
+      '<h1>Raport Evaluare Proiect</h1>'+
+      '<h2>Schema Energie Solară · Sector Agricol și Alimentar · '+dateStr+'</h2>'+
+    '</div>'+
+    '<div class="section">'+
+      '<div class="section-title">Date proiect introduse</div>'+
+      '<div class="input-row"><span class="input-lbl">Ajutor solicitat / MW:</span><span>'+aidVal+'</span></div>'+
+      '<div class="input-row"><span class="input-lbl">Procent autoconsum:</span><span>'+autoVal+'</span></div>'+
+      '<div class="input-row"><span class="input-lbl">Capacitate stocare:</span><span>'+storLbl+'</span></div>'+
+      '<div class="input-row"><span class="input-lbl">Domeniu CAEN:</span><span>'+caenLbl+'</span></div>'+
+    '</div>'+
+    '<div class="section">'+
+      '<div class="section-title">Punctaj detaliat — Grilă evaluare AFIR</div>'+
+      '<div class="row"><span class="row-lbl">C1 · Cuantum ajutor / MW instalat</span><div><span class="row-val">'+c1+'~</span> <span class="row-max">/ 70 pct</span></div></div>'+
+      '<div class="row"><span class="row-lbl">C2 · Procent autoconsum</span><div><span class="row-val">'+c2+'</span> <span class="row-max">/ 10 pct</span></div></div>'+
+      '<div class="row"><span class="row-lbl">C3 · Capacitate stocare</span><div><span class="row-val">'+c3+'</span> <span class="row-max">/ 10 pct</span></div></div>'+
+      '<div class="row"><span class="row-lbl">C4 · Domeniu activitate CAEN</span><div><span class="row-val">'+c4+'</span> <span class="row-max">/ 10 pct</span></div></div>'+
+      '<div class="total-box"><div><div class="total-lbl">Punctaj total estimat</div><div style="font-size:9px;opacity:0.5;margin-top:2px">* C1 definitiv după sesiune AFIR</div></div><span class="total-num">'+tot+'</span></div>'+
+    '</div>'+
+    '<div class="section">'+
+      '<div class="section-title">Evaluare și recomandări</div>'+
+      '<div class="verdict-box">'+verdText+'</div>'+
+    '</div>'+
+    '<div class="footer">'+
+      '<span>E-Consultants · office@e-consultants.ro · +40 740 013 477</span>'+
+      '<span>www.e-consultants.ro · '+dateStr+'</span>'+
+    '</div>'+
+  '</body></html>';
+
+  // detectare mobil
+  var isMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+
+  if(isMobile){
+    // Pe mobil — deschidem fereastra și injectăm HTML direct
+    // apoi apelăm print() din contextul ferestrei noi
+    var w = window.open('', '_blank');
+    if(w){
+      w.document.open();
+      w.document.write(html);
+      w.document.close();
+      // Așteptăm ca documentul să se încarce complet
+      w.onload = function(){
+        w.focus();
+        w.print();
+      };
+      // fallback dacă onload nu se declanșează
+      setTimeout(function(){
+        try { w.focus(); w.print(); } catch(e){}
+        if(btn){
+          btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="1" width="9" height="12" rx="1" stroke="currentColor" stroke-width="1.2"/><line x1="4" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1"/><path d="M10 9 L14 9 L14 15 L10 15 Z" fill="currentColor" opacity="0.3"/><path d="M12 7 L12 13 M10 11 L12 13 L14 11" stroke="currentColor" stroke-width="1.2"/></svg> Exportă Raport PDF';
+          btn.disabled = false;
+        }
+      }, 1200);
+    } else {
+      // Dacă window.open e blocat (popup blocker) — fallback cu data URI
+      var encoded = 'data:text/html;charset=utf-8,' + encodeURIComponent(html);
+      var a = document.createElement('a');
+      a.href = encoded;
+      a.download = 'Raport-FM-Energie-V7.html';
+      a.click();
+      if(btn){ btn.innerHTML = '✓ Descărcat'; btn.disabled = false; }
+    }
+  } else {
+    // Desktop: window.open cu print dialog
+    var w = window.open('','_blank','width=900,height=700');
+    if(w){
+      w.document.write(html);
+      w.document.close();
+      setTimeout(function(){
+        w.focus(); w.print();
+        if(btn){ btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="1" width="9" height="12" rx="1" stroke="currentColor" stroke-width="1.2"/><line x1="4" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1"/><path d="M10 9 L14 9 L14 15 L10 15 Z" fill="currentColor" opacity="0.3"/><path d="M12 7 L12 13 M10 11 L12 13 L14 11" stroke="currentColor" stroke-width="1.2"/></svg> Exportă Raport PDF'; btn.disabled=false; }
+      }, 800);
+    }
+  }
+};
+
+
+
+/* ════════════════════════════════════════════════
+   CURSOR PERSONALIZAT — SOARE
+════════════════════════════════════════════════ */
+(function(){
+  var cursor = document.getElementById('sun-cursor');
+  var trail  = document.getElementById('sun-cursor-trail');
+  if(!cursor) return;
+  var mx=0, my=0, tx=0, ty=0;
+
+  // Dezactivăm cursorul personalizat pe touch
+  var isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+  if(isTouch){
+    if(cursor) cursor.style.display = 'none';
+    if(trail)  trail.style.display  = 'none';
+    return;
+  }
+
+  document.addEventListener('mousemove', function(e){
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top  = my + 'px';
+  });
+
+  // trail follows with lag
+  (function animTrail(){
+    tx += (mx - tx) * 0.18;
+    ty += (my - ty) * 0.18;
+    if(trail){
+      trail.style.left = tx + 'px';
+      trail.style.top  = ty + 'px';
+    }
+    requestAnimationFrame(animTrail);
+  })();
+
+  document.addEventListener('mousedown', function(){ cursor.classList.add('clicking'); });
+  document.addEventListener('mouseup',   function(){ cursor.classList.remove('clicking'); });
+})();
+
+/* ════════════════════════════════════════════════
+   RIPPLE GLOBAL LA CLICK
+════════════════════════════════════════════════ */
+document.addEventListener('click', function(e){
+  var r = document.createElement('div');
+  r.className = 'global-ripple';
+  var size = 120;
+  r.style.cssText = 'width:'+size+'px;height:'+size+'px;left:'+(e.clientX-size/2)+'px;top:'+(e.clientY-size/2)+'px;';
+  document.body.appendChild(r);
+  setTimeout(function(){ if(r.parentNode) r.parentNode.removeChild(r); }, 750);
+});
+
+/* ════════════════════════════════════════════════
+   TYPING EFFECT — TITLU PRINCIPAL
+════════════════════════════════════════════════ */
+(function(){
+  var el = document.getElementById('main-title');
+  if(!el) return;
+
+  var line1 = 'Schema Energie Solară';
+  var line2 = 'Sector Agricol și Alimentar';
+  var delay = 500; // start quickly
+
+  setTimeout(function(){
+    el.style.visibility = 'visible';
+    el.innerHTML = '<span class="typed-text"></span><span class="typed-cursor"></span>';
+    var typed = el.querySelector('.typed-text');
+    var cur   = el.querySelector('.typed-cursor');
+    var i = 0;
+    var phase = 1;
+
+    function typeChar(){
+      if(phase === 1){
+        if(i <= line1.length){
+          typed.textContent = line1.slice(0, i);
+          i++;
+          setTimeout(typeChar, i < line1.length ? 55 : 300);
+        } else {
+          phase = 2; i = 0;
+          typed.innerHTML = line1 + '<br><em></em>';
+          setTimeout(typeChar, 80);
+        }
+      } else {
+        var em = typed.querySelector('em');
+        if(i <= line2.length){
+          if(em) em.textContent = line2.slice(0, i);
+          i++;
+          setTimeout(typeChar, i < line2.length ? 50 : 500);
+        } else {
+          // done — remove cursor after pause
+          setTimeout(function(){ if(cur) cur.style.display='none'; }, 1500);
+        }
+      }
+    }
+    typeChar();
+  }, delay);
+})();
+
+/* ════════════════════════════════════════════════
+   CONTOARE ANIMATE — CIFRE CHEIE
+════════════════════════════════════════════════ */
+(function(){
+  function animCount(el){
+    var target = parseInt(el.dataset.val);
+    var suffix = el.dataset.suffix || '';
+    if(!target) return;
+    var duration = 1800;
+    var start = null;
+
+    function easeOut(t){ return 1 - Math.pow(1-t, 3); }
+
+    function step(ts){
+      if(!start) start = ts;
+      var prog = Math.min((ts - start) / duration, 1);
+      var val  = Math.round(easeOut(prog) * target);
+      el.textContent = val.toLocaleString('ro-RO') + suffix;
+      if(prog < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          animCount(entry.target);
+          io.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.5});
+    document.querySelectorAll('.count-anim[data-val]').forEach(function(el){
+      io.observe(el);
+    });
+  }
+})();
+
+/* ════════════════════════════════════════════════
+   BUTON PORNEȘTE SISTEMUL
+════════════════════════════════════════════════ */
+var _systemOn = false;
+window.bootSystem = function(){
+  var btn = document.getElementById('btn-boot');
+  var svg = document.getElementById('main-svg');
+  if(!btn || !svg) return;
+
+  _systemOn = !_systemOn;
+
+  if(_systemOn){
+    btn.classList.add('active-state');
+    btn.innerHTML = '<span class="btn-icon">🔴</span> Oprește sistemul';
+
+    // animăm celulele una câte una
+    var cells = svg.querySelectorAll('.panel-cell');
+    cells.forEach(function(cell, i){
+      setTimeout(function(){
+        cell.style.animation = 'none';
+        cell.style.fill = 'rgba(60,60,60,0.1)';
+        setTimeout(function(){
+          cell.style.transition = 'fill 0.3s ease';
+          cell.style.fill = 'rgba(245,200,66,0.4)';
+          setTimeout(function(){
+            cell.style.fill = '';
+            cell.style.transition = '';
+            cell.style.animation = '';
+          }, 400);
+        }, 50);
+      }, i * 55);
+    });
+
+    // DC line flash
+    var dcLine = document.getElementById('dc-line');
+    if(dcLine){
+      setTimeout(function(){
+        dcLine.style.stroke = '#f5c842';
+        dcLine.style.strokeWidth = '3';
+        setTimeout(function(){
+          dcLine.style.stroke = '';
+          dcLine.style.strokeWidth = '';
+        }, 600);
+      }, cells.length * 55 + 100);
+    }
+
+    // baterie boot
+    var battFill = document.getElementById('batt-fill');
+    if(battFill){
+      setTimeout(function(){
+        battFill.style.animation = 'none';
+        battFill.style.width = '0px';
+        var w = 0;
+        var iv = setInterval(function(){
+          w += 2;
+          battFill.style.width = w + 'px';
+          if(w >= 72){ clearInterval(iv); battFill.style.animation = ''; }
+        }, 25);
+      }, cells.length * 55 + 200);
+    }
+
+    // fermă glow intens
+    var farm = document.getElementById('farm-group');
+    if(farm){
+      setTimeout(function(){
+        farm.style.filter = 'drop-shadow(0 0 14px rgba(90,200,74,0.9))';
+        setTimeout(function(){ farm.style.filter = ''; }, 1200);
+      }, cells.length * 55 + 400);
+    }
+
+  } else {
+    btn.classList.remove('active-state');
+    btn.innerHTML = '<span class="btn-icon">⚡</span> Pornește sistemul';
+    // stinge celulele
+    var cells = svg.querySelectorAll('.panel-cell');
+    cells.forEach(function(cell){
+      cell.style.transition = 'fill 0.4s ease';
+      cell.style.fill = 'rgba(40,40,50,0.12)';
+      setTimeout(function(){ cell.style.fill=''; cell.style.transition=''; }, 600);
+    });
+  }
+};
+
+/* ════════════════════════════════════════════════
+   BUTON ZI / NOAPTE
+════════════════════════════════════════════════ */
+var _nightMode = false;
+window.toggleDayNight = function(){
+  _nightMode = !_nightMode;
+  var page   = document.querySelector('.page');
+  var btn    = document.getElementById('btn-daynight');
+  var icon   = document.getElementById('dn-icon');
+  var lbl    = document.getElementById('dn-label');
+  var svg    = document.getElementById('main-svg');
+  if(!page || !svg) return;
+
+  var nightLine  = document.getElementById('night-discharge-line');
+  var nightLabel = document.getElementById('night-discharge-label');
+  var acLine     = svg.querySelector('line[x1="170"][y1="292"]');
+  var acLabel    = svg.querySelector('text[x="148"][y="284"]');
+  var dcText     = svg.querySelector('text[x="244"][y="246"]');
+  var farmGroup  = document.getElementById('farm-group');
+  var battBox    = document.getElementById('batt-box');
+
+  if(_nightMode){
+    // ── NOAPTE ──────────────────────────────────
+    page.classList.add('night-mode');
+    if(icon) icon.textContent = '☀';
+    if(lbl)  lbl.textContent  = 'Mod Zi';
+    if(btn)  btn.classList.add('active-state');
+
+    // cer → noapte
+    var skyRect = svg.querySelector('rect[x="0"][y="0"]');
+    if(skyRect){ skyRect.style.transition='fill 0.8s ease'; skyRect.style.fill='rgba(8,12,28,0.95)'; }
+
+    // soare → lună
+    var sunOuter = document.getElementById('sun-outer');
+    if(sunOuter){ sunOuter.style.fill='rgba(220,220,255,0.18)'; sunOuter.style.stroke='#aaaaee'; }
+    var sunCore = svg.querySelector('circle[cx="230"][cy="40"][r="8"]');
+    if(sunCore){ sunCore.style.fill='rgba(200,200,245,0.75)'; }
+    // razele soarelui dispar
+    var sunRays = document.getElementById('sun-rays');
+    if(sunRays){ sunRays.style.opacity='0'; sunRays.style.transition='opacity 0.5s'; }
+    // text "SOARE · ENERGIE SOLARĂ" → noaptea
+    var soareText = svg.querySelector('text[y="82"]');
+    if(soareText){ soareText.textContent='LUNĂ · FĂRĂ PRODUCȚIE SOLARĂ'; soareText.style.fill='#aaaaee'; }
+
+    // stinge panouri complet
+    svg.querySelectorAll('.panel-cell').forEach(function(c){
+      c.style.transition = 'fill 0.5s ease';
+      c.style.fill = 'rgba(20,20,40,0.12)';
+      c.style.animation = 'none';
+    });
+
+    // stinge razele iradianță
+    svg.querySelectorAll('.irr-line').forEach(function(l){
+      l.style.opacity='0'; l.style.transition='opacity 0.4s';
+    });
+
+    // stinge DC line și text DC
+    var dcLine = document.getElementById('dc-line');
+    if(dcLine){ dcLine.style.opacity='0'; dcLine.style.transition='opacity 0.4s'; }
+    if(dcText){ dcText.style.opacity='0'; }
+
+    // stinge AC line normală (ziua)
+    if(acLine){ acLine.style.opacity='0'; acLine.style.transition='opacity 0.3s'; }
+    if(acLabel){ acLabel.style.opacity='0'; }
+
+    // ARATĂ linia de descărcare baterie → fermă
+    setTimeout(function(){
+      if(nightLine)  nightLine.classList.add('show');
+      if(nightLabel) nightLabel.classList.add('show');
+    }, 600);
+
+    // ferma primește energie — glow intens verde
+    if(farmGroup){
+      farmGroup.style.filter = 'drop-shadow(0 0 8px rgba(160,208,80,0.7))';
+      farmGroup.style.transition = 'filter 0.6s ease';
+    }
+
+    // bateria descărcată — pulsează mai puternic
+    if(battBox){
+      battBox.style.filter = 'drop-shadow(0 0 12px rgba(160,208,80,0.8))';
+    }
+
+    // particule mai lente/rare noaptea
+    var pCanvas = document.getElementById('particles-canvas');
+    if(pCanvas) pCanvas.style.opacity='0.15';
+
+  } else {
+    // ── ZI ──────────────────────────────────────
+    page.classList.remove('night-mode');
+    if(icon) icon.textContent = '🌙';
+    if(lbl)  lbl.textContent  = 'Mod Noapte';
+    if(btn)  btn.classList.remove('active-state');
+
+    // cer → zi
+    var skyRect = svg.querySelector('rect[x="0"][y="0"]');
+    if(skyRect){ skyRect.style.fill=''; skyRect.style.transition='fill 0.8s ease'; }
+
+    // soare înapoi
+    var sunOuter = document.getElementById('sun-outer');
+    if(sunOuter){ sunOuter.style.fill=''; sunOuter.style.stroke=''; }
+    var sunCore = svg.querySelector('circle[cx="230"][cy="40"][r="8"]');
+    if(sunCore){ sunCore.style.fill=''; }
+    var sunRays = document.getElementById('sun-rays');
+    if(sunRays){ sunRays.style.opacity=''; sunRays.style.transition='opacity 0.5s'; }
+    var soareText = svg.querySelector('text[y="82"]');
+    if(soareText){ soareText.textContent='SOARE · ENERGIE SOLARĂ'; soareText.style.fill=''; }
+
+    // aprinde panouri
+    svg.querySelectorAll('.panel-cell').forEach(function(c){
+      c.style.fill=''; c.style.animation=''; c.style.transition='fill 0.5s ease';
+    });
+
+    // aprinde irradianță
+    svg.querySelectorAll('.irr-line').forEach(function(l){
+      l.style.opacity=''; l.style.transition='opacity 0.5s';
+    });
+
+    // DC line și text revin
+    var dcLine = document.getElementById('dc-line');
+    if(dcLine){ dcLine.style.opacity=''; dcLine.style.transition='opacity 0.4s'; }
+    if(dcText){ dcText.style.opacity=''; }
+
+    // AC line normală revine
+    if(acLine){ acLine.style.opacity=''; }
+    if(acLabel){ acLabel.style.opacity=''; }
+
+    // ASCUNDE linia de descărcare
+    if(nightLine)  nightLine.classList.remove('show');
+    if(nightLabel) nightLabel.classList.remove('show');
+
+    // fermă și baterie revin normal
+    if(farmGroup){ farmGroup.style.filter=''; }
+    if(battBox){ battBox.style.filter=''; }
+
+    // particule revin
+    var pCanvas = document.getElementById('particles-canvas');
+    if(pCanvas) pCanvas.style.opacity='0.55';
+  }
+};
+
+
+
+/* ════════════════════════════════════════════════
+   SEAL FLY — patch update pentru animație sigilii
+════════════════════════════════════════════════ */
+(function(){
+  var lastScores = {};
+  setInterval(function(){
+    ['c1','c2','c3','c4'].forEach(function(k){
+      var el = document.getElementById(k+'-score');
+      if(!el) return;
+      var val = el.textContent;
+      if(val !== lastScores[k]){
+        lastScores[k] = val;
+        var seal = document.getElementById('seal-'+k);
+        if(seal){
+          seal.classList.remove('fly-anim');
+          void seal.offsetWidth; // reflow
+          seal.classList.add('fly-anim');
+          setTimeout(function(){ seal.classList.remove('fly-anim'); }, 600);
+        }
+      }
+    });
+  }, 120);
+})();
+
+
+/* ════════════════════════════════════════════════
+   SLIDER PUTERE MW — PANOURI VIZUALE
+════════════════════════════════════════════════ */
+(function(){
+  var slider  = document.getElementById('mw-slider');
+  var mwVal   = document.getElementById('mw-val');
+  var mwCells = document.getElementById('mw-cells');
+  var mwProd  = document.getElementById('mw-prod');
+  var mwGrant = document.getElementById('mw-grant');
+  var mwType  = document.getElementById('mw-type');
+  var svg     = document.getElementById('main-svg');
+  if(!slider || !svg) return;
+
+  // toate celulele în ordine
+  var allCells = Array.from(svg.querySelectorAll('.panel-cell'));
+  var totalCells = allCells.length; // 24
+
+  function fmt(n){ return Number(n).toLocaleString('ro-RO'); }
+
+  function updateMW(){
+    var mw = parseFloat(slider.value);
+
+    // display valoare
+    if(mwVal) mwVal.textContent = mw.toFixed(2).replace('.',',');
+
+    // câte celule active (proporțional 0.1MW = ~1 celulă, 2MW = 24)
+    var activeCnt = Math.max(1, Math.round((mw / 2) * totalCells));
+    if(mwCells) mwCells.textContent = activeCnt + ' / ' + totalCells;
+
+    // actualizare vizuală celule
+    allCells.forEach(function(cell, i){
+      if(i < activeCnt){
+        cell.style.fill = '';
+        cell.style.animation = '';
+        cell.style.opacity = '1';
+      } else {
+        cell.style.fill = 'rgba(80,80,80,0.06)';
+        cell.style.animation = 'none';
+        cell.style.opacity = '0.3';
+      }
+    });
+
+    // intensitate glow pe panou proporțional
+    var intensity = (mw / 2);
+    var panelOuter = svg.querySelector('rect[x="60"][y="96"]');
+    if(panelOuter){
+      panelOuter.style.strokeWidth = (1 + intensity * 1.5) + 'px';
+      panelOuter.style.stroke = intensity > 0.7
+        ? 'rgba(245,200,66,' + (0.6 + intensity*0.3) + ')'
+        : '#c8943a';
+    }
+
+    // producție și grant
+    var prod  = Math.round(mw * 1050);
+    var grant = mw <= 1
+      ? Math.min(mw * 650000, 650000)
+      : Math.min(mw * 550000, 20000000);
+    var type  = mw <= 1 ? '≤ 1 MW' : '> 1 MW';
+
+    if(mwProd)  mwProd.textContent  = fmt(prod) + ' MWh/an';
+    if(mwGrant) mwGrant.textContent = fmt(Math.round(grant)) + ' €';
+    if(mwType)  mwType.textContent  = type;
+
+    // dimensiune text putere instalată în SVG
+    var dimText = svg.querySelector('text[x="230"][y="250"]');
+    if(dimText){
+      dimText.textContent = mw <= 1
+        ? 'PUTERE INSTALATĂ  ≤ 1 MW'
+        : 'PUTERE INSTALATĂ  ' + mw.toFixed(2).replace('.',',') + ' MW  (> 1 MW)';
+    }
+
+    // DC line grosime proporțional
+    var dcLine = document.getElementById('dc-line');
+    if(dcLine){
+      dcLine.style.strokeWidth = (1.5 + intensity * 2) + 'px';
+      dcLine.style.opacity     = (0.5 + intensity * 0.5) + '';
+    }
+  }
+
+  slider.addEventListener('input', updateMW);
+  updateMW();
+})();
+
+/* ════════════════════════════════════════════════
+   TOOLTIP AVANSAT PE LINII ENERGIE
+════════════════════════════════════════════════ */
+(function(){
+  var wrap = document.querySelector('.diagram-wrap');
+  var svg  = document.getElementById('main-svg');
+  if(!wrap || !svg) return;
+
+  // create tooltip
+  var lt = document.createElement('div');
+  lt.className = 'line-tooltip';
+  wrap.appendChild(lt);
+
+  function showLineTip(html, e){
+    lt.innerHTML = html;
+    lt.classList.add('show');
+    posLt(e);
+  }
+  function hideLt(){ lt.classList.remove('show'); }
+  function posLt(e){
+    var r = wrap.getBoundingClientRect();
+    var x = e.clientX - r.left + 14;
+    var y = e.clientY - r.top  - 12;
+    if(x + 220 > wrap.offsetWidth) x = x - 240;
+    lt.style.left = x + 'px';
+    lt.style.top  = y + 'px';
+  }
+  wrap.addEventListener('mousemove', function(e){
+    if(lt.classList.contains('show')) posLt(e);
+  });
+
+  function getMW(){
+    var s = document.getElementById('mw-slider');
+    return s ? parseFloat(s.value) : 0.5;
+  }
+  function fmt(n){ return Number(n.toLocaleString ? n : n).toLocaleString('ro-RO'); }
+
+  // DC line hit
+  var dcHit = document.getElementById('dc-hit');
+  if(dcHit){
+    dcHit.addEventListener('mouseenter', function(e){
+      var mw   = getMW();
+      var kw   = Math.round(mw * 1000);
+      var autoV= document.getElementById('auto-slider') ? parseInt(document.getElementById('auto-slider').value) : 85;
+      showLineTip(
+        '<div class="lt-title">Flux DC · Panouri → Invertor</div>'+
+        '<div class="lt-val"><span class="lt-flow-dot" style="background:#e8b84b"></span>'+kw.toLocaleString('ro-RO')+' kW</div>'+
+        '<div style="font-size:9px;margin-top:4px;opacity:0.75">Curent continuu · tensiune ~600V DC</div>'+
+        '<div style="font-size:9px;opacity:0.75">Pierderi invertor est.: ~'+Math.round(kw*0.05)+' kW (5%)</div>',
+        e
+      );
+    });
+    dcHit.addEventListener('mouseleave', hideLt);
+  }
+
+  // AC line hit
+  var acHit = document.getElementById('ac-hit');
+  if(acHit){
+    acHit.addEventListener('mouseenter', function(e){
+      var mw   = getMW();
+      var kwAC = Math.round(mw * 1000 * 0.95);
+      var autoV= document.getElementById('auto-slider') ? parseInt(document.getElementById('auto-slider').value) : 85;
+      var kwConsum = Math.round(kwAC * autoV/100);
+      showLineTip(
+        '<div class="lt-title">Flux AC · Invertor → Fermă</div>'+
+        '<div class="lt-val"><span class="lt-flow-dot" style="background:#7ab83a"></span>'+kwAC.toLocaleString('ro-RO')+' kW</div>'+
+        '<div style="font-size:9px;margin-top:4px;opacity:0.75">Curent alternativ · 230/400V AC</div>'+
+        '<div style="font-size:9px;opacity:0.75">Consum propriu: ~'+kwConsum.toLocaleString('ro-RO')+' kW ('+autoV+'%)</div>',
+        e
+      );
+    });
+    acHit.addEventListener('mouseleave', hideLt);
+  }
+
+  // Battery line hit
+  var battHit = document.getElementById('batt-hit');
+  if(battHit){
+    battHit.addEventListener('mouseenter', function(e){
+      var mw     = getMW();
+      var kwBatt = Math.round(mw * 1000 * 0.75);
+      showLineTip(
+        '<div class="lt-title">Flux Stocare · Invertor → Baterii</div>'+
+        '<div class="lt-val"><span class="lt-flow-dot" style="background:#a0d050"></span>'+kwBatt.toLocaleString('ro-RO')+' kW</div>'+
+        '<div style="font-size:9px;margin-top:4px;opacity:0.75">Min. 75% din producție proprie</div>'+
+        '<div style="font-size:9px;opacity:0.75">Capacitate min. 0,2 MWh/MW instalat</div>',
+        e
+      );
+    });
+    battHit.addEventListener('mouseleave', hideLt);
+  }
+})();
+
+/* ════════════════════════════════════════════════
+   SHAKE + BANNER NEELIGIBIL — AUTOCONSUM < 70%
+════════════════════════════════════════════════ */
+(function(){
+  var autoSlider = document.getElementById('auto-slider');
+  var panel      = document.querySelector('.crit-panel.c2');
+  var banner     = document.getElementById('neeligibil-banner');
+  var sealC2     = document.getElementById('seal-c2');
+  if(!autoSlider || !panel) return;
+
+  var wasNeeligibil = false;
+
+  function checkEligibil(){
+    var v = parseInt(autoSlider.value);
+
+    if(v < 70){
+      if(!wasNeeligibil){
+        // prima dată — shake
+        panel.classList.remove('neeligibil');
+        void panel.offsetWidth; // reflow
+        panel.classList.add('neeligibil');
+        wasNeeligibil = true;
+        // after shake remove animation class but keep border
+        setTimeout(function(){ panel.style.animation = 'none'; }, 600);
+      }
+      if(banner) banner.classList.add('show');
+      // sigiliu devine roșu
+      if(sealC2){
+        sealC2.style.background = 'radial-gradient(circle at 35% 35%, #c85050, #8b2020)';
+        sealC2.querySelector('.seal-num').textContent = '✗';
+      }
+      // slider roșu
+      autoSlider.style.accentColor = '#c85050';
+    } else {
+      panel.classList.remove('neeligibil');
+      panel.style.animation = '';
+      wasNeeligibil = false;
+      if(banner) banner.classList.remove('show');
+      autoSlider.style.accentColor = '';
+      if(sealC2){
+        sealC2.style.background = '';
+      }
+    }
+  }
+
+  autoSlider.addEventListener('input', checkEligibil);
+
+  // patch slider min to allow going below 70 for demo
+  autoSlider.min = 50;
+  checkEligibil();
+})();
+
+
+/* ════════════════════════════════════════════════
+   INFOGRAFIC CIRCULAR — ANIMAȚIE FAZE
+════════════════════════════════════════════════ */
+(function(){
+  var nodes = [
+    document.getElementById('inf-n1'),
+    document.getElementById('inf-n2'),
+    document.getElementById('inf-n3'),
+    document.getElementById('inf-n4')
+  ];
+  var arcs = [
+    document.getElementById('inf-arc-1'),
+    document.getElementById('inf-arc-2'),
+    document.getElementById('inf-arc-3'),
+    document.getElementById('inf-arc-4')
+  ];
+  var centerIcon = document.getElementById('inf-center-icon');
+  var centerLbl  = document.getElementById('inf-center-lbl');
+
+  if(!nodes[0]) return;
+
+  var phases = [
+    { icon: '☀',  lbl: 'Producție',  cIcon: '⚡', cLbl: 'Energie\ngenerată' },
+    { icon: '🔋', lbl: 'Stocare',    cIcon: '💾', cLbl: 'Energie\nstocată' },
+    { icon: '🏭', lbl: 'Consum',     cIcon: '🔌', cLbl: 'Autoconsum\nagricol' },
+    { icon: '🌿', lbl: 'CO₂ redus',  cIcon: '🌱', cLbl: 'Emisii\nevitate' }
+  ];
+
+  var current = 0;
+  var INTERVAL = 1800; // ms per fază
+
+  function activate(idx){
+    // dezactivează toate
+    nodes.forEach(function(n){ if(n) n.classList.remove('active'); });
+    arcs.forEach(function(a){  if(a) a.classList.remove('active'); });
+
+    // activează nodul curent
+    if(nodes[idx]) nodes[idx].classList.add('active');
+
+    // activează arcul SPRE nodul curent (arcul anterior)
+    var arcIdx = (idx + 3) % 4; // arcul care duce SPRE idx
+    if(arcs[arcIdx]) arcs[arcIdx].classList.add('active');
+
+    // actualizează centrul
+    var p = phases[idx];
+    if(centerIcon){
+      centerIcon.style.transform = 'scale(0.5)';
+      centerIcon.style.opacity   = '0';
+      setTimeout(function(){
+        centerIcon.textContent   = p.cIcon;
+        centerIcon.style.transform = 'scale(1)';
+        centerIcon.style.opacity = '1';
+        centerIcon.style.transition = 'all 0.3s ease';
+      }, 200);
+    }
+    if(centerLbl){
+      var lines = p.cLbl.split('\n');
+      centerLbl.innerHTML = lines.join('<br>');
+    }
+  }
+
+  // pornire cu delay după loader
+  setTimeout(function(){
+    activate(0);
+    setInterval(function(){
+      current = (current + 1) % 4;
+      activate(current);
+    }, INTERVAL);
+  }, 800);
+
+  // hover pe noduri → pauza animației și activare manuală
+  nodes.forEach(function(node, i){
+    if(!node) return;
+    node.addEventListener('mouseenter', function(){
+      activate(i);
+    });
+  });
+})();
+
+
+/* ════════════════════════════════════════════════
+   SOUND ENGINE — Web Audio API
+   Toate sunetele generate sintetic, fără fișiere
+════════════════════════════════════════════════ */
+var SoundEngine = (function(){
+  var ctx = null;
+  var muted = false;
+  var unlocked = false;
+  var masterGain = null;
+
+  function getCtx(){
+    if(!ctx){
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      masterGain = ctx.createGain();
+      masterGain.gain.value = 0.55;
+      masterGain.connect(ctx.destination);
+    }
+    if(ctx.state === 'suspended') ctx.resume();
+    return ctx;
+  }
+
+  // helper — envelope
+  function env(gainNode, attack, sustain, release, peak){
+    var now = ctx.currentTime;
+    gainNode.gain.setValueAtTime(0, now);
+    gainNode.gain.linearRampToValueAtTime(peak || 0.5, now + attack);
+    gainNode.gain.setValueAtTime(peak || 0.5, now + attack + sustain);
+    gainNode.gain.exponentialRampToValueAtTime(0.0001, now + attack + sustain + release);
+  }
+
+  var sounds = {
+
+    /* ── ȘTAMPILĂ SIGILIU (thud + click) ── */
+    stamp: function(){
+      if(muted) return;
+      var c = getCtx();
+      // thud jos
+      var o1 = c.createOscillator();
+      var g1 = c.createGain();
+      o1.connect(g1); g1.connect(masterGain);
+      o1.type = 'sine'; o1.frequency.setValueAtTime(120, c.currentTime);
+      o1.frequency.exponentialRampToValueAtTime(40, c.currentTime + 0.12);
+      g1.gain.setValueAtTime(0.6, c.currentTime);
+      g1.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.14);
+      o1.start(c.currentTime); o1.stop(c.currentTime + 0.15);
+      // click scurt
+      var buf = c.createBuffer(1, c.sampleRate * 0.03, c.sampleRate);
+      var d   = buf.getChannelData(0);
+      for(var i=0;i<d.length;i++) d[i] = (Math.random()*2-1) * (1 - i/d.length);
+      var src = c.createBufferSource();
+      var g2  = c.createGain();
+      src.buffer = buf;
+      var filt = c.createBiquadFilter();
+      filt.type = 'highpass'; filt.frequency.value = 800;
+      src.connect(filt); filt.connect(g2); g2.connect(masterGain);
+      g2.gain.value = 0.3;
+      src.start(c.currentTime + 0.01);
+    },
+
+    /* ── PORNIRE SISTEM (hum electric crescând) ── */
+    boot: function(){
+      if(muted) return;
+      var c = getCtx();
+      // hum principal
+      var o1 = c.createOscillator();
+      var g1 = c.createGain();
+      o1.connect(g1); g1.connect(masterGain);
+      o1.type = 'sawtooth';
+      o1.frequency.setValueAtTime(55, c.currentTime);
+      o1.frequency.linearRampToValueAtTime(220, c.currentTime + 0.8);
+      g1.gain.setValueAtTime(0, c.currentTime);
+      g1.gain.linearRampToValueAtTime(0.25, c.currentTime + 0.4);
+      g1.gain.linearRampToValueAtTime(0.08, c.currentTime + 1.2);
+      g1.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 2.0);
+      o1.start(c.currentTime); o1.stop(c.currentTime + 2.0);
+      // harmonic
+      var o2 = c.createOscillator();
+      var g2 = c.createGain();
+      o2.connect(g2); g2.connect(masterGain);
+      o2.type = 'sine';
+      o2.frequency.setValueAtTime(110, c.currentTime);
+      o2.frequency.linearRampToValueAtTime(440, c.currentTime + 0.8);
+      g2.gain.setValueAtTime(0, c.currentTime);
+      g2.gain.linearRampToValueAtTime(0.12, c.currentTime + 0.4);
+      g2.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 1.5);
+      o2.start(c.currentTime); o2.stop(c.currentTime + 1.6);
+      // chord final optimist
+      var notes = [261.63, 329.63, 392.00]; // C4 E4 G4
+      notes.forEach(function(freq, i){
+        var o = c.createOscillator();
+        var g = c.createGain();
+        o.connect(g); g.connect(masterGain);
+        o.type = 'sine'; o.frequency.value = freq;
+        var t = c.currentTime + 0.75 + i*0.06;
+        g.gain.setValueAtTime(0, t);
+        g.gain.linearRampToValueAtTime(0.1, t + 0.08);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.6);
+        o.start(t); o.stop(t + 0.7);
+      });
+    },
+
+    /* ── OPRIRE SISTEM (hum descrescând) ── */
+    shutdown: function(){
+      if(muted) return;
+      var c = getCtx();
+      var o1 = c.createOscillator();
+      var g1 = c.createGain();
+      o1.connect(g1); g1.connect(masterGain);
+      o1.type = 'sawtooth';
+      o1.frequency.setValueAtTime(180, c.currentTime);
+      o1.frequency.exponentialRampToValueAtTime(30, c.currentTime + 0.9);
+      g1.gain.setValueAtTime(0.2, c.currentTime);
+      g1.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 1.0);
+      o1.start(c.currentTime); o1.stop(c.currentTime + 1.0);
+    },
+
+    /* ── MOD NOAPTE (ambient greieri) ── */
+    night: function(){
+      if(muted) return;
+      var c = getCtx();
+      // chord întunecat descendent
+      var notes = [493.88, 392.00, 293.66]; // B4 G4 D4
+      notes.forEach(function(freq, i){
+        var o = c.createOscillator();
+        var g = c.createGain();
+        o.connect(g); g.connect(masterGain);
+        o.type = 'sine'; o.frequency.value = freq;
+        var t = c.currentTime + i*0.1;
+        g.gain.setValueAtTime(0, t);
+        g.gain.linearRampToValueAtTime(0.09, t + 0.15);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 1.0);
+        o.start(t); o.stop(t + 1.1);
+      });
+      // greieri — oscillatori rapizi modulați
+      setTimeout(function(){
+        if(muted || !_nightMode) return;
+        for(var k=0; k<3; k++){
+          (function(delay){
+            setTimeout(function(){
+              if(muted || !_nightMode) return;
+              var c2 = getCtx();
+              var o = c2.createOscillator();
+              var lfo = c2.createOscillator();
+              var lfoGain = c2.createGain();
+              var g = c2.createGain();
+              lfo.frequency.value = 18 + Math.random()*6;
+              lfoGain.gain.value  = 400;
+              lfo.connect(lfoGain); lfoGain.connect(o.frequency);
+              o.type = 'sine';
+              o.frequency.value = 3200 + Math.random()*400;
+              o.connect(g); g.connect(masterGain);
+              g.gain.setValueAtTime(0, c2.currentTime);
+              g.gain.linearRampToValueAtTime(0.04, c2.currentTime + 0.05);
+              g.gain.setValueAtTime(0.04, c2.currentTime + 0.18);
+              g.gain.exponentialRampToValueAtTime(0.001, c2.currentTime + 0.25);
+              lfo.start(c2.currentTime); o.start(c2.currentTime);
+              lfo.stop(c2.currentTime + 0.3); o.stop(c2.currentTime + 0.3);
+            }, delay);
+          })(k * 220 + Math.random()*100);
+        }
+      }, 500);
+    },
+
+    /* ── MOD ZI (chord luminos de răsărit) ── */
+    sunrise: function(){
+      if(muted) return;
+      var c = getCtx();
+      var notes = [261.63, 329.63, 392.00, 523.25]; // C E G C5
+      notes.forEach(function(freq, i){
+        var o = c.createOscillator();
+        var g = c.createGain();
+        o.connect(g); g.connect(masterGain);
+        o.type = 'sine'; o.frequency.value = freq;
+        var t = c.currentTime + i*0.08;
+        g.gain.setValueAtTime(0, t);
+        g.gain.linearRampToValueAtTime(0.11, t + 0.1);
+        g.gain.setValueAtTime(0.11, t + 0.2);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.8 + i*0.1);
+        o.start(t); o.stop(t + 1.0);
+      });
+    },
+
+    /* ── SLIDER MW (buzz electric proporțional) ── */
+    sliderBuzz: function(val, max){
+      if(muted) return;
+      var c = getCtx();
+      var freq = 80 + (val/max) * 320;
+      var o = c.createOscillator();
+      var g = c.createGain();
+      o.connect(g); g.connect(masterGain);
+      o.type = 'sawtooth'; o.frequency.value = freq;
+      g.gain.setValueAtTime(0.06, c.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.08);
+      o.start(c.currentTime); o.stop(c.currentTime + 0.09);
+    },
+
+    /* ── TICK SIGILIU SCOR ── */
+    tick: function(){
+      if(muted) return;
+      var c = getCtx();
+      var o = c.createOscillator();
+      var g = c.createGain();
+      o.connect(g); g.connect(masterGain);
+      o.type = 'sine'; o.frequency.value = 880;
+      g.gain.setValueAtTime(0.15, c.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.06);
+      o.start(c.currentTime); o.stop(c.currentTime + 0.07);
+    },
+
+    /* ── HUM SOLAR AMBIENT (când sistemul e activ) ── */
+    _humNode: null,
+    _humGain: null,
+    startHum: function(){
+      if(muted) return;
+      if(this._humNode) return;
+      var c = getCtx();
+      this._humGain = c.createGain();
+      this._humGain.gain.value = 0;
+      this._humGain.connect(masterGain);
+      this._humNode = c.createOscillator();
+      this._humNode.type = 'sine';
+      this._humNode.frequency.value = 50;
+      this._humNode.connect(this._humGain);
+      this._humNode.start();
+      // fade in
+      this._humGain.gain.linearRampToValueAtTime(0.04, c.currentTime + 1.0);
+    },
+    stopHum: function(){
+      if(!this._humGain) return;
+      var c = getCtx();
+      this._humGain.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.8);
+      var hn = this._humNode, hg = this._humGain;
+      setTimeout(function(){ try{ hn.stop(); }catch(e){} }, 900);
+      this._humNode = null; this._humGain = null;
+    }
+  };
+
+  return {
+    play: function(name, a, b){ if(sounds[name]) sounds[name].call(sounds, a, b); },
+    startHum: function(){ sounds.startHum.call(sounds); },
+    stopHum:  function(){ sounds.stopHum.call(sounds); },
+    setMuted: function(m){ muted = m; if(m && sounds._humGain) sounds.stopHum.call(sounds); },
+    unlock: function(){ getCtx(); unlocked = true; }
+  };
+})();
+
+/* ── BUTON MUTE ── */
+window.toggleSound = function(){
+  var btn = document.getElementById('sound-toggle');
+  var isMuted = btn.classList.toggle('muted');
+  btn.textContent = isMuted ? '🔇' : '🔊';
+  SoundEngine.setMuted(isMuted);
+};
+
+/* ── UNLOCK la primul click ── */
+document.addEventListener('click', function unlockAudio(){
+  SoundEngine.unlock();
+  document.removeEventListener('click', unlockAudio);
+}, { once: true });
+
+/* ── PATCH bootSystem pentru sunet ── */
+var _origBoot = window.bootSystem;
+window.bootSystem = function(){
+  if(_systemOn){
+    SoundEngine.play('shutdown');
+    SoundEngine.stopHum();
+  } else {
+    SoundEngine.play('boot');
+    setTimeout(function(){ SoundEngine.startHum(); }, 1200);
+  }
+  _origBoot();
+};
+
+/* ── PATCH toggleDayNight pentru sunet ── */
+var _origDayNight = window.toggleDayNight;
+window.toggleDayNight = function(){
+  if(!_nightMode){
+    SoundEngine.play('night');
+    SoundEngine.stopHum();
+  } else {
+    SoundEngine.play('sunrise');
+    if(_systemOn) setTimeout(function(){ SoundEngine.startHum(); }, 600);
+  }
+  _origDayNight();
+};
+
+/* ── STAMP opts — sunet la click ── */
+document.querySelectorAll('.stamp-opt').forEach(function(opt){
+  opt.addEventListener('click', function(){
+    SoundEngine.play('stamp');
+  });
+});
+
+/* ── SIGILII — tick la schimbare scor ── */
+(function(){
+  var lastTotal = null;
+  setInterval(function(){
+    var el = document.getElementById('total-score');
+    if(!el) return;
+    var val = el.textContent;
+    if(val !== lastTotal && lastTotal !== null){
+      SoundEngine.play('tick');
+    }
+    lastTotal = val;
+  }, 150);
+})();
+
+/* ── SLIDER MW — buzz proporțional ── */
+(function(){
+  var slider = document.getElementById('mw-slider');
+  if(!slider) return;
+  var lastBuzz = 0;
+  slider.addEventListener('input', function(){
+    var now = Date.now();
+    if(now - lastBuzz > 80){ // throttle
+      SoundEngine.play('sliderBuzz', parseFloat(slider.value), parseFloat(slider.max));
+      lastBuzz = now;
+    }
+  });
+})();
+
+/* ── SLIDER aid/auto — tick discret ── */
+(function(){
+  ['aid-slider','auto-slider'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(!el) return;
+    var lastT = 0;
+    el.addEventListener('input', function(){
+      var now = Date.now();
+      if(now - lastT > 100){
+        SoundEngine.play('tick');
+        lastT = now;
+      }
+    });
+  });
+})();
+
+
+/* ════════════════════════════════════════════════
+   LINKEDIN — deep link mobil / web desktop
+════════════════════════════════════════════════ */
+window.openLinkedIn = function(e){
+  var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  var webUrl   = 'https://www.linkedin.com/in/lucian-vr%C3%AEnceanu-7913a8173';
+  var profileId = 'lucian-vr%C3%AEnceanu-7913a8173';
+
+  if(!isMobile){
+    // Desktop — deschide tab normal, lasă href să funcționeze
+    return true;
+  }
+
+  // Mobil — încearcă deep link LinkedIn app
+  e.preventDefault();
+
+  var isAndroid = /Android/i.test(navigator.userAgent);
+  var isIOS     = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  if(isIOS){
+    // iOS: linkedin://profile/ scheme
+    var appUrl = 'linkedin://profile/' + profileId;
+    // Încearcă să deschidă app-ul
+    var iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+    iframe.src = appUrl;
+    // Dacă app-ul nu e instalat, după 1.5s deschide browser
+    var timer = setTimeout(function(){
+      window.location.href = webUrl;
+    }, 1500);
+    // Dacă pagina devine ascunsă, app-ul s-a deschis
+    window.addEventListener('blur', function onBlur(){
+      clearTimeout(timer);
+      window.removeEventListener('blur', onBlur);
+    });
+    setTimeout(function(){ document.body.removeChild(iframe); }, 2000);
+
+  } else if(isAndroid){
+    // Android: intent URL pentru LinkedIn
+    var intentUrl = 'intent://profile/' + profileId +
+      '#Intent;package=com.linkedin.android;scheme=linkedin;' +
+      'S.browser_fallback_url=' + encodeURIComponent(webUrl) + ';end';
+    window.location.href = intentUrl;
+
+  } else {
+    // Alt mobil — web URL
+    window.open(webUrl, '_blank');
+  }
+};
+
+
+</script>
+</body>
+</html>
