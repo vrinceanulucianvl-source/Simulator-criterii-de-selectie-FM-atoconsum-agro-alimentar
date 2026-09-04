@@ -6,25 +6,26 @@ host (or `npx http-server portfolio`) — there is no framework and no build ste
 ```
 index.html        the whole site: markup, styles and behaviour
 vendor/           GSAP + ScrollTrigger, Lenis, Three.js (self-hosted, pinned)
-fonts/            fonts.css for self-hosting Archivo + Newsreader (see below)
+fonts/            Archivo + Newsreader, self-hosted woff2 (latin + latin-ext)
 assets/           optional local copies of the three cinematic clips
 ```
 
 ## Fonts
 
-The page loads Archivo and Newsreader from Google Fonts. `fonts/fonts.css` is
-the self-hosted equivalent, kept here because self-hosting is faster and drops
-a third-party request — but the eight `.woff2` binaries could not be committed
-through this session's GitHub path, so they are not in the repository.
+Archivo and Newsreader are self-hosted from `fonts/` — no third-party request,
+and the page renders correctly offline. Both include latin-ext, which the `î`
+and `â` in Vrînceanu need.
 
-To self-host: copy the `fonts/*.woff2` files from the delivered archive into
-`fonts/`, then in `index.html` replace the two Google Fonts tags with
+To load them from Google Fonts instead, replace the stylesheet link in the head
+with:
 
 ```html
-<link rel="stylesheet" href="fonts/fonts.css" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..900;1,62..125,400..900&family=Newsreader:ital,opsz,wght@0,6..72,200..500;1,6..72,200..500&display=swap" />
 ```
 
-Both routes render identically; only the source of the files changes.
+Keep the `wdth` axis in that URL — the display type relies on widths between
+70% and 88%, and a static build renders it wrong.
 
 ## The three cinematic clips
 
