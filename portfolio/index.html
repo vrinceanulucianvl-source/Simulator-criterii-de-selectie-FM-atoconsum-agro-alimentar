@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Lucian Vrînceanu — Battery Energy Storage · Strategic Energy Investments</title>
+<meta name="description" content="Investment strategy and execution for Battery Energy Storage Systems and renewable infrastructure — from European funding to utility-scale delivery." />
+<meta name="theme-color" content="#04070A" />
+<meta property="og:title" content="Lucian Vrînceanu — Battery Energy Storage · Strategic Energy Investments" />
+<meta property="og:description" content="I structure the investments that make energy projects possible." />
+<meta property="og:type" content="website" />
+<link rel="stylesheet" href="fonts/fonts.css" />
+
+<style>
+/* ══════════════════════════════════════════════════════════════
+   TOKENS
+   ══════════════════════════════════════════════════════════════ */
+:root{
+  --ink:        #04070A;
+  --ink-raise:  #080D11;
+  --ink-glass:  rgba(12,19,24,.55);
+  --cream:      #EFE9DD;
+  --cream-mid:  rgba(239,233,221,.66);
+  --cream-low:  rgba(239,233,221,.34);
+  --cream-dim:  rgba(239,233,221,.18);
+  --hair:       rgba(239,233,221,.13);
+  --em:         #17E4A0;
+  --em-deep:    #0A5B45;
+  --em-glow:    rgba(23,228,160,.42);
+
+  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --text:    "Newsreader", Georgia, "Times New Roman", serif;
+
+  --gut: clamp(20px, 4.4vw, 84px);
+  --rule: 1px solid var(--hair);
+  --ease: cubic-bezier(.16,.84,.28,1);
+  --ease-io: cubic-bezier(.62,.02,.24,1);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   BASE
+   ══════════════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--ink); color:var(--cream);
+  font-family:var(--text); font-size:17px; line-height:1.62;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+body.is-locked{overflow:hidden;height:100vh}
+img,video,canvas{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--em);color:#02120C}
+:focus-visible{outline:2px solid var(--em);outline-offset:4px;border-radius:2px}
+
+h1,h2,h3,h4,.dsp{
+  font-family:var(--display); font-weight:800;
+  font-stretch:74%; letter-spacing:-.018em; line-height:.86;
+  margin:0; text-transform:uppercase;
+}
+.mono{
+  font-family:var(--display); font-stretch:100%; font-weight:500;
+  font-size:11px; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--cream-low);
+}
+.wrap{max-width:1560px;margin-inline:auto;padding-inline:var(--gut)}
+.sec{padding-block:clamp(110px,15vw,230px)}
+#about{padding-bottom:clamp(60px,7vw,110px)}
+.sec--tight{padding-block:clamp(70px,9vw,140px)}
+
+/* ── film grain + vignette ─────────────────────────────────── */
+#grain,#vig{position:fixed;inset:-40px;pointer-events:none;z-index:900}
+#grain{
+  background-image:var(--grain);
+  opacity:.055; mix-blend-mode:overlay;
+  animation:grainShift 700ms steps(1) infinite;
+}
+@keyframes grainShift{
+  0%  {transform:translate(0,0)}      20%{transform:translate(-3%,2%)}
+  40% {transform:translate(2%,-3%)}   60%{transform:translate(-2%,-2%)}
+  80% {transform:translate(3%,1%)}    100%{transform:translate(0,0)}
+}
+#vig{
+  z-index:899;
+  background:radial-gradient(120% 90% at 50% 45%,transparent 42%,rgba(0,0,0,.5) 100%);
+}
+@media (prefers-reduced-motion:reduce){ #grain{animation:none} }
+
+/* ── reveal primitive ─────────────────────────────────────── */
+.rv{opacity:0;transform:translateY(26px)}
+.ch,.w i,[data-splitlines] span i{display:inline-block;will-change:transform}
+.ln{display:block;overflow:hidden}
+
+/* ══════════════════════════════════════════════════════════════
+   PRELOADER
+   ══════════════════════════════════════════════════════════════ */
+#pre{
+  position:fixed;inset:0;z-index:1000;background:var(--ink);
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:var(--gut);gap:26px;
+}
+#pre .bar{height:1px;background:var(--hair);position:relative;overflow:hidden}
+#pre .bar i{position:absolute;inset:0;width:0;background:var(--em);box-shadow:0 0 22px var(--em-glow)}
+#pre .row{display:flex;justify-content:space-between;align-items:flex-end}
+#pre .nm{font-family:var(--display);font-weight:800;font-stretch:74%;
+  text-transform:uppercase;line-height:.84;font-size:clamp(34px,7vw,92px)}
+#pre .pct{font-family:var(--display);font-stretch:100%;font-weight:500;
+  font-size:12px;letter-spacing:.2em;color:var(--cream-low)}
+
+/* ══════════════════════════════════════════════════════════════
+   NAV
+   ══════════════════════════════════════════════════════════════ */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:800;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px var(--gut);
+  transition:background .5s var(--ease),backdrop-filter .5s var(--ease),border-color .5s;
+  border-bottom:1px solid transparent;
+}
+#nav.solid{
+  background:rgba(4,7,10,.72);backdrop-filter:blur(16px) saturate(140%);
+  -webkit-backdrop-filter:blur(16px) saturate(140%);
+  border-bottom-color:var(--hair);
+}
+#nav .mark{font-family:var(--display);font-weight:800;font-stretch:88%;
+  letter-spacing:.02em;font-size:19px;text-transform:uppercase}
+#nav .mark em{color:var(--em);font-style:normal}
+#nav ul{display:flex;gap:clamp(16px,2.4vw,40px);list-style:none;margin:0;padding:0}
+#nav ul a{
+  font-family:var(--display);font-stretch:100%;font-weight:500;font-size:11px;
+  letter-spacing:.19em;text-transform:uppercase;color:var(--cream-mid);
+  position:relative;padding-block:6px;transition:color .35s var(--ease);
+}
+#nav ul a::after{
+  content:'';position:absolute;left:0;right:100%;bottom:0;height:1px;
+  background:var(--em);transition:right .45s var(--ease);
+}
+#nav ul a:hover{color:var(--cream)}
+#nav ul a:hover::after{right:0}
+@media (max-width:820px){ #nav ul{display:none} }
+
+/* grain texture (inline SVG turbulence) */
+:root{
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ══════════════════════════════════════════════════════════════
+   HERO
+   ══════════════════════════════════════════════════════════════ */
+#hero{height:420vh;position:relative}
+.hero-pin{position:sticky;top:0;height:100vh;overflow:hidden}
+#heroStage{position:absolute;inset:0}
+#heroStage video,#heroStage canvas{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+}
+#heroStage::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(to top,var(--ink) 2%,rgba(4,7,10,.34) 34%,rgba(4,7,10,.12) 58%,rgba(4,7,10,.66) 100%),
+    radial-gradient(90% 70% at 62% 42%,transparent 30%,rgba(4,7,10,.62) 100%);
+}
+.hero-type{
+  position:absolute;left:var(--gut);right:var(--gut);bottom:clamp(78px,11vh,132px);
+  z-index:3;
+}
+.hero-name{
+  font-size:clamp(58px,13.2vw,232px);font-stretch:70%;letter-spacing:-.028em;
+  line-height:.88;
+}
+.hero-name .ln{
+  /* Î in VRÎNCEANU carries a circumflex above cap height; the rise-up mask
+     would shear it off, so open the box upward and pull the layout back. */
+  padding-top:.18em; margin-top:-.18em;
+}
+.hero-name .ch{
+  transform:translateY(112%) rotate(4deg);
+}
+.hero-sub{
+  display:flex;flex-wrap:wrap;gap:10px 30px;margin-top:clamp(22px,3vw,42px);
+  font-family:var(--display);font-stretch:100%;font-weight:500;font-size:11px;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--cream-mid);
+}
+.hero-sub span{display:flex;align-items:center;gap:12px;opacity:0}
+.hero-sub span::before{content:'';width:5px;height:5px;background:var(--em);
+  border-radius:50%;box-shadow:0 0 12px var(--em-glow)}
+.hero-state{
+  margin:clamp(20px,2.6vw,34px) 0 0;max-width:56ch;
+  font-size:clamp(15px,1.32vw,20px);line-height:1.6;color:var(--cream-mid);
+  opacity:0;
+}
+.hero-cue{
+  position:absolute;right:var(--gut);bottom:clamp(78px,11vh,132px);z-index:3;
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+}
+.hero-cue i{display:block;width:1px;height:64px;background:linear-gradient(var(--em),transparent);
+  animation:cueDrop 2.1s var(--ease-io) infinite}
+@keyframes cueDrop{0%{transform:scaleY(0);transform-origin:top}
+  55%{transform:scaleY(1);transform-origin:top}
+  56%{transform:scaleY(1);transform-origin:bottom}
+  100%{transform:scaleY(0);transform-origin:bottom}}
+@media (max-width:820px){ .hero-cue{display:none} }
+
+/* ══════════════════════════════════════════════════════════════
+   ABOUT
+   ══════════════════════════════════════════════════════════════ */
+.about-grid{display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);
+  gap:clamp(34px,6vw,110px);align-items:start}
+#about h2{font-size:clamp(34px,5.4vw,92px);max-width:13ch}
+.about-body p{margin:0 0 1.35em;font-size:clamp(16px,1.42vw,21px);color:var(--cream-mid)}
+.about-body p strong{color:var(--cream);font-weight:500}
+.about-body p:first-child{font-size:clamp(19px,1.9vw,29px);line-height:1.48;color:var(--cream)}
+.role-line{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px}
+.role-line b{
+  font-family:var(--display);font-stretch:100%;font-weight:500;font-size:10.5px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--cream-mid);
+  border:var(--rule);border-radius:999px;padding:9px 17px;
+}
+@media (max-width:900px){ .about-grid{grid-template-columns:1fr} }
+
+/* ══════════════════════════════════════════════════════════════
+   IMPACT
+   ══════════════════════════════════════════════════════════════ */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);
+  border-block:var(--rule)}
+.stat{background:var(--ink);padding:clamp(30px,3.6vw,62px) clamp(18px,2vw,36px)}
+.fig{font-family:var(--display);font-weight:800;font-stretch:70%;
+  font-size:clamp(40px,6.4vw,116px);line-height:.84;letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums}
+.stat--hero{background:var(--ink-raise)}
+.stat--hero .fig{color:var(--em);text-shadow:0 0 44px rgba(23,228,160,.28)}
+.stat--word .fig{font-size:clamp(26px,3.1vw,54px);line-height:.92}
+.lab{margin-top:16px;font-family:var(--display);font-stretch:100%;font-weight:500;
+  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream-low)}
+@media (max-width:860px){ .stats{grid-template-columns:repeat(2,1fr)} }
+
+/* ══════════════════════════════════════════════════════════════
+   EXPERTISE
+   ══════════════════════════════════════════════════════════════ */
+#expertise{height:380vh;position:relative}
+.exp-pin{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center}
+.exp-media{position:absolute;inset:0}
+.exp-media video,.exp-media canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.exp-media::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(100deg,var(--ink) 6%,rgba(4,7,10,.9) 34%,rgba(4,7,10,.42) 76%)}
+.exp-inner{position:relative;z-index:2;width:100%}
+.exp-head{font-size:clamp(30px,4.6vw,78px);max-width:14ch;margin-bottom:clamp(30px,4vw,64px)}
+.pillars{position:relative;max-width:660px;min-height:270px}
+.pillar{position:absolute;inset:0;opacity:0;pointer-events:none}
+.pillar .idx{font-family:var(--display);font-stretch:100%;font-weight:500;font-size:11px;
+  letter-spacing:.24em;color:var(--em);display:block;margin-bottom:20px}
+.pillar h3{font-size:clamp(24px,3.1vw,52px);margin-bottom:20px;max-width:15ch}
+.pillar p{margin:0;color:var(--cream-mid);font-size:clamp(15px,1.36vw,20px);max-width:52ch}
+.exp-rail{position:absolute;left:var(--gut);bottom:clamp(40px,6vh,74px);
+  display:flex;gap:10px;z-index:3}
+.exp-rail i{width:52px;height:2px;background:var(--cream-dim);position:relative;overflow:hidden}
+.exp-rail i b{position:absolute;inset:0;width:0;background:var(--em);display:block}
+
+/* ══════════════════════════════════════════════════════════════
+   WORK
+   ══════════════════════════════════════════════════════════════ */
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.6vw,26px);
+  margin-top:clamp(44px,6vw,86px)}
+.card{
+  position:relative;padding:clamp(26px,2.6vw,44px);border:var(--rule);
+  background:var(--ink-glass);backdrop-filter:blur(11px);-webkit-backdrop-filter:blur(11px);
+  min-height:clamp(340px,34vw,470px);display:flex;flex-direction:column;
+  transform-style:preserve-3d;transition:border-color .5s var(--ease),background .5s var(--ease);
+  overflow:hidden;
+}
+.card::before{
+  content:'';position:absolute;inset:0;opacity:0;transition:opacity .5s var(--ease);
+  background:radial-gradient(340px circle at var(--mx,50%) var(--my,50%),
+    rgba(23,228,160,.16),transparent 62%);
+}
+.card:hover,.card:focus-visible{border-color:rgba(23,228,160,.44);background:rgba(14,24,29,.72)}
+.card:hover::before,.card:focus-visible::before{opacity:1}
+.card>*{position:relative;z-index:1;transform:translateZ(28px)}
+.card .num{font-family:var(--display);font-stretch:100%;font-weight:500;font-size:11px;
+  letter-spacing:.24em;color:var(--em)}
+.card h3{font-size:clamp(21px,2vw,34px);margin:22px 0 16px;max-width:14ch}
+.card p{margin:0;color:var(--cream-mid);font-size:15.5px}
+.card ul{list-style:none;margin:auto 0 0;padding:24px 0 0;display:flex;flex-wrap:wrap;gap:7px}
+.card li{
+  font-family:var(--display);font-stretch:100%;font-weight:500;font-size:10px;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--cream-low);
+  border:1px solid var(--cream-dim);border-radius:999px;padding:6px 12px;
+}
+@media (max-width:980px){ .proj-grid{grid-template-columns:1fr} .card{min-height:0} }
+
+/* ══════════════════════════════════════════════════════════════
+   BESS — signature 3D chapter
+   ══════════════════════════════════════════════════════════════ */
+#bess{height:640vh;position:relative;background:#020507}
+.bess-pin{position:sticky;top:0;height:100vh;overflow:hidden}
+#bessCanvas{position:absolute;inset:0;width:100%;height:100%}
+.bess-ui{position:absolute;inset:0;pointer-events:none;
+  padding:calc(var(--gut) + 46px) var(--gut) var(--gut);
+  display:flex;flex-direction:column;justify-content:space-between}
+.bess-head{max-width:640px}
+.bess-head h2{font-size:clamp(34px,6.4vw,116px);line-height:.84}
+.bess-head h2 span{display:block;overflow:hidden}
+.bess-head h2 span i{display:inline-block;font-style:normal;transform:translateY(104%)}
+.bess-head p{margin:24px 0 0;max-width:44ch;color:var(--cream-mid);
+  font-size:clamp(15px,1.3vw,19px)}
+.bess-services{
+  position:absolute;right:var(--gut);top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;align-items:flex-end;gap:12px;text-align:right;
+}
+.bess-services b{
+  font-family:var(--display);font-stretch:100%;font-weight:500;font-size:11px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--cream-dim);
+  transition:color .5s var(--ease),transform .5s var(--ease);
+}
+.bess-services b.on{color:var(--em);transform:translateX(-8px)}
+.bess-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:40px}
+.bess-step{max-width:44ch}
+.bess-step .n{font-family:var(--display);font-stretch:100%;font-weight:500;font-size:11px;
+  letter-spacing:.24em;color:var(--em);font-variant-numeric:tabular-nums}
+.bess-step .t{font-family:var(--display);font-weight:800;font-stretch:74%;
+  text-transform:uppercase;font-size:clamp(20px,2.5vw,40px);line-height:.92;margin-top:14px}
+.bess-step .d{margin-top:12px;color:var(--cream-mid);font-size:15.5px}
+.bess-prog{width:min(38vw,420px);height:1px;background:var(--hair);position:relative}
+.bess-prog i{position:absolute;inset:0;width:0;background:var(--em);
+  box-shadow:0 0 18px var(--em-glow);display:block}
+@media (max-width:820px){
+  .bess-ui{padding-top:calc(var(--gut) + 74px)}
+  .bess-services{display:none}
+  .bess-foot{flex-direction:column;align-items:flex-start;gap:20px}
+  .bess-prog{width:100%}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CAPITAL
+   ══════════════════════════════════════════════════════════════ */
+.life{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);
+  gap:clamp(34px,6vw,110px);align-items:start}
+#capital h2{font-size:clamp(32px,5vw,86px);max-width:11ch}
+.lede{margin:28px 0 0;color:var(--cream-mid);font-size:clamp(16px,1.4vw,21px);max-width:44ch}
+.chain-row{
+  position:relative;display:grid;grid-template-columns:52px minmax(0,1fr) minmax(0,1fr);
+  gap:18px;align-items:baseline;padding:clamp(16px,1.7vw,26px) 0;border-top:var(--rule);
+}
+.chain-row:last-child{border-bottom:var(--rule)}
+.chain-row .k{font-family:var(--display);font-stretch:100%;font-weight:500;font-size:11px;
+  letter-spacing:.2em;color:var(--em)}
+.chain-row .v{font-family:var(--display);font-weight:800;font-stretch:74%;
+  text-transform:uppercase;font-size:clamp(16px,1.75vw,28px);letter-spacing:-.01em}
+.chain-row .m{color:var(--cream-low);font-size:14.5px}
+.chain-row .fill{position:absolute;left:0;top:-1px;height:1px;width:0;background:var(--em);display:block}
+@media (max-width:900px){
+  .life{grid-template-columns:1fr}
+  .chain-row{grid-template-columns:44px 1fr;gap:10px}
+  .chain-row .m{grid-column:2}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TIMELINE
+   ══════════════════════════════════════════════════════════════ */
+#track{height:340vh;position:relative}
+.track-pin{position:sticky;top:0;height:100vh;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;gap:clamp(30px,5vh,64px)}
+.track-head{padding-inline:var(--gut)}
+.track-head h2{font-size:clamp(30px,4.4vw,74px);max-width:14ch}
+.rail{display:flex;gap:clamp(16px,2vw,34px);padding-inline:var(--gut);will-change:transform}
+.stop{
+  flex:0 0 clamp(260px,25vw,400px);border-top:var(--rule);padding-top:26px;
+}
+.stop .yr{font-family:var(--display);font-stretch:100%;font-weight:500;font-size:11px;
+  letter-spacing:.24em;color:var(--em)}
+.stop h3{font-size:clamp(20px,2.1vw,34px);margin:18px 0 14px}
+.stop p{margin:0;color:var(--cream-mid);font-size:15px}
+
+/* ══════════════════════════════════════════════════════════════
+   STATEMENT
+   ══════════════════════════════════════════════════════════════ */
+#stmt{text-align:left}
+.stmt-a{font-family:var(--display);font-weight:800;font-stretch:74%;text-transform:uppercase;
+  font-size:clamp(20px,3vw,50px);color:var(--cream-low);margin:0 0 clamp(14px,1.6vw,26px);
+  line-height:.9}
+.stmt-b{font-size:clamp(34px,7.6vw,140px);line-height:.85;max-width:19ch}
+.stmt-b em{font-style:normal;color:var(--em)}
+.stmt-b .w{display:inline-block;overflow:hidden;padding-bottom:.06em}
+.stmt-b .w i{font-style:normal;transform:translateY(104%)}
+
+/* ══════════════════════════════════════════════════════════════
+   FINALE + FOOTER
+   ══════════════════════════════════════════════════════════════ */
+#finale{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+#finale video,#finale canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#finale::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(to top,var(--ink) 4%,rgba(4,7,10,.74) 46%,rgba(4,7,10,.5) 100%)}
+.fin-in{position:relative;z-index:2;width:100%;padding:clamp(80px,11vh,140px) var(--gut)}
+.fin-in h2{font-size:clamp(40px,9.4vw,178px);line-height:.83}
+.fin-in h2 span{display:block;overflow:hidden}
+.fin-in h2 span i{display:inline-block;font-style:normal;transform:translateY(104%)}
+.fin-in p{margin:clamp(24px,3vw,42px) 0 0;max-width:52ch;color:var(--cream-mid);
+  font-size:clamp(16px,1.4vw,21px)}
+.cta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:clamp(32px,4vw,58px)}
+.btn{
+  position:relative;display:inline-flex;align-items:center;gap:13px;
+  font-family:var(--display);font-stretch:100%;font-weight:600;font-size:11.5px;
+  letter-spacing:.2em;text-transform:uppercase;
+  padding:19px 34px;border-radius:999px;background:var(--em);color:#02120C;
+  overflow:hidden;will-change:transform;
+}
+.btn span{position:relative;z-index:1}
+.btn .dot{width:6px;height:6px;border-radius:50%;background:#02120C;position:relative;z-index:1}
+.btn::before{content:'';position:absolute;inset:0;background:var(--cream);
+  transform:translateY(101%);transition:transform .52s var(--ease)}
+.btn:hover::before{transform:translateY(0)}
+.btn--ghost{background:transparent;color:var(--cream);border:1px solid var(--cream-dim)}
+.btn--ghost::before{background:var(--cream)}
+.btn--ghost:hover{color:#02120C}
+
+footer{padding:clamp(60px,8vw,120px) var(--gut) 40px;border-top:var(--rule)}
+.foot-grid{display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;align-items:flex-end}
+.foot-links{display:flex;flex-wrap:wrap;gap:clamp(18px,2.6vw,46px)}
+.foot-links a{font-family:var(--display);font-stretch:100%;font-weight:500;font-size:11.5px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--cream-mid);
+  position:relative;padding-bottom:5px;transition:color .35s}
+.foot-links a::after{content:'';position:absolute;left:0;right:100%;bottom:0;height:1px;
+  background:var(--em);transition:right .45s var(--ease)}
+.foot-links a:hover{color:var(--cream)}
+.foot-links a:hover::after{right:0}
+.foot-meta{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
+  margin-top:clamp(48px,7vw,96px);padding-top:24px;border-top:var(--rule);
+  font-family:var(--display);font-stretch:100%;font-weight:500;font-size:10.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--cream-low)}
+</style>
+</head>
+<body>
+<div id="grain"></div>
+<div id="vig"></div>
+
+<!-- ══ PRELOADER ══ -->
+<div id="pre">
+  <div class="bar"><i></i></div>
+  <div class="row">
+    <div class="nm">Lucian<br>Vrînceanu</div>
+    <div class="pct">0</div>
+  </div>
+</div>
+
+<!-- ══ NAV ══ -->
+<nav id="nav">
+  <a class="mark" href="#hero">LV<em>.</em></a>
+  <ul>
+    <li><a href="#about">Profile</a></li>
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#bess">Storage</a></li>
+    <li><a href="#capital">Capital</a></li>
+    <li><a href="#finale">Contact</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<!-- ══ HERO ══════════════════════════════════════════════════ -->
+<section id="hero">
+ <div class="hero-pin">
+  <div id="heroStage">
+    <canvas id="heroFallback"></canvas>
+    <video id="heroVideo" muted playsinline preload="auto"></video>
+  </div>
+
+  <div class="hero-type">
+    <h1 class="hero-name">
+      <span class="ln" data-split>Lucian</span>
+      <span class="ln" data-split>Vrînceanu</span>
+    </h1>
+    <div class="hero-sub">
+      <span>Battery Energy Storage</span>
+      <span>Strategic Energy Investments</span>
+      <span>Renewable Infrastructure</span>
+    </div>
+    <p class="hero-state">I lead the investment strategy and execution of complex Battery Energy Storage and renewable infrastructure projects — from European funding to utility-scale implementation.</p>
+  </div>
+
+  <div class="hero-cue"><span class="mono">Scroll</span><i></i></div>
+ </div>
+</section>
+
+<!-- ══ ABOUT ═════════════════════════════════════════════════ -->
+<section class="sec wrap" id="about">
+  <div class="about-grid">
+    <div>
+      <div class="mono rv" style="margin-bottom:26px">Profile</div>
+      <h2 class="rv">Engineering the future of energy storage</h2>
+    </div>
+    <div class="about-body">
+      <p class="rv">Over ten years in the energy sector, concentrated on <strong>Battery Energy Storage Systems</strong>, strategic investment management, European funding and complex renewable infrastructure.</p>
+      <p class="rv">My work covers the full investment lifecycle — identifying the opportunity, shaping the investment strategy, testing feasibility, securing financing and funding, running procurement, and carrying the project through implementation to delivery.</p>
+      <p class="rv">Most of that work sits where three disciplines meet: the engineering of storage assets, the financial structure that makes them viable, and the regulatory and funding frameworks that decide whether they get built at all. I coordinate energy investments end to end, including utility-scale storage developments delivered under confidentiality.</p>
+      <div class="role-line rv">
+        <b>Energy Investment Strategist</b><b>BESS Specialist</b><b>Project Leader</b>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ IMPACT ════════════════════════════════════════════════ -->
+<section class="sec sec--tight wrap" id="impact">
+  <div class="stats">
+    <div class="stat rv"><div class="fig" data-count="10" data-suffix="+">0</div><div class="lab">Years of experience</div></div>
+    <div class="stat stat--hero rv"><div class="fig" data-count="30" data-prefix="€" data-suffix="M">€0M</div><div class="lab">Investment value coordinated</div></div>
+    <div class="stat rv"><div class="fig" data-count="40" data-suffix="+">0</div><div class="lab">Energy projects</div></div>
+    <div class="stat stat--word rv"><div class="fig">Utility<br>scale</div><div class="lab">BESS expertise</div></div>
+  </div>
+</section>
+
+<!-- ══ EXPERTISE ═════════════════════════════════════════════ -->
+<section id="expertise">
+  <div class="exp-pin">
+    <div class="exp-media">
+      <canvas id="expFallback"></canvas>
+      <video id="expVideo" muted playsinline loop preload="auto"></video>
+    </div>
+    <div class="exp-inner wrap">
+      <div class="mono" style="margin-bottom:22px">Core expertise</div>
+      <h2 class="exp-head">Where storage, capital and delivery converge</h2>
+      <div class="pillars">
+        <article class="pillar" data-p="0">
+          <span class="idx">01</span>
+          <h3>Battery Energy Storage Systems</h3>
+          <p>Utility-scale BESS strategy, investment planning, grid integration, revenue modelling, project development and implementation management.</p>
+        </article>
+        <article class="pillar" data-p="1">
+          <span class="idx">02</span>
+          <h3>Strategic Investment Management</h3>
+          <p>Complex energy infrastructure investments carried from concept and feasibility through financing, procurement, implementation and delivery.</p>
+        </article>
+        <article class="pillar" data-p="2">
+          <span class="idx">03</span>
+          <h3>Renewable Energy Infrastructure</h3>
+          <p>Industrial photovoltaic and hybrid systems that support long-term energy transition strategies and reinforce the storage case.</p>
+        </article>
+      </div>
+    </div>
+    <div class="exp-rail"><i><b></b></i><i><b></b></i><i><b></b></i></div>
+  </div>
+</section>
+
+<!-- ══ PROJECTS ══════════════════════════════════════════════ -->
+<section class="sec wrap" id="work">
+  <div class="mono rv">Selected work</div>
+  <h2 class="rv" style="font-size:clamp(32px,4.6vw,74px);margin-top:22px;max-width:16ch">Assets built from strategy, not from templates</h2>
+  <div class="proj-grid">
+    <article class="card rv" tabindex="0">
+      <div class="num">01</div>
+      <h3>Utility-scale battery energy storage</h3>
+      <p>Investment management and strategic coordination for flagship grid-scale storage developments.</p>
+      <ul><li>Investment strategy</li><li>Project structuring</li><li>Financial modelling</li><li>Technical coordination</li><li>Implementation</li><li>Market strategy</li></ul>
+    </article>
+    <article class="card rv" tabindex="0">
+      <div class="num">02</div>
+      <h3>Industrial energy infrastructure</h3>
+      <p>Large-scale hybrid photovoltaic and battery storage investments for industrial operations.</p>
+      <ul><li>Energy autonomy</li><li>Storage</li><li>Cost optimisation</li><li>Decarbonisation</li><li>Industrial strategy</li></ul>
+    </article>
+    <article class="card rv" tabindex="0">
+      <div class="num">03</div>
+      <h3>European funding &amp; energy finance</h3>
+      <p>Competitive funding and financing structures for transformational energy infrastructure.</p>
+      <ul><li>Funding strategy</li><li>Eligibility</li><li>Scoring</li><li>Blended finance</li><li>Compliance</li></ul>
+    </article>
+  </div>
+  <p class="mono" style="margin-top:26px">Client names, capacities and financial figures withheld under confidentiality.</p>
+</section>
+
+<!-- ══ BESS ══════════════════════════════════════════════════ -->
+<section id="bess">
+  <div class="bess-pin">
+    <canvas id="bessCanvas"></canvas>
+    <div class="bess-ui">
+      <div class="bess-head">
+        <div class="mono" style="margin-bottom:18px">Signature chapter</div>
+        <h2><span><i>Battery is</i></span><span><i>the new grid</i></span></h2>
+        <p>Storage stopped being an accessory to generation. Assembled correctly, it is the balancing layer the network runs on.</p>
+      </div>
+
+      <div class="bess-services">
+        <b data-svc="0">Energy arbitrage</b>
+        <b data-svc="1">Frequency regulation</b>
+        <b data-svc="2">Grid balancing</b>
+        <b data-svc="3">Peak shaving</b>
+        <b data-svc="4">Renewable integration</b>
+        <b data-svc="5">Hybrid PV + BESS</b>
+        <b data-svc="6">Market optimisation</b>
+      </div>
+
+      <div class="bess-foot">
+        <div class="bess-step">
+          <div class="n" id="bessN">01 / 10</div>
+          <div class="t" id="bessT">Battery containers</div>
+          <div class="d" id="bessD">Enclosures land on the pad and set the footprint of the asset.</div>
+        </div>
+        <div class="bess-prog"><i id="bessProg"></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CAPITAL ═══════════════════════════════════════════════ -->
+<section class="sec wrap" id="capital">
+  <div class="life">
+    <div>
+      <div class="mono rv" style="margin-bottom:26px">Investment management</div>
+      <h2 class="rv">From capital to infrastructure</h2>
+      <p class="lede rv">An investment thesis only becomes an energy asset if capital, technology, funding and execution stay connected at every stage. Losing one of them is how projects stall.</p>
+    </div>
+    <div class="chain">
+      <div class="chain-row rv"><span class="k">01</span><span class="v">Opportunity</span><span class="m">Screening, siting, grid position</span><i class="fill"></i></div>
+      <div class="chain-row rv"><span class="k">02</span><span class="v">Feasibility</span><span class="m">Technical and commercial validation</span><i class="fill"></i></div>
+      <div class="chain-row rv"><span class="k">03</span><span class="v">Investment strategy</span><span class="m">Structure, revenue stack, risk</span><i class="fill"></i></div>
+      <div class="chain-row rv"><span class="k">04</span><span class="v">Funding &amp; financing</span><span class="m">Grants, debt, blended capital</span><i class="fill"></i></div>
+      <div class="chain-row rv"><span class="k">05</span><span class="v">Technical development</span><span class="m">Design, permitting, connection</span><i class="fill"></i></div>
+      <div class="chain-row rv"><span class="k">06</span><span class="v">Procurement</span><span class="m">Tendering and supplier contracts</span><i class="fill"></i></div>
+      <div class="chain-row rv"><span class="k">07</span><span class="v">Implementation</span><span class="m">Construction and commissioning</span><i class="fill"></i></div>
+      <div class="chain-row rv"><span class="k">08</span><span class="v">Operational asset</span><span class="m">Revenue, performance, reporting</span><i class="fill"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TIMELINE ══════════════════════════════════════════════ -->
+<section id="track">
+  <div class="track-pin">
+    <div class="track-head">
+      <div class="mono" style="margin-bottom:18px">Trajectory</div>
+      <h2>How the practice was built</h2>
+    </div>
+    <div class="rail" id="rail">
+      <article class="stop"><div class="yr">Stage 01</div><h3>Technical consulting</h3><p>Engineering fundamentals and the discipline of getting specifications right the first time.</p></article>
+      <article class="stop"><div class="yr">Stage 02</div><h3>Renewable energy</h3><p>Photovoltaic development, from rooftop industrial systems to ground-mounted plants.</p></article>
+      <article class="stop"><div class="yr">Stage 03</div><h3>European funding</h3><p>Programme architecture, eligibility and scoring — learning what actually makes a file bankable.</p></article>
+      <article class="stop"><div class="yr">Stage 04</div><h3>Strategic investment management</h3><p>Moving from writing applications to structuring the investments behind them.</p></article>
+      <article class="stop"><div class="yr">Stage 05</div><h3>Battery energy storage</h3><p>Revenue stacking, grid services and the commercial logic of storage assets.</p></article>
+      <article class="stop"><div class="yr">Stage 06</div><h3>Utility-scale infrastructure</h3><p>Coordinating storage and hybrid developments at network scale.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STATEMENT ═════════════════════════════════════════════ -->
+<section class="sec wrap" id="stmt">
+  <p class="stmt-a rv">I don't just develop energy projects.</p>
+  <h2 class="stmt-b" data-splitwords>I structure the <em>investments</em> that make them possible.</h2>
+</section>
+
+<!-- ══ FINALE ════════════════════════════════════════════════ -->
+<section id="finale">
+  <canvas id="finaleFallback"></canvas>
+  <video id="finVideo" muted playsinline loop preload="auto"></video>
+  <div class="fin-in">
+    <h2 data-splitlines>
+      <span><i>Build the next</i></span>
+      <span><i>energy landmark</i></span>
+    </h2>
+    <p>From Battery Energy Storage Systems to strategic renewable infrastructure, I help transform ambitious energy investments into bankable, executable projects.</p>
+    <div class="cta-row">
+      <a class="btn" id="ctaPrimary" href="#"><i class="dot"></i><span>Start a project</span></a>
+      <a class="btn btn--ghost" href="#work"><span>Explore my portfolio</span></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="foot-grid">
+    <div class="mark dsp" style="font-size:clamp(28px,4vw,58px)">Lucian<br>Vrînceanu</div>
+    <div class="foot-links">
+      <a id="lnLinkedin" href="#" target="_blank" rel="noopener">LinkedIn</a>
+      <a id="lnEmail" href="#">Email</a>
+      <a id="lnCompany" href="#" target="_blank" rel="noopener">Think Blu® Solution</a>
+    </div>
+  </div>
+  <div class="foot-meta">
+    <span>Battery energy storage · Strategic energy investments · Renewable infrastructure</span>
+    <span id="yr">© 2026</span>
+  </div>
+</footer>
+
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/three.min.js"></script>
+<script src="vendor/lenis.min.js"></script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════════════
+   LUCIAN VRÎNCEANU — cinematic scroll experience
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── 1. CONFIGURATION ─────────────────────────────────────────────────────
+   Each slot is a candidate list tried in order: a local file in ./assets/
+   wins if present, otherwise the Higgsfield CDN copy, otherwise the
+   procedural fallback film. No slot ever renders as a black rectangle. */
+/* Set to true once the three clips have been downloaded into ./assets/ —
+   see README. Left false, the page skips the local probe entirely rather than
+   spending a failed request per slot on every visit. */
+const USE_LOCAL_ASSETS = false;
+
+const CDN = 'https://d8j0ntlcm91z4.cloudfront.net/user_3IGCVkXvjejfKQewPn4ej8wH0Op';
+
+/* Seedance 2.0 · STD · 1080p · 16:9 · silent · identity-locked to the five
+   reference portraits. Candidates are tried in order; if none loads, the
+   procedural fallback film below takes the slot. */
+const slot = (local, remote) =>
+  USE_LOCAL_ASSETS ? ['assets/' + local, remote] : [remote];
+
+const MEDIA = {
+  boardroom : slot('01-boardroom.mp4',
+    CDN + '/hf_20260904_095620_be25bf0d-7c91-49d1-91d0-9bbf3c729a52.mp4'),
+  strategist: slot('02-strategist.mp4',
+    CDN + '/hf_20260904_095620_d0977e77-14b0-4585-92f5-7ea94aa3cb4f.mp4'),
+  execution : slot('03-execution.mp4',
+    CDN + '/hf_20260904_095620_1a83648e-97ef-4520-a95d-290bf695431c.mp4')
+};
+
+const CONTACT = {
+  email   : 'office@e-consultants.ro',
+  linkedin: 'https://www.linkedin.com/in/lucian-vrinceanu',
+  company : 'https://www.thinkblu.ro'
+};
+
+const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* Exponential smoothing that behaves the same at 30, 60 or 144 fps. A plain
+   `v += (target - v) * k` per frame converges at whatever rate the device
+   happens to run at, which made the scrub and the 3D assembly lag on slower
+   machines. */
+const approach = (v, target, k, dt) => v + (target - v) * (1 - Math.pow(1 - k, dt * 60));
+const MOBILE = window.matchMedia('(max-width: 820px)').matches;
+
+/* ─── 2. SCROLL ENGINE ─────────────────────────────────────────────────────*/
+gsap.registerPlugin(ScrollTrigger);
+
+let lenis = null;
+if (window.Lenis && !RM) {
+  lenis = new Lenis({ duration: 1.15, lerp: 0.09, wheelMultiplier: 1, smoothWheel: true });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((t) => lenis.raf(t * 1000));
+  gsap.ticker.lagSmoothing(0);
+  window.lenis = lenis;
+}
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const el = document.querySelector(a.getAttribute('href'));
+    if (!el) return;
+    e.preventDefault();
+    lenis ? lenis.scrollTo(el, { offset: 0 }) : el.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+/* ─── 3. CONTACT WIRING ────────────────────────────────────────────────────*/
+document.getElementById('lnEmail').href    = 'mailto:' + CONTACT.email;
+document.getElementById('lnLinkedin').href = CONTACT.linkedin;
+document.getElementById('lnCompany').href  = CONTACT.company;
+document.getElementById('ctaPrimary').href = 'mailto:' + CONTACT.email + '?subject=Project%20enquiry';
+document.getElementById('yr').textContent  = '© ' + new Date().getFullYear();
+
+/* ─── 4. TEXT SPLITTING ────────────────────────────────────────────────────*/
+function splitChars(node) {
+  const txt = node.textContent.trim();
+  node.textContent = '';
+  [...txt].forEach(c => {
+    const s = document.createElement('span');
+    s.className = 'ch';
+    s.textContent = c === ' ' ? ' ' : c;
+    node.appendChild(s);
+  });
+  return node.querySelectorAll('.ch');
+}
+document.querySelectorAll('[data-split]').forEach(splitChars);
+
+/* statement — word by word, keeps <em> colouring */
+(function splitStatement() {
+  const h = document.querySelector('[data-splitwords]');
+  if (!h) return;
+  const frag = document.createDocumentFragment();
+  [...h.childNodes].forEach(node => {
+    const isEm = node.nodeName === 'EM';
+    node.textContent.split(/(\s+)/).forEach(tok => {
+      if (!tok.trim()) { frag.appendChild(document.createTextNode(' ')); return; }
+      const w = document.createElement('span'); w.className = 'w';
+      const i = document.createElement('i'); i.textContent = tok;
+      if (isEm) { const em = document.createElement('em'); em.appendChild(i); w.appendChild(em); }
+      else w.appendChild(i);
+      frag.appendChild(w);
+    });
+  });
+  h.textContent = ''; h.appendChild(frag);
+})();
+
+/* ─── 5. PROCEDURAL FALLBACK FILM ──────────────────────────────────────────
+   Architectural light sweeps + volumetric haze, used whenever a clip is
+   missing so the composition never collapses. */
+function architecturalCanvas(canvas, opts) {
+  const o = Object.assign({ tint: '23,228,160', beams: 5, speed: 1, seedShift: 0 }, opts);
+  const ctx = canvas.getContext('2d');
+  let w = 0, h = 0, t = o.seedShift;
+  const dpr = Math.min(devicePixelRatio || 1, 1.75);
+  const beams = [];
+  for (let i = 0; i < o.beams; i++) {
+    beams.push({
+      x: Math.random(), y: Math.random() * .5,
+      len: .5 + Math.random() * .7, ang: -.9 + Math.random() * .5,
+      wdt: 40 + Math.random() * 190, sp: .012 + Math.random() * .03,
+      a: .05 + Math.random() * .13
+    });
+  }
+  function size() {
+    const r = canvas.getBoundingClientRect();
+    w = Math.max(1, r.width); h = Math.max(1, r.height);
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  size();
+  addEventListener('resize', size, { passive: true });
+
+  function frame() {
+    t += .0042 * o.speed;
+    ctx.fillStyle = '#04070A'; ctx.fillRect(0, 0, w, h);
+
+    const g = ctx.createRadialGradient(w * .58, h * .42, 0, w * .58, h * .42, Math.max(w, h) * .8);
+    g.addColorStop(0, `rgba(${o.tint},.12)`);
+    g.addColorStop(.45, `rgba(${o.tint},.035)`);
+    g.addColorStop(1, 'rgba(4,7,10,0)');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+
+    ctx.globalCompositeOperation = 'lighter';
+    beams.forEach((b, i) => {
+      const px = ((b.x + t * b.sp * 6) % 1.4 - .2) * w;
+      const py = b.y * h;
+      const ex = px + Math.cos(b.ang) * b.len * w;
+      const ey = py + Math.sin(b.ang) * b.len * h + h;
+      const lg = ctx.createLinearGradient(px, py, ex, ey);
+      const pulse = .55 + .45 * Math.sin(t * 2.1 + i);
+      lg.addColorStop(0, `rgba(${o.tint},0)`);
+      lg.addColorStop(.5, `rgba(${o.tint},${b.a * pulse})`);
+      lg.addColorStop(1, `rgba(${o.tint},0)`);
+      ctx.strokeStyle = lg; ctx.lineWidth = b.wdt; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(ex, ey); ctx.stroke();
+    });
+    ctx.globalCompositeOperation = 'source-over';
+
+    /* architectural horizon lines */
+    ctx.strokeStyle = `rgba(${o.tint},.07)`; ctx.lineWidth = 1;
+    for (let i = 0; i < 7; i++) {
+      const y = h * (.28 + i * .1) + Math.sin(t * .7 + i) * 5;
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+    }
+    ctx.fillStyle = 'rgba(4,7,10,.42)'; ctx.fillRect(0, 0, w, h);
+    canvas._raf = requestAnimationFrame(frame);
+  }
+  frame();
+  return { stop(){ cancelAnimationFrame(canvas._raf); } };
+}
+function bootFallback(id, opts) {
+  const c = document.getElementById(id);
+  if (c) architecturalCanvas(c, opts);
+}
+
+/* ─── 6. VIDEO SLOTS ───────────────────────────────────────────────────────
+   Probe each candidate; first one that can actually play wins. */
+function tryOne(videoEl, src, loop) {
+  return new Promise(resolve => {
+    let settled = false;
+    const done = ok => { if (!settled) { settled = true; cleanup(); resolve(ok); } };
+    const onOk   = () => done(true);
+    const onFail = () => done(false);
+    function cleanup() {
+      videoEl.removeEventListener('loadeddata', onOk);
+      videoEl.removeEventListener('error', onFail);
+      clearTimeout(timer);
+    }
+    const timer = setTimeout(onFail, 9000);
+    videoEl.addEventListener('loadeddata', onOk,   { once: true });
+    videoEl.addEventListener('error',      onFail, { once: true });
+    videoEl.loop = !!loop;
+    videoEl.src = src;
+    videoEl.load();
+  });
+}
+async function mountVideo(videoEl, list, { loop = false, autoplay = true } = {}) {
+  for (const src of list) {
+    if (await tryOne(videoEl, src, loop)) {
+      videoEl.style.opacity = '1';
+      const fb = videoEl.parentElement.querySelector('canvas');
+      if (fb) gsap.to(fb, { opacity: 0, duration: .9, ease: 'power2.out' });
+      if (autoplay) { try { await videoEl.play(); } catch (e) { /* poster-only is fine */ } }
+      return true;
+    }
+  }
+  videoEl.style.display = 'none';
+  return false;
+}
+
+const heroVideo = document.getElementById('heroVideo');
+const expVideo  = document.getElementById('expVideo');
+const finVideo  = document.getElementById('finVideo');
+[heroVideo, expVideo, finVideo].forEach(v => v.style.opacity = '0');
+heroVideo.style.transition = expVideo.style.transition = finVideo.style.transition = 'opacity .9s ease';
+
+bootFallback('heroFallback',    { beams: 6, speed: 1.0, seedShift: 0 });
+bootFallback('expFallback',     { beams: 4, speed: .75, seedShift: 40 });
+bootFallback('finaleFallback',  { beams: 7, speed: 1.2, seedShift: 90 });
+
+/* HERO — scroll-scrubbed frame by frame.
+   The raw scroll value is eased toward every frame so the playhead glides
+   instead of stepping, which is what makes it read as film rather than
+   as a slider. */
+let heroReady = false;
+mountVideo(heroVideo, MEDIA.boardroom, { loop: false, autoplay: false }).then(ok => {
+  if (!ok) return;
+  heroVideo.pause();
+  heroReady = true;
+});
+mountVideo(expVideo, MEDIA.strategist, { loop: true });
+mountVideo(finVideo, MEDIA.execution,  { loop: true });
+
+const scrub = { target: 0, current: 0 };
+ScrollTrigger.create({
+  trigger: '#hero',
+  start: 'top top',
+  end: 'bottom bottom',
+  onUpdate: self => { scrub.target = self.progress; }
+});
+gsap.ticker.add((time, dt) => {
+  if (!heroReady) return;
+  const d = heroVideo.duration;
+  if (!d || !isFinite(d)) return;
+  scrub.current = approach(scrub.current, scrub.target, 0.12, Math.min(dt, 100) / 1000);
+  const t = Math.min(Math.max(scrub.current, 0), 0.9999) * d;
+  if (Math.abs(heroVideo.currentTime - t) > 0.012) heroVideo.currentTime = t;
+});
+
+/* hero type retreats as the boardroom shot pushes in */
+gsap.to('.hero-type, .hero-cue', {
+  yPercent: -14, opacity: 0, ease: 'none',
+  scrollTrigger: { trigger: '#hero', start: '58% top', end: 'bottom bottom', scrub: true }
+});
+
+/* ─── 7. PRELOADER ─────────────────────────────────────────────────────────*/
+(function preloader() {
+  const pre = document.getElementById('pre');
+  const bar = pre.querySelector('.bar i');
+  const pct = pre.querySelector('.pct');
+  document.body.classList.add('is-locked');
+  const state = { v: 0 };
+
+  gsap.to(state, {
+    v: 100, duration: 1.9, ease: 'power2.inOut',
+    onUpdate() { const n = Math.round(state.v); pct.textContent = n; bar.style.width = n + '%'; },
+    onComplete() {
+      const tl = gsap.timeline({
+        onComplete() { document.body.classList.remove('is-locked'); ScrollTrigger.refresh(); }
+      });
+      tl.to(pre, { yPercent: -100, duration: 1.05, ease: 'expo.inOut' })
+        .set(pre, { display: 'none' })
+        /* name lands letter by letter */
+        .to('.hero-name .ch', {
+          y: 0, rotate: 0, duration: 1.15, ease: 'expo.out', stagger: 0.028
+        }, '-=0.72')
+        .to('.hero-sub span', {
+          opacity: 1, duration: .8, ease: 'power2.out', stagger: .09
+        }, '-=0.62')
+        .to('.hero-state', { opacity: 1, duration: .9, ease: 'power2.out' }, '-=0.5');
+    }
+  });
+})();
+
+/* ─── 8. GENERIC REVEALS ───────────────────────────────────────────────────*/
+gsap.utils.toArray('.rv').forEach(el => {
+  gsap.to(el, {
+    opacity: 1, y: 0, duration: 1.05, ease: 'expo.out',
+    scrollTrigger: { trigger: el, start: 'top 86%' }
+  });
+});
+
+/* ─── 9. COUNTERS ──────────────────────────────────────────────────────────*/
+gsap.utils.toArray('[data-count]').forEach(el => {
+  const end = +el.dataset.count;
+  const pre = el.dataset.prefix || '';
+  const suf = el.dataset.suffix || '';
+  const o = { v: 0 };
+  ScrollTrigger.create({
+    trigger: el, start: 'top 88%', once: true,
+    onEnter: () => gsap.to(o, {
+      v: end, duration: 2.1, ease: 'expo.out',
+      onUpdate: () => { el.textContent = pre + Math.round(o.v) + suf; }
+    })
+  });
+});
+
+/* ─── 10. CORE EXPERTISE — pinned pillar sequence ──────────────────────────*/
+(function pillars() {
+  const items = gsap.utils.toArray('.pillar');
+  const bars  = gsap.utils.toArray('.exp-rail i b');
+  if (!items.length) return;
+  gsap.set(items[0], { opacity: 1 });
+  let active = 0;
+
+  ScrollTrigger.create({
+    trigger: '#expertise', start: 'top top', end: 'bottom bottom',
+    onUpdate: self => {
+      const raw = self.progress * items.length;
+      const i = Math.min(items.length - 1, Math.floor(raw));
+      if (i !== active) {
+        gsap.to(items[active], { opacity: 0, y: -22, duration: .55, ease: 'power2.in' });
+        gsap.fromTo(items[i], { opacity: 0, y: 26 },
+                              { opacity: 1, y: 0, duration: .85, ease: 'expo.out' });
+        active = i;
+      }
+      bars.forEach((b, k) => {
+        const local = Math.min(1, Math.max(0, raw - k));
+        b.style.width = (local * 100) + '%';
+      });
+    }
+  });
+})();
+
+/* ─── 11. PROJECT CARDS — parallax tilt + cursor light ─────────────────────*/
+gsap.utils.toArray('.card').forEach(card => {
+  if (MOBILE) return;
+  card.addEventListener('pointermove', e => {
+    const r = card.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width;
+    const py = (e.clientY - r.top) / r.height;
+    card.style.setProperty('--mx', (px * 100) + '%');
+    card.style.setProperty('--my', (py * 100) + '%');
+    gsap.to(card, {
+      rotateY: (px - .5) * 9, rotateX: (.5 - py) * 9,
+      duration: .6, ease: 'power2.out', transformPerspective: 900
+    });
+  });
+  card.addEventListener('pointerleave', () => {
+    gsap.to(card, { rotateY: 0, rotateX: 0, duration: .85, ease: 'expo.out' });
+  });
+});
+
+/* ─── 12. INVESTMENT CHAIN ─────────────────────────────────────────────────*/
+gsap.utils.toArray('.chain-row').forEach((row, i) => {
+  ScrollTrigger.create({
+    trigger: row, start: 'top 84%', once: true,
+    onEnter: () => {
+      gsap.to(row.querySelector('.fill'), {
+        width: '100%', duration: 1.1, ease: 'expo.out', delay: i * .045
+      });
+    }
+  });
+});
+
+/* ─── 13. HORIZONTAL TIMELINE ──────────────────────────────────────────────*/
+(function rail() {
+  const el = document.getElementById('rail');
+  if (!el) return;
+  const shift = () => Math.max(0, el.scrollWidth - innerWidth + 40);
+  gsap.to(el, {
+    x: () => -shift(), ease: 'none',
+    scrollTrigger: {
+      trigger: '#track', start: 'top top', end: 'bottom bottom',
+      scrub: 1, invalidateOnRefresh: true
+    }
+  });
+})();
+
+/* ─── 14. STATEMENT + FINALE KINETICS ──────────────────────────────────────*/
+gsap.to('[data-splitwords] .w i', {
+  y: 0, duration: 1.15, ease: 'expo.out', stagger: .045,
+  scrollTrigger: { trigger: '#stmt', start: 'top 72%' }
+});
+gsap.to('[data-splitlines] span i', {
+  y: 0, duration: 1.35, ease: 'expo.out', stagger: .13,
+  scrollTrigger: { trigger: '#finale', start: 'top 62%' }
+});
+gsap.to('.bess-head h2 span i', {
+  y: 0, duration: 1.3, ease: 'expo.out', stagger: .12,
+  scrollTrigger: { trigger: '#bess', start: 'top 60%' }
+});
+
+/* ─── 15. MAGNETIC BUTTONS ─────────────────────────────────────────────────*/
+gsap.utils.toArray('.btn').forEach(btn => {
+  if (MOBILE) return;
+  btn.addEventListener('pointermove', e => {
+    const r = btn.getBoundingClientRect();
+    gsap.to(btn, {
+      x: (e.clientX - (r.left + r.width / 2)) * .32,
+      y: (e.clientY - (r.top + r.height / 2)) * .42,
+      duration: .5, ease: 'power3.out'
+    });
+  });
+  btn.addEventListener('pointerleave', () => {
+    gsap.to(btn, { x: 0, y: 0, duration: .85, ease: 'elastic.out(1,.42)' });
+  });
+});
+
+/* ─── 16. NAV ──────────────────────────────────────────────────────────────*/
+ScrollTrigger.create({
+  start: 'top -80',
+  onUpdate: self => document.getElementById('nav').classList.toggle('solid', self.scroll() > 80)
+});
+
+/* ══════════════════════════════════════════════════════════════════════════
+   17. SIGNATURE CHAPTER — utility-scale BESS assembles itself on scroll
+   ══════════════════════════════════════════════════════════════════════════ */
+(function bess() {
+  const canvas = document.getElementById('bessCanvas');
+  if (!canvas || !window.THREE) return;
+
+  const EM = 0x17E4A0;
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true,
+                                             powerPreference: 'high-performance' });
+  renderer.setClearColor(0x020507, 1);
+
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x020507, 0.0115);
+
+  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 400);
+  const target = new THREE.Vector3(0, 2.4, 0);
+
+  scene.add(new THREE.AmbientLight(0x415a69, 1.55));
+  const key = new THREE.DirectionalLight(0xdfe9f2, 1.75); key.position.set(-16, 22, 14); scene.add(key);
+  const fill= new THREE.DirectionalLight(0x9fc4d6, 0.65); fill.position.set(22, 14, 22);  scene.add(fill);
+  const rim = new THREE.DirectionalLight(EM, 1.15);       rim.position.set(18, 8, -16);  scene.add(rim);
+  const pulse = new THREE.PointLight(EM, 0, 46);          pulse.position.set(0, 5, 0);   scene.add(pulse);
+
+  /* ground + survey grid */
+  const ground = new THREE.Mesh(
+    new THREE.PlaneGeometry(300, 300),
+    new THREE.MeshStandardMaterial({ color: 0x0b1116, roughness: .74, metalness: .35 })
+  );
+  ground.rotation.x = -Math.PI / 2; ground.position.y = -.02; scene.add(ground);
+
+  const grid = new THREE.GridHelper(220, 88, EM, 0x0d1a1f);
+  grid.material.transparent = true; grid.material.opacity = .20; scene.add(grid);
+
+  /* ── material helpers: everything starts invisible and is faded in ── */
+  const fadeables = [];
+  const shell = (c = 0x222f39, r = .52, m = .45) =>
+    new THREE.MeshStandardMaterial({ color: c, roughness: r, metalness: m,
+                                     transparent: true, opacity: 0 });
+  const glow = () =>
+    new THREE.MeshBasicMaterial({ color: EM, transparent: true, opacity: 0 });
+
+  /* every stage is a group whose materials fade together */
+  function stage(group) {
+    const mats = [];
+    group.traverse(o => { if (o.material) mats.push(o.material); });
+    const s = { group, mats, shown: 0 };
+    fadeables.push(s);
+    return s;
+  }
+  function edges(mesh, parent) {
+    const l = new THREE.LineSegments(
+      new THREE.EdgesGeometry(mesh.geometry),
+      new THREE.LineBasicMaterial({ color: EM, transparent: true, opacity: 0 })
+    );
+    l.position.copy(mesh.position); l.rotation.copy(mesh.rotation);
+    parent.add(l);
+    return l;
+  }
+
+  const ROWS = [-9.5, -3.2, 3.1, 9.4];
+
+  /* 01 — battery containers */
+  const contGroup = new THREE.Group();
+  ROWS.forEach((z, r) => {
+    for (let i = -2; i <= 2; i++) {
+      const box = new THREE.Mesh(new THREE.BoxGeometry(7.4, 3.0, 2.6), shell());
+      box.position.set(i * 8.4, 1.5, z);
+      contGroup.add(box); edges(box, contGroup);
+    }
+  });
+  scene.add(contGroup);
+  const S_CONT = stage(contGroup);
+
+  /* 02 — battery racks (glowing internals) */
+  const rackGroup = new THREE.Group();
+  ROWS.forEach(z => {
+    for (let i = -2; i <= 2; i++) {
+      for (let k = 0; k < 5; k++) {
+        const rack = new THREE.Mesh(new THREE.BoxGeometry(6.6, .22, 1.9), glow());
+        rack.position.set(i * 8.4, .45 + k * .52, z);
+        rackGroup.add(rack);
+      }
+    }
+  });
+  scene.add(rackGroup);
+  const S_RACK = stage(rackGroup);
+
+  /* 03 — power conversion systems */
+  const pcsGroup = new THREE.Group();
+  ROWS.forEach(z => {
+    const pcs = new THREE.Mesh(new THREE.BoxGeometry(2.2, 2.2, 1.6), shell(0x1a242b, .5, .7));
+    pcs.position.set(24, 1.1, z);
+    pcsGroup.add(pcs); edges(pcs, pcsGroup);
+  });
+  scene.add(pcsGroup);
+  const S_PCS = stage(pcsGroup);
+
+  /* 04 — medium-voltage transformers */
+  const trGroup = new THREE.Group();
+  [-6.4, 6.4].forEach(z => {
+    const body = new THREE.Mesh(new THREE.BoxGeometry(3.4, 2.6, 3.0), shell(0x111a20, .6, .55));
+    body.position.set(33, 1.3, z);
+    trGroup.add(body); edges(body, trGroup);
+    for (const dx of [-.9, 0, .9]) {
+      const bush = new THREE.Mesh(new THREE.CylinderGeometry(.16, .16, 1.5, 10), glow());
+      bush.position.set(33 + dx, 3.2, z);
+      trGroup.add(bush);
+    }
+  });
+  scene.add(trGroup);
+  const S_TR = stage(trGroup);
+
+  /* 05 — switchgear */
+  const swGroup = new THREE.Group();
+  for (let i = 0; i < 6; i++) {
+    const cab = new THREE.Mesh(new THREE.BoxGeometry(1.5, 2.4, 1.2), shell(0x18222a, .45, .75));
+    cab.position.set(41, 1.2, -3.6 + i * 1.45);
+    swGroup.add(cab); edges(cab, swGroup);
+  }
+  scene.add(swGroup);
+  const S_SW = stage(swGroup);
+
+  /* 06 / 07 / 09 — EMS, SCADA and the management layer as luminous nodes */
+  function node(x, y, z, r) {
+    const g = new THREE.Group();
+    const core = new THREE.Mesh(new THREE.IcosahedronGeometry(r, 1), glow());
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(r * 2.4, .035, 8, 60), glow());
+    ring.rotation.x = Math.PI / 2;
+    g.add(core, ring); g.position.set(x, y, z);
+    g.userData.spin = core;
+    return g;
+  }
+  const emsG = new THREE.Group(); emsG.add(node(0, 9.5, -16, .9));   scene.add(emsG);
+  const scadaG = new THREE.Group(); scadaG.add(node(-20, 8.2, 10, .7)); scene.add(scadaG);
+  const S_EMS   = stage(emsG);
+  const S_SCADA = stage(scadaG);
+
+  /* 08 — grid connection: pylons + transmission lines */
+  const gridConn = new THREE.Group();
+  for (let i = 0; i < 4; i++) {
+    const x = 52 + i * 16;
+    const mast = new THREE.Mesh(new THREE.BoxGeometry(.5, 14, .5), shell(0x1b252c, .5, .6));
+    mast.position.set(x, 7, 0); gridConn.add(mast); edges(mast, gridConn);
+    const arm = new THREE.Mesh(new THREE.BoxGeometry(.4, .4, 8), shell(0x1b252c, .5, .6));
+    arm.position.set(x, 12.4, 0); gridConn.add(arm);
+  }
+  const wireMat = new THREE.LineBasicMaterial({ color: EM, transparent: true, opacity: 0 });
+  for (const dz of [-3.2, 0, 3.2]) {
+    const pts = [];
+    for (let i = 0; i <= 60; i++) {
+      const t = i / 60, x = 41 + t * (52 + 3 * 16 - 41);
+      pts.push(new THREE.Vector3(x, 12.4 - Math.sin(t * Math.PI * 4) * .5 + Math.sin(t * Math.PI) * -.9, dz));
+    }
+    gridConn.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), wireMat));
+  }
+  scene.add(gridConn);
+  const S_GRID = stage(gridConn);
+
+  /* 09 — energy management layer: link web across the whole asset */
+  const linkPts = [];
+  const hubs = [
+    new THREE.Vector3(0, 9.5, -16), new THREE.Vector3(-20, 8.2, 10),
+    new THREE.Vector3(24, 1.1, 0),  new THREE.Vector3(33, 1.3, 0),
+    new THREE.Vector3(41, 1.2, 0)
+  ];
+  ROWS.forEach(z => {
+    for (let i = -2; i <= 2; i += 2) {
+      const a = new THREE.Vector3(i * 8.4, 3.1, z);
+      hubs.forEach((h, k) => { if (k < 2) { linkPts.push(a.clone(), h.clone()); } });
+    }
+  });
+  for (let i = 0; i < hubs.length - 1; i++) linkPts.push(hubs[i].clone(), hubs[i + 1].clone());
+  const links = new THREE.LineSegments(
+    new THREE.BufferGeometry().setFromPoints(linkPts),
+    new THREE.LineBasicMaterial({ color: EM, transparent: true, opacity: 0 })
+  );
+  scene.add(links);
+  const S_LINK = stage(links);
+
+  /* 10 — energy flow particles running battery → grid */
+  const FLOW = 420;
+  const flowPos = new Float32Array(FLOW * 3);
+  const flowSeed = new Float32Array(FLOW);
+  for (let i = 0; i < FLOW; i++) {
+    flowSeed[i] = Math.random();
+    flowPos[i * 3] = -20; flowPos[i * 3 + 1] = 2; flowPos[i * 3 + 2] = 0;
+  }
+  const flowGeo = new THREE.BufferGeometry();
+  flowGeo.setAttribute('position', new THREE.BufferAttribute(flowPos, 3));
+  const flow = new THREE.Points(flowGeo, new THREE.PointsMaterial({
+    color: EM, size: .42, transparent: true, opacity: 0,
+    blending: THREE.AdditiveBlending, depthWrite: false
+  }));
+  scene.add(flow);
+  const S_FLOW = stage(flow);
+
+  /* ── the ten assembly steps ───────────────────────────────────────────── */
+  const STEPS = [
+    [S_CONT,  'Battery containers',        'Enclosures land on the pad and set the footprint of the asset.'],
+    [S_RACK,  'Battery racks',             'Modules and cells stack into racks — the energy itself arrives.'],
+    [S_PCS,   'Power conversion systems',  'PCS units convert between DC storage and AC network.'],
+    [S_TR,    'Medium-voltage transformers','Step-up plant lifts the site to distribution voltage.'],
+    [S_SW,    'Switchgear',                'Protection and isolation — the asset can now be operated safely.'],
+    [S_EMS,   'Energy management system',  'The EMS decides what every megawatt-hour does, and when.'],
+    [S_SCADA, 'SCADA',                     'Supervisory control and telemetry across the whole facility.'],
+    [S_GRID,  'Grid connection',           'Overhead transmission ties the asset into the network.'],
+    [S_LINK,  'Energy management layer',   'Control, market and dispatch logic bind the components into one asset.'],
+    [S_FLOW,  'Utility-scale BESS',        'Complete. Charging, discharging and balancing the grid in real time.']
+  ];
+  const elN = document.getElementById('bessN');
+  const elT = document.getElementById('bessT');
+  const elD = document.getElementById('bessD');
+  const elP = document.getElementById('bessProg');
+  const svcEls = [...document.querySelectorAll('.bess-services b')];
+
+  let shownStep = -1, lastStepAt = 0;
+  function setStep(i) {
+    if (i === shownStep) return;
+    /* A fast scrub crosses several stages per second, one after another.
+       Restarting the entrance tween on each of them left the caption caught
+       at opacity 0, so animate only when the reader has actually settled on
+       a stage; rapid sweeps just swap the text and stay legible. */
+    const now = performance.now();
+    const settled = (now - lastStepAt) > 420 && shownStep !== -1;
+    lastStepAt = now;
+    shownStep = i;
+    const [, title, desc] = STEPS[i];
+    elN.textContent = String(i + 1).padStart(2, '0') + ' / 10';
+    gsap.killTweensOf([elT, elD]);
+    if (settled) {
+      gsap.fromTo([elT, elD], { opacity: .3, y: 9 },
+        { opacity: 1, y: 0, duration: .38, ease: 'expo.out', stagger: .04, overwrite: true });
+    } else {
+      gsap.set([elT, elD], { opacity: 1, y: 0 });
+    }
+    elT.textContent = title; elD.textContent = desc;
+    gsap.fromTo(pulse, { intensity: 2.6 }, { intensity: 0, duration: 1.1, ease: 'power2.out' });
+  }
+  setStep(0);
+
+  /* ── scroll driver ────────────────────────────────────────────────────── */
+  let prog = 0, progEased = 0;
+  ScrollTrigger.create({
+    trigger: '#bess', start: 'top top', end: 'bottom bottom',
+    onUpdate: self => { prog = self.progress; }
+  });
+
+  /* ── render loop ──────────────────────────────────────────────────────── */
+  let w = 1, h = 1, running = false, t = 0, last = performance.now();
+  function resize() {
+    const r = canvas.getBoundingClientRect();
+    w = Math.max(1, r.width); h = Math.max(1, r.height);
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.85));
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h; camera.updateProjectionMatrix();
+  }
+  resize();
+  addEventListener('resize', () => { resize(); }, { passive: true });
+
+  ScrollTrigger.create({
+    trigger: '#bess', start: 'top bottom', end: 'bottom top',
+    onToggle: self => { running = self.isActive; }
+  });
+
+  function render() {
+    requestAnimationFrame(render);
+    const now = performance.now();
+    const dt = Math.min((now - last) / 1000, 0.1);
+    last = now;
+    if (!running) return;
+    t += dt;
+    progEased = approach(progEased, prog, 0.09, dt);
+
+    /* stage reveal: each of the ten steps owns a tenth of the scroll */
+    const raw = progEased * 10;
+    const step = Math.min(9, Math.max(0, Math.floor(raw)));
+    setStep(step);
+    elP.style.width = (progEased * 100).toFixed(2) + '%';
+
+    fadeables.forEach((s, i) => {
+      const want = Math.min(1, Math.max(0, raw - i));
+      s.shown = approach(s.shown, want, 0.11, dt);
+      const o = s.shown;
+      s.mats.forEach(m => {
+        m.opacity = m.isLineBasicMaterial ? o * .85
+                  : m.isPointsMaterial    ? o * .95
+                  : m.isMeshBasicMaterial ? o * .72 : o;
+      });
+    });
+
+    /* idle motion on the control nodes */
+    [emsG, scadaG].forEach((g, k) => {
+      const n = g.children[0];
+      if (n.userData.spin) n.userData.spin.rotation.y = t * (.5 + k * .2);
+      n.children[1].rotation.z = t * (.32 + k * .18);
+    });
+
+    /* energy flow: battery field → conversion → grid */
+    if (S_FLOW.shown > .01) {
+      const p = flowGeo.attributes.position.array;
+      for (let i = 0; i < FLOW; i++) {
+        let u = (flowSeed[i] + t * .13) % 1;
+        const lane = (i % 4);
+        p[i * 3]     = -22 + u * 118;
+        p[i * 3 + 1] = 2.2 + Math.sin(u * Math.PI) * 7.5 + Math.sin(t * 2 + i) * .12;
+        p[i * 3 + 2] = ROWS[lane] * (1 - u) * .9;
+      }
+      flowGeo.attributes.position.needsUpdate = true;
+    }
+
+    /* service highlight cycles once the asset is complete */
+    if (progEased > .9 && svcEls.length) {
+      const k = Math.floor(t * .55) % svcEls.length;
+      svcEls.forEach((b, i) => b.classList.toggle('on', i === k));
+    } else {
+      svcEls.forEach(b => b.classList.remove('on'));
+    }
+
+    /* camera: a slow arc that opens out as the asset completes */
+    const e = progEased;
+    const ang = -0.92 + e * 1.15 + Math.sin(t * .12) * .035;
+    /* A narrow viewport sees far less of the field at a given distance —
+       widen the standoff so the whole facility stays in frame on phones. */
+    const fit  = camera.aspect < 1.35 ? Math.min(1.5, Math.pow(1.35 / camera.aspect, 0.72)) : 1;
+    const dist = (74 - e * 16 + Math.cos(t * .1) * 1.6) * fit;
+    const hgt  = (46 - e * 28) * (0.55 + 0.45 * fit);
+    camera.position.set(Math.cos(ang) * dist + 14, hgt, Math.sin(ang) * dist);
+    target.set(14 + e * 8, 3.2, 0);
+    camera.lookAt(target);
+
+    renderer.render(scene, camera);
+  }
+  render();
+})();
+</script>
+</body>
+</html>
