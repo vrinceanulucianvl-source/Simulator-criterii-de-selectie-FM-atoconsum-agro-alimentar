@@ -6,9 +6,25 @@ host (or `npx http-server portfolio`) — there is no framework and no build ste
 ```
 index.html        the whole site: markup, styles and behaviour
 vendor/           GSAP + ScrollTrigger, Lenis, Three.js (self-hosted, pinned)
-fonts/            Archivo + Newsreader, self-hosted woff2 (latin + latin-ext)
+fonts/            fonts.css for self-hosting Archivo + Newsreader (see below)
 assets/           optional local copies of the three cinematic clips
 ```
+
+## Fonts
+
+The page loads Archivo and Newsreader from Google Fonts. `fonts/fonts.css` is
+the self-hosted equivalent, kept here because self-hosting is faster and drops
+a third-party request — but the eight `.woff2` binaries could not be committed
+through this session's GitHub path, so they are not in the repository.
+
+To self-host: copy the `fonts/*.woff2` files from the delivered archive into
+`fonts/`, then in `index.html` replace the two Google Fonts tags with
+
+```html
+<link rel="stylesheet" href="fonts/fonts.css" />
+```
+
+Both routes render identically; only the source of the files changes.
 
 ## The three cinematic clips
 
