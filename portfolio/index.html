@@ -703,19 +703,22 @@ const USE_LOCAL_ASSETS = false;
 
 const CDN = 'https://d8j0ntlcm91z4.cloudfront.net/user_3IGCVkXvjejfKQewPn4ej8wH0Op';
 
-/* Seedance 2.0 · STD · 1080p · 16:9 · silent · identity-locked to the five
-   reference portraits. Candidates are tried in order; if none loads, the
-   procedural fallback film below takes the slot. */
+/* Seedance 2.0 · STD · 16:9 · silent · identity-locked to the five reference
+   portraits. The hero is 1080p because it is scrubbed frame by frame and seen
+   at full size; the other two sit behind text under a heavy gradient, where
+   720p is indistinguishable and halves both the cost and the download.
+   Candidates are tried in order; if none loads, the procedural fallback film
+   below takes the slot. */
 const slot = (local, remote) =>
   USE_LOCAL_ASSETS ? ['assets/' + local, remote] : [remote];
 
 const MEDIA = {
   boardroom : slot('01-boardroom.mp4',
-    CDN + '/hf_20260904_095620_be25bf0d-7c91-49d1-91d0-9bbf3c729a52.mp4'),
+    CDN + '/hf_20260904_191420_479118c7-b815-4e1f-95a7-f04abd0b4dcf.mp4'),
   strategist: slot('02-strategist.mp4',
-    CDN + '/hf_20260904_095620_d0977e77-14b0-4585-92f5-7ea94aa3cb4f.mp4'),
+    CDN + '/hf_20260904_191420_0db42d8b-4b54-4ffb-b3be-f3f8fd0c7e48.mp4'),
   execution : slot('03-execution.mp4',
-    CDN + '/hf_20260904_095620_1a83648e-97ef-4520-a95d-290bf695431c.mp4')
+    CDN + '/hf_20260904_191420_26cce321-dd86-4623-9a6f-cf385221504b.mp4')
 };
 
 const CONTACT = {
