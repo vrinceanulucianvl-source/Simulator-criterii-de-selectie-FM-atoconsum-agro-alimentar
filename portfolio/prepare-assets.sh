@@ -36,9 +36,8 @@ fetch_and_encode() {
   rm -f "assets/.raw-$out"
 }
 
-# ── replace these three filenames with the newest renders ──────────────────
-fetch_and_encode "$CDN/hf_20260905_084706_d457e7f8-adce-4eb7-b512-6411af97dde7.mp4"  01-boardroom.mp4  yes
-fetch_and_encode "$CDN/hf_20260905_084706_8765299d-7784-4937-a2ce-b8084ee8fd19.mp4" 02-strategist.mp4 no
+fetch_and_encode "$CDN/hf_20260905_101239_5de252ff-e507-43c5-8ca8-3b3857e884b4.mp4"  01-boardroom.mp4  yes
+fetch_and_encode "$CDN/hf_20260905_101239_161b5b35-5dc4-4154-b76e-b445b079ec0e.mp4" 02-strategist.mp4 no
 fetch_and_encode "$CDN/hf_20260904_191420_26cce321-dd86-4623-9a6f-cf385221504b.mp4"  03-execution.mp4  no
 
 echo

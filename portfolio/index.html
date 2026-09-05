@@ -713,13 +713,22 @@ const slot = (local, remote) =>
   USE_LOCAL_ASSETS ? ['assets/' + local, remote] : [remote];
 
 const MEDIA = {
-  /* 01 — boardroom, printed documents, closing handshake */
+  /* Seedance 2.0 · STD · 16:9 · silent · identity-locked to the reference
+     portraits. Drop a re-encoded copy into ./assets/ and it wins — see the
+     scrub notes in the README before shipping the hero from the CDN. */
+
+  /* Boardroom, on paper: seven distinct men, black three-piece, handshake
+     offered as he stands. Scroll-scrubbed. */
   boardroom : slot('01-boardroom.mp4',
-    CDN + '/hf_20260905_084706_d457e7f8-adce-4eb7-b512-6411af97dde7.mp4'),
-  /* 02 — working session over site plans, bright oak meeting room */
+    CDN + '/hf_20260905_101239_5de252ff-e507-43c5-8ca8-3b3857e884b4.mp4'),
+
+  /* Working session over technical plans in a bright oak meeting room —
+     four distinct men, no screens. Ambient loop. */
   strategist: slot('02-strategist.mp4',
-    CDN + '/hf_20260905_084706_8765299d-7784-4937-a2ce-b8084ee8fd19.mp4'),
-  /* 03 — wide storage facility, figure enters late for scale */
+    CDN + '/hf_20260905_101239_161b5b35-5dc4-4154-b76e-b445b079ec0e.mp4'),
+
+  /* Wide storage facility at dusk; he enters late and stays small in frame.
+     Ambient loop. */
   execution : slot('03-execution.mp4',
     CDN + '/hf_20260904_191420_26cce321-dd86-4623-9a6f-cf385221504b.mp4')
 };
