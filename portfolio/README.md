@@ -40,21 +40,43 @@ five reference portraits so the same person appears in every shot.
 
 `MEDIA` at the top of the script block lists candidates per slot, tried in
 order. A local file in `assets/` wins if it exists; otherwise the Higgsfield
-CDN copy is used; if neither loads, a procedural WebGL-free fallback film
-renders so no slot is ever a black rectangle.
+CDN copy is used; if neither loads, a procedural fallback film renders so no
+slot is ever a black rectangle.
 
-**Self-hosting the clips is recommended** — it removes the third-party
-dependency and lets the hero scrub seek without network latency. Download the
-three CDN URLs listed in `MEDIA` and save them as:
+## Making the hero scrub smooth (important)
 
-```
-assets/01-boardroom.mp4
-assets/02-strategist.mp4
-assets/03-execution.mp4
-```
+The hero is scrubbed frame by frame from scroll position, and that places an
+unusual demand on the file. A normal MP4 stores a keyframe only every one or
+two seconds and rebuilds the frames between them from differences. Playing
+forward, that is efficient. **Seeking** to an arbitrary time is not: the
+browser has to find the previous keyframe and decode forward to reach the
+frame you asked for. Ask it to do that on every scroll frame, over the
+network, and the scrub stutters or looks frozen — the clip appears not to
+respond to scrolling at all.
 
-Then set `USE_LOCAL_ASSETS = true` at the top of the script block. Left false,
-the page does not probe for them at all, so no visitor pays a failed request.
+Two things fix it, and both are needed:
+
+1. **Re-encode all-intra.** Every frame becomes a keyframe, so any frame can
+   be presented immediately. `prepare-assets.sh` does this — it downloads the
+   three clips and encodes the hero with `-g 1 -keyint_min 1 -sc_threshold 0`
+   plus `-movflags +faststart`. Edit the three filenames in it first, then:
+
+   ```bash
+   bash prepare-assets.sh
+   ```
+
+2. **Serve them locally.** Set `USE_LOCAL_ASSETS = true` in `index.html`. A
+   seek that has to make a network round trip can never feel immediate, no
+   matter how the file is encoded.
+
+The all-intra hero file is several times larger than the original. That is the
+trade: size for seekability. The two ambient clips only ever play forward, so
+they get a normal encode and stay small.
+
+The player already avoids the other common cause of stutter — it waits for the
+decoder to finish each seek before requesting the next one, instead of writing
+`currentTime` on every frame and making the browser abort a seek it had
+already started.
 
 ## Contact details
 

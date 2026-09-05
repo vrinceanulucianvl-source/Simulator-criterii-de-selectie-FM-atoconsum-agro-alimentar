@@ -936,7 +936,15 @@ gsap.ticker.add((time, dt) => {
   if (!d || !isFinite(d)) return;
   scrub.current = approach(scrub.current, scrub.target, 0.12, Math.min(dt, 100) / 1000);
   const t = Math.min(Math.max(scrub.current, 0), 0.9999) * d;
-  if (Math.abs(heroVideo.currentTime - t) > 0.012) heroVideo.currentTime = t;
+  /* Only issue a seek once the decoder has finished the previous one. Writing
+     currentTime on every frame while a seek is still in flight makes the
+     browser abort and restart it, which is exactly what turns a scrub into a
+     stutter — the playhead never lands anywhere long enough to present a
+     frame. Waiting for `seeking` to clear costs nothing and is the difference
+     between a scrub that glides and one that looks broken. */
+  if (!heroVideo.seeking && Math.abs(heroVideo.currentTime - t) > 0.012) {
+    heroVideo.currentTime = t;
+  }
 });
 
 /* hero type retreats as the boardroom shot pushes in */
