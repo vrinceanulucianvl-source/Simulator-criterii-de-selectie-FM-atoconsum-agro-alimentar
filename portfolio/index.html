@@ -53,6 +53,11 @@
   --vignette:   radial-gradient(120% 90% at 50% 45%,transparent 42%,rgba(0,0,0,.5) 100%);
   --grain-op:   .055;
   --nav-bg:     rgba(4,7,10,.72);
+  /* Light mode puts dark nav labels over the top of a clip that may itself be
+     dark. A short veil under the bar keeps them legible without washing the
+     picture, and it is not needed at all on the dark theme. */
+  --nav-veil:   linear-gradient(to bottom,rgba(245,242,235,.96) 0%,rgba(245,242,235,.62) 45%,rgba(245,242,235,0) 100%);
+  --nav-veil-op: 0;
   --card-hover: rgba(14,24,29,.72);
   --bess-bg:    #020507;
   --fallback-bg:#04070A;
@@ -85,13 +90,27 @@ html[data-theme="light"]{
   --em-wash:    rgba(6,122,85,.13);
   --on-em:      #FFFFFF;
 
-  --hero-scrim: linear-gradient(to top,var(--ink) 2%,rgba(245,242,235,.72) 30%,rgba(245,242,235,.40) 58%,rgba(245,242,235,.74) 100%),
-                radial-gradient(90% 70% at 62% 42%,rgba(245,242,235,.12) 30%,rgba(245,242,235,.66) 100%);
-  --exp-scrim:  linear-gradient(100deg,var(--ink) 6%,rgba(245,242,235,.90) 34%,rgba(245,242,235,.48) 76%);
-  --fin-scrim:  linear-gradient(to top,var(--ink) 4%,rgba(245,242,235,.80) 46%,rgba(245,242,235,.54) 100%);
+  /* Dark type cannot sit on dark footage, but washing the whole frame turns
+     the film into fog — and it punishes the already-bright clips worst. So
+     the light is pooled exactly where the words are and released everywhere
+     else, leaving most of the picture untouched. */
+  --hero-scrim: radial-gradient(125% 100% at 6% 94%,
+                  rgba(245,242,235,.97) 0%, rgba(245,242,235,.90) 26%,
+                  rgba(245,242,235,.42) 54%, rgba(245,242,235,.06) 82%),
+                linear-gradient(to top, var(--ink) 0%,
+                  rgba(245,242,235,.62) 9%, rgba(245,242,235,.05) 30%);
+  --exp-scrim:  linear-gradient(100deg, var(--ink) 0%,
+                  rgba(245,242,235,.96) 24%, rgba(245,242,235,.74) 44%,
+                  rgba(245,242,235,.20) 66%, rgba(245,242,235,.04) 100%);
+  --fin-scrim:  radial-gradient(125% 105% at 5% 62%,
+                  rgba(245,242,235,.97) 0%, rgba(245,242,235,.88) 30%,
+                  rgba(245,242,235,.38) 60%, rgba(245,242,235,.05) 88%),
+                linear-gradient(to top, var(--ink) 0%,
+                  rgba(245,242,235,.42) 10%, rgba(245,242,235,.04) 34%);
   --vignette:   radial-gradient(120% 90% at 50% 45%,transparent 55%,rgba(90,80,60,.16) 100%);
   --grain-op:   .028;
   --nav-bg:     rgba(245,242,235,.80);
+  --nav-veil-op: 1;
   --card-hover: rgba(255,253,248,.86);
   --bess-bg:    #F5F2EB;
   --fallback-bg:#F5F2EB;
@@ -184,6 +203,12 @@ h1,h2,h3,h4,.dsp{
   -webkit-backdrop-filter:blur(16px) saturate(140%);
   border-bottom-color:var(--hair);
 }
+#nav::before{
+  content:'';position:absolute;left:0;right:0;top:0;height:124px;z-index:-1;
+  pointer-events:none;background:var(--nav-veil);opacity:var(--nav-veil-op);
+  transition:opacity .5s var(--ease);
+}
+#nav.solid::before{opacity:0}
 #nav .mark{font-family:var(--display);font-weight:800;font-stretch:88%;
   letter-spacing:.02em;font-size:19px;text-transform:uppercase}
 #nav .mark em{color:var(--em);font-style:normal}
@@ -271,15 +296,6 @@ html[data-theme="light"] .theme-t .ico-moon{display:block}
   56%{transform:scaleY(1);transform-origin:bottom}
   100%{transform:scaleY(0);transform-origin:bottom}}
 @media (max-width:820px){ .hero-cue{display:none} }
-
-/* The clips are graded for an ink-black page. On the light ground they are
-   lifted and softened so the footage stays visible under a much lighter
-   scrim, instead of being flattened by an opaque veil. */
-html[data-theme="light"] #heroStage video,
-html[data-theme="light"] .exp-media video,
-html[data-theme="light"] #finale video{
-  filter:brightness(1.42) contrast(.80) saturate(.88);
-}
 
 /* ══════════════════════════════════════════════════════════════
    ABOUT
@@ -766,7 +782,6 @@ footer{padding:clamp(60px,8vw,120px) var(--gut) 40px;border-top:var(--rule)}
     <div class="foot-links">
       <a id="lnLinkedin" href="#" target="_blank" rel="noopener">LinkedIn</a>
       <a id="lnEmail" href="#">Email</a>
-      <a id="lnCompany" href="#" target="_blank" rel="noopener">Think Blu® Solution</a>
     </div>
   </div>
   <div class="foot-meta">
@@ -827,9 +842,8 @@ const MEDIA = {
 };
 
 const CONTACT = {
-  email   : 'office@e-consultants.ro',
-  linkedin: 'https://www.linkedin.com/in/lucian-vrinceanu',
-  company : 'https://www.thinkblu.ro'
+  email   : 'vrinceanulucian.vl@gmail.com',
+  linkedin: 'https://www.linkedin.com/in/lucian-vrinceanu'
 };
 
 const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -902,7 +916,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 /* ─── 3. CONTACT WIRING ────────────────────────────────────────────────────*/
 document.getElementById('lnEmail').href    = 'mailto:' + CONTACT.email;
 document.getElementById('lnLinkedin').href = CONTACT.linkedin;
-document.getElementById('lnCompany').href  = CONTACT.company;
 document.getElementById('ctaPrimary').href = 'mailto:' + CONTACT.email + '?subject=Project%20enquiry';
 document.getElementById('yr').textContent  = '© ' + new Date().getFullYear();
 
