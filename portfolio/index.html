@@ -13,6 +13,17 @@
      from Google Fonts instead, see README. -->
 <link rel="stylesheet" href="fonts/fonts.css" />
 
+<script>
+/* Runs before paint so the page never flashes the wrong theme. Dark is the
+   brand default; only an explicit choice moves it. */
+(function () {
+  try {
+    var t = localStorage.getItem('lv-theme');
+    document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+  } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+})();
+</script>
+
 <style>
 /* ══════════════════════════════════════════════════════════════
    TOKENS
@@ -26,9 +37,27 @@
   --cream-low:  rgba(239,233,221,.34);
   --cream-dim:  rgba(239,233,221,.18);
   --hair:       rgba(239,233,221,.13);
-  --em:         #17E4A0;
+  --em:         #17E4A0;   /* accent for text and hairlines */
+  --em-fill:    #17E4A0;   /* solid fills: buttons, bars, 3D emissive */
   --em-deep:    #0A5B45;
   --em-glow:    rgba(23,228,160,.42);
+  --em-wash:    rgba(23,228,160,.16);
+  --on-em:      #02120C;   /* text sitting on an --em-fill surface */
+
+  /* Scrims over the cinematic clips. The footage is dark in both themes, so
+     light mode needs a pale veil or the dark type on top becomes unreadable. */
+  --hero-scrim: linear-gradient(to top,var(--ink) 2%,rgba(4,7,10,.34) 34%,rgba(4,7,10,.12) 58%,rgba(4,7,10,.66) 100%),
+                radial-gradient(90% 70% at 62% 42%,transparent 30%,rgba(4,7,10,.62) 100%);
+  --exp-scrim:  linear-gradient(100deg,var(--ink) 6%,rgba(4,7,10,.9) 34%,rgba(4,7,10,.42) 76%);
+  --fin-scrim:  linear-gradient(to top,var(--ink) 4%,rgba(4,7,10,.74) 46%,rgba(4,7,10,.5) 100%);
+  --vignette:   radial-gradient(120% 90% at 50% 45%,transparent 42%,rgba(0,0,0,.5) 100%);
+  --grain-op:   .055;
+  --nav-bg:     rgba(4,7,10,.72);
+  --card-hover: rgba(14,24,29,.72);
+  --bess-bg:    #020507;
+  --fallback-bg:#04070A;
+  --fallback-veil: rgba(4,7,10,.42);
+  --fallback-tint: 23,228,160;
 
   --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --text:    "Newsreader", Georgia, "Times New Roman", serif;
@@ -37,6 +66,39 @@
   --rule: 1px solid var(--hair);
   --ease: cubic-bezier(.16,.84,.28,1);
   --ease-io: cubic-bezier(.62,.02,.24,1);
+}
+
+html[data-theme="light"]{
+  --ink:        #F5F2EB;
+  --ink-raise:  #ECE7DC;
+  --ink-glass:  rgba(255,253,248,.62);
+  --cream:      #0C1116;
+  --cream-mid:  rgba(12,17,22,.74);
+  --cream-low:  rgba(12,17,22,.70);
+  --cream-dim:  rgba(12,17,22,.30);
+  --hair:       rgba(12,17,22,.15);
+
+  --em:         #067A55;
+  --em-fill:    #04704F;
+  --em-deep:    #04503A;
+  --em-glow:    rgba(6,122,85,.30);
+  --em-wash:    rgba(6,122,85,.13);
+  --on-em:      #FFFFFF;
+
+  --hero-scrim: linear-gradient(to top,var(--ink) 2%,rgba(245,242,235,.72) 30%,rgba(245,242,235,.40) 58%,rgba(245,242,235,.74) 100%),
+                radial-gradient(90% 70% at 62% 42%,rgba(245,242,235,.12) 30%,rgba(245,242,235,.66) 100%);
+  --exp-scrim:  linear-gradient(100deg,var(--ink) 6%,rgba(245,242,235,.90) 34%,rgba(245,242,235,.48) 76%);
+  --fin-scrim:  linear-gradient(to top,var(--ink) 4%,rgba(245,242,235,.80) 46%,rgba(245,242,235,.54) 100%);
+  --vignette:   radial-gradient(120% 90% at 50% 45%,transparent 55%,rgba(90,80,60,.16) 100%);
+  --grain-op:   .028;
+  --nav-bg:     rgba(245,242,235,.80);
+  --card-hover: rgba(255,253,248,.86);
+  --bess-bg:    #F5F2EB;
+  --fallback-bg:#F5F2EB;
+  --fallback-veil: rgba(245,242,235,.30);
+  --fallback-tint: 6,122,85;
+
+  color-scheme: light;
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -53,7 +115,7 @@ body{
 body.is-locked{overflow:hidden;height:100vh}
 img,video,canvas{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
-::selection{background:var(--em);color:#02120C}
+::selection{background:var(--em-fill);color:var(--on-em)}
 :focus-visible{outline:2px solid var(--em);outline-offset:4px;border-radius:2px}
 
 h1,h2,h3,h4,.dsp{
@@ -75,7 +137,7 @@ h1,h2,h3,h4,.dsp{
 #grain,#vig{position:fixed;inset:-40px;pointer-events:none;z-index:900}
 #grain{
   background-image:var(--grain);
-  opacity:.055; mix-blend-mode:overlay;
+  opacity:var(--grain-op); mix-blend-mode:overlay;
   animation:grainShift 700ms steps(1) infinite;
 }
 @keyframes grainShift{
@@ -83,10 +145,7 @@ h1,h2,h3,h4,.dsp{
   40% {transform:translate(2%,-3%)}   60%{transform:translate(-2%,-2%)}
   80% {transform:translate(3%,1%)}    100%{transform:translate(0,0)}
 }
-#vig{
-  z-index:899;
-  background:radial-gradient(120% 90% at 50% 45%,transparent 42%,rgba(0,0,0,.5) 100%);
-}
+#vig{ z-index:899; background:var(--vignette); }
 @media (prefers-reduced-motion:reduce){ #grain{animation:none} }
 
 /* ── reveal primitive ─────────────────────────────────────── */
@@ -103,7 +162,7 @@ h1,h2,h3,h4,.dsp{
   padding:var(--gut);gap:26px;
 }
 #pre .bar{height:1px;background:var(--hair);position:relative;overflow:hidden}
-#pre .bar i{position:absolute;inset:0;width:0;background:var(--em);box-shadow:0 0 22px var(--em-glow)}
+#pre .bar i{position:absolute;inset:0;width:0;background:var(--em-fill);box-shadow:0 0 22px var(--em-glow)}
 #pre .row{display:flex;justify-content:space-between;align-items:flex-end}
 #pre .nm{font-family:var(--display);font-weight:800;font-stretch:74%;
   text-transform:uppercase;line-height:.84;font-size:clamp(34px,7vw,92px)}
@@ -121,7 +180,7 @@ h1,h2,h3,h4,.dsp{
   border-bottom:1px solid transparent;
 }
 #nav.solid{
-  background:rgba(4,7,10,.72);backdrop-filter:blur(16px) saturate(140%);
+  background:var(--nav-bg);backdrop-filter:blur(16px) saturate(140%);
   -webkit-backdrop-filter:blur(16px) saturate(140%);
   border-bottom-color:var(--hair);
 }
@@ -140,6 +199,18 @@ h1,h2,h3,h4,.dsp{
 }
 #nav ul a:hover{color:var(--cream)}
 #nav ul a:hover::after{right:0}
+.nav-right{display:flex;align-items:center;gap:clamp(16px,2.4vw,40px)}
+.theme-t{
+  width:40px;height:40px;border-radius:50%;border:1px solid var(--hair);
+  background:transparent;color:var(--cream-mid);display:grid;place-items:center;
+  cursor:pointer;padding:0;flex:none;
+  transition:color .35s var(--ease),border-color .35s var(--ease),transform .35s var(--ease);
+}
+.theme-t:hover{color:var(--cream);border-color:var(--em);transform:rotate(-18deg)}
+.theme-t svg{width:17px;height:17px;display:block}
+.theme-t .ico-moon{display:none}
+html[data-theme="light"] .theme-t .ico-sun{display:none}
+html[data-theme="light"] .theme-t .ico-moon{display:block}
 @media (max-width:820px){ #nav ul{display:none} }
 
 /* grain texture (inline SVG turbulence) */
@@ -158,9 +229,7 @@ h1,h2,h3,h4,.dsp{
 }
 #heroStage::after{
   content:'';position:absolute;inset:0;pointer-events:none;
-  background:
-    linear-gradient(to top,var(--ink) 2%,rgba(4,7,10,.34) 34%,rgba(4,7,10,.12) 58%,rgba(4,7,10,.66) 100%),
-    radial-gradient(90% 70% at 62% 42%,transparent 30%,rgba(4,7,10,.62) 100%);
+  background:var(--hero-scrim);
 }
 .hero-type{
   position:absolute;left:var(--gut);right:var(--gut);bottom:clamp(78px,11vh,132px);
@@ -184,7 +253,7 @@ h1,h2,h3,h4,.dsp{
   letter-spacing:.22em;text-transform:uppercase;color:var(--cream-mid);
 }
 .hero-sub span{display:flex;align-items:center;gap:12px;opacity:0}
-.hero-sub span::before{content:'';width:5px;height:5px;background:var(--em);
+.hero-sub span::before{content:'';width:5px;height:5px;background:var(--em-fill);
   border-radius:50%;box-shadow:0 0 12px var(--em-glow)}
 .hero-state{
   margin:clamp(20px,2.6vw,34px) 0 0;max-width:56ch;
@@ -202,6 +271,15 @@ h1,h2,h3,h4,.dsp{
   56%{transform:scaleY(1);transform-origin:bottom}
   100%{transform:scaleY(0);transform-origin:bottom}}
 @media (max-width:820px){ .hero-cue{display:none} }
+
+/* The clips are graded for an ink-black page. On the light ground they are
+   lifted and softened so the footage stays visible under a much lighter
+   scrim, instead of being flattened by an opaque veil. */
+html[data-theme="light"] #heroStage video,
+html[data-theme="light"] .exp-media video,
+html[data-theme="light"] #finale video{
+  filter:brightness(1.42) contrast(.80) saturate(.88);
+}
 
 /* ══════════════════════════════════════════════════════════════
    ABOUT
@@ -230,7 +308,7 @@ h1,h2,h3,h4,.dsp{
   font-size:clamp(40px,6.4vw,116px);line-height:.84;letter-spacing:-.03em;
   font-variant-numeric:tabular-nums}
 .stat--hero{background:var(--ink-raise)}
-.stat--hero .fig{color:var(--em);text-shadow:0 0 44px rgba(23,228,160,.28)}
+.stat--hero .fig{color:var(--em);text-shadow:0 0 44px var(--em-glow)}
 .stat--word .fig{font-size:clamp(26px,3.1vw,54px);line-height:.92}
 .lab{margin-top:16px;font-family:var(--display);font-stretch:100%;font-weight:500;
   font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream-low)}
@@ -244,7 +322,7 @@ h1,h2,h3,h4,.dsp{
 .exp-media{position:absolute;inset:0}
 .exp-media video,.exp-media canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .exp-media::after{content:'';position:absolute;inset:0;
-  background:linear-gradient(100deg,var(--ink) 6%,rgba(4,7,10,.9) 34%,rgba(4,7,10,.42) 76%)}
+  background:var(--exp-scrim)}
 .exp-inner{position:relative;z-index:2;width:100%}
 .exp-head{font-size:clamp(30px,4.6vw,78px);max-width:14ch;margin-bottom:clamp(30px,4vw,64px)}
 .pillars{position:relative;max-width:660px;min-height:270px}
@@ -256,7 +334,7 @@ h1,h2,h3,h4,.dsp{
 .exp-rail{position:absolute;left:var(--gut);bottom:clamp(40px,6vh,74px);
   display:flex;gap:10px;z-index:3}
 .exp-rail i{width:52px;height:2px;background:var(--cream-dim);position:relative;overflow:hidden}
-.exp-rail i b{position:absolute;inset:0;width:0;background:var(--em);display:block}
+.exp-rail i b{position:absolute;inset:0;width:0;background:var(--em-fill);display:block}
 
 /* ══════════════════════════════════════════════════════════════
    WORK
@@ -273,9 +351,9 @@ h1,h2,h3,h4,.dsp{
 .card::before{
   content:'';position:absolute;inset:0;opacity:0;transition:opacity .5s var(--ease);
   background:radial-gradient(340px circle at var(--mx,50%) var(--my,50%),
-    rgba(23,228,160,.16),transparent 62%);
+    var(--em-wash),transparent 62%);
 }
-.card:hover,.card:focus-visible{border-color:rgba(23,228,160,.44);background:rgba(14,24,29,.72)}
+.card:hover,.card:focus-visible{border-color:var(--em-glow);background:var(--card-hover)}
 .card:hover::before,.card:focus-visible::before{opacity:1}
 .card>*{position:relative;z-index:1;transform:translateZ(28px)}
 .card .num{font-family:var(--display);font-stretch:100%;font-weight:500;font-size:11px;
@@ -293,7 +371,7 @@ h1,h2,h3,h4,.dsp{
 /* ══════════════════════════════════════════════════════════════
    BESS — signature 3D chapter
    ══════════════════════════════════════════════════════════════ */
-#bess{height:640vh;position:relative;background:#020507}
+#bess{height:640vh;position:relative;background:var(--bess-bg)}
 .bess-pin{position:sticky;top:0;height:100vh;overflow:hidden}
 #bessCanvas{position:absolute;inset:0;width:100%;height:100%}
 .bess-ui{position:absolute;inset:0;pointer-events:none;
@@ -323,7 +401,7 @@ h1,h2,h3,h4,.dsp{
   text-transform:uppercase;font-size:clamp(20px,2.5vw,40px);line-height:.92;margin-top:14px}
 .bess-step .d{margin-top:12px;color:var(--cream-mid);font-size:15.5px}
 .bess-prog{width:min(38vw,420px);height:1px;background:var(--hair);position:relative}
-.bess-prog i{position:absolute;inset:0;width:0;background:var(--em);
+.bess-prog i{position:absolute;inset:0;width:0;background:var(--em-fill);
   box-shadow:0 0 18px var(--em-glow);display:block}
 @media (max-width:820px){
   .bess-ui{padding-top:calc(var(--gut) + 74px)}
@@ -349,7 +427,7 @@ h1,h2,h3,h4,.dsp{
 .chain-row .v{font-family:var(--display);font-weight:800;font-stretch:74%;
   text-transform:uppercase;font-size:clamp(16px,1.75vw,28px);letter-spacing:-.01em}
 .chain-row .m{color:var(--cream-low);font-size:14.5px}
-.chain-row .fill{position:absolute;left:0;top:-1px;height:1px;width:0;background:var(--em);display:block}
+.chain-row .fill{position:absolute;left:0;top:-1px;height:1px;width:0;background:var(--em-fill);display:block}
 @media (max-width:900px){
   .life{grid-template-columns:1fr}
   .chain-row{grid-template-columns:44px 1fr;gap:10px}
@@ -390,8 +468,7 @@ h1,h2,h3,h4,.dsp{
    ══════════════════════════════════════════════════════════════ */
 #finale{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
 #finale video,#finale canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-#finale::after{content:'';position:absolute;inset:0;
-  background:linear-gradient(to top,var(--ink) 4%,rgba(4,7,10,.74) 46%,rgba(4,7,10,.5) 100%)}
+#finale::after{content:'';position:absolute;inset:0;background:var(--fin-scrim)}
 .fin-in{position:relative;z-index:2;width:100%;padding:clamp(80px,11vh,140px) var(--gut)}
 .fin-in h2{font-size:clamp(40px,9.4vw,178px);line-height:.83}
 .fin-in h2 span{display:block;overflow:hidden}
@@ -403,17 +480,18 @@ h1,h2,h3,h4,.dsp{
   position:relative;display:inline-flex;align-items:center;gap:13px;
   font-family:var(--display);font-stretch:100%;font-weight:600;font-size:11.5px;
   letter-spacing:.2em;text-transform:uppercase;
-  padding:19px 34px;border-radius:999px;background:var(--em);color:#02120C;
+  padding:19px 34px;border-radius:999px;background:var(--em-fill);color:var(--on-em);
   overflow:hidden;will-change:transform;
 }
 .btn span{position:relative;z-index:1}
-.btn .dot{width:6px;height:6px;border-radius:50%;background:#02120C;position:relative;z-index:1}
+.btn .dot{width:6px;height:6px;border-radius:50%;background:var(--on-em);position:relative;z-index:1}
 .btn::before{content:'';position:absolute;inset:0;background:var(--cream);
   transform:translateY(101%);transition:transform .52s var(--ease)}
 .btn:hover::before{transform:translateY(0)}
+.btn:hover{color:var(--ink)}
 .btn--ghost{background:transparent;color:var(--cream);border:1px solid var(--cream-dim)}
 .btn--ghost::before{background:var(--cream)}
-.btn--ghost:hover{color:#02120C}
+.btn--ghost:hover{color:var(--ink)}
 
 footer{padding:clamp(60px,8vw,120px) var(--gut) 40px;border-top:var(--rule)}
 .foot-grid{display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;align-items:flex-end}
@@ -447,13 +525,27 @@ footer{padding:clamp(60px,8vw,120px) var(--gut) 40px;border-top:var(--rule)}
 <!-- ══ NAV ══ -->
 <nav id="nav">
   <a class="mark" href="#hero">LV<em>.</em></a>
-  <ul>
-    <li><a href="#about">Profile</a></li>
-    <li><a href="#expertise">Expertise</a></li>
-    <li><a href="#bess">Storage</a></li>
-    <li><a href="#capital">Capital</a></li>
-    <li><a href="#finale">Contact</a></li>
-  </ul>
+  <div class="nav-right">
+    <ul>
+      <li><a href="#about">Profile</a></li>
+      <li><a href="#expertise">Expertise</a></li>
+      <li><a href="#bess">Storage</a></li>
+      <li><a href="#capital">Capital</a></li>
+      <li><a href="#finale">Contact</a></li>
+    </ul>
+    <button class="theme-t" id="themeBtn" type="button"
+            aria-label="Switch to light mode" title="Switch to light mode">
+      <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4.2"/>
+        <path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/>
+      </svg>
+      <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20.5 14.6A8.6 8.6 0 1 1 9.4 3.5a6.9 6.9 0 0 0 11.1 11.1Z"/>
+      </svg>
+    </button>
+  </div>
 </nav>
 
 <main>
@@ -493,7 +585,8 @@ footer{padding:clamp(60px,8vw,120px) var(--gut) 40px;border-top:var(--rule)}
     <div class="about-body">
       <p class="rv">Over ten years in the energy sector, working across <strong>renewable energy investments</strong> — securing European funding and project finance, structuring the investment case, and carrying projects through to a working asset. Battery storage is where that work is sharpest.</p>
       <p class="rv">My work covers the full investment lifecycle — identifying the opportunity, shaping the investment strategy, testing feasibility, securing financing and funding, running procurement, and carrying the project through implementation to delivery.</p>
-      <p class="rv">Most of that work sits where three disciplines meet: the engineering of renewable and storage assets, the financial structure that makes them viable, and the funding and regulatory frameworks that decide whether they get built at all. A project that is technically sound but unfunded is not a project. I coordinate energy investments end to end, including utility-scale developments delivered under confidentiality.</p>
+      <p class="rv">Most of that work sits where three disciplines meet: how renewable and storage assets are engineered, the financial structure that makes them viable, and the funding and regulatory frameworks that decide whether they get built at all. A project that is technically sound but unfunded is not a project. I coordinate energy investments end to end, including utility-scale developments delivered under confidentiality.</p>
+      <p class="rv">Engineering, design and permitting are delivered by specialist partners I select and coordinate. My work is the investment case, the funding and the execution that holds them together — and the responsibility for the result.</p>
       <div class="role-line rv">
         <b>Energy Investment Strategist</b><b>Funding &amp; Project Finance</b><b>BESS Specialist</b><b>Project Leader</b>
       </div>
@@ -616,7 +709,7 @@ footer{padding:clamp(60px,8vw,120px) var(--gut) 40px;border-top:var(--rule)}
       <div class="chain-row rv"><span class="k">02</span><span class="v">Feasibility</span><span class="m">Technical and commercial validation</span><i class="fill"></i></div>
       <div class="chain-row rv"><span class="k">03</span><span class="v">Investment strategy</span><span class="m">Structure, revenue stack, risk</span><i class="fill"></i></div>
       <div class="chain-row rv"><span class="k">04</span><span class="v">Funding &amp; financing</span><span class="m">Grants, debt, blended capital</span><i class="fill"></i></div>
-      <div class="chain-row rv"><span class="k">05</span><span class="v">Technical development</span><span class="m">Design, permitting, connection</span><i class="fill"></i></div>
+      <div class="chain-row rv"><span class="k">05</span><span class="v">Technical development</span><span class="m">Design and permitting, with specialist partners</span><i class="fill"></i></div>
       <div class="chain-row rv"><span class="k">06</span><span class="v">Procurement</span><span class="m">Tendering and supplier contracts</span><i class="fill"></i></div>
       <div class="chain-row rv"><span class="k">07</span><span class="v">Implementation</span><span class="m">Construction and commissioning</span><i class="fill"></i></div>
       <div class="chain-row rv"><span class="k">08</span><span class="v">Operational asset</span><span class="m">Revenue, performance, reporting</span><i class="fill"></i></div>
@@ -632,7 +725,7 @@ footer{padding:clamp(60px,8vw,120px) var(--gut) 40px;border-top:var(--rule)}
       <h2>How the practice was built</h2>
     </div>
     <div class="rail" id="rail">
-      <article class="stop"><div class="yr">Stage 01</div><h3>Technical consulting</h3><p>Engineering fundamentals and the discipline of getting specifications right the first time.</p></article>
+      <article class="stop"><div class="yr">Stage 01</div><h3>Technical foundations</h3><p>Learning how energy projects are actually engineered — and building the network of specialists who do that work.</p></article>
       <article class="stop"><div class="yr">Stage 02</div><h3>Renewable energy</h3><p>Photovoltaic development, from rooftop industrial systems to ground-mounted plants.</p></article>
       <article class="stop"><div class="yr">Stage 03</div><h3>European funding</h3><p>Programme architecture, eligibility and scoring across renewable energy calls — learning what actually makes a file bankable.</p></article>
       <article class="stop"><div class="yr">Stage 04</div><h3>Strategic investment management</h3><p>Moving from writing applications to structuring the investments behind them.</p></article>
@@ -741,6 +834,44 @@ const CONTACT = {
 
 const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+/* ─── THEME ────────────────────────────────────────────────────────────────
+   Everything themeable is a CSS custom property, so the canvas and WebGL
+   layers read the same tokens the stylesheet uses rather than keeping their
+   own copies of the palette. */
+const cssVar = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+let THEME = {};
+function readTheme() {
+  THEME = {
+    light : document.documentElement.getAttribute('data-theme') === 'light',
+    bg    : cssVar('--fallback-bg')   || '#04070A',
+    veil  : cssVar('--fallback-veil') || 'rgba(4,7,10,.42)',
+    tint  : cssVar('--fallback-tint') || '23,228,160',
+    bess  : cssVar('--bess-bg')       || '#020507'
+  };
+}
+readTheme();
+
+(function themeToggle() {
+  const root = document.documentElement;
+  const btn  = document.getElementById('themeBtn');
+  if (!btn) return;
+  const label = () => {
+    const toLight = root.getAttribute('data-theme') !== 'light';
+    const text = toLight ? 'Switch to light mode' : 'Switch to dark mode';
+    btn.setAttribute('aria-label', text);
+    btn.setAttribute('title', text);
+  };
+  label();
+  btn.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('lv-theme', next); } catch (e) { /* private mode */ }
+    readTheme();
+    label();
+    window.dispatchEvent(new CustomEvent('themechange'));
+  });
+})();
+
 /* Exponential smoothing that behaves the same at 30, 60 or 144 fps. A plain
    `v += (target - v) * k` per frame converges at whatever rate the device
    happens to run at, which made the scrub and the 3D assembly lag on slower
@@ -812,7 +943,7 @@ document.querySelectorAll('[data-split]').forEach(splitChars);
    Architectural light sweeps + volumetric haze, used whenever a clip is
    missing so the composition never collapses. */
 function architecturalCanvas(canvas, opts) {
-  const o = Object.assign({ tint: '23,228,160', beams: 5, speed: 1, seedShift: 0 }, opts);
+  const o = Object.assign({ beams: 5, speed: 1, seedShift: 0 }, opts);
   const ctx = canvas.getContext('2d');
   let w = 0, h = 0, t = o.seedShift;
   const dpr = Math.min(devicePixelRatio || 1, 1.75);
@@ -836,11 +967,12 @@ function architecturalCanvas(canvas, opts) {
 
   function frame() {
     t += .0042 * o.speed;
-    ctx.fillStyle = '#04070A'; ctx.fillRect(0, 0, w, h);
+    const tint = THEME.tint;
+    ctx.fillStyle = THEME.bg; ctx.fillRect(0, 0, w, h);
 
     const g = ctx.createRadialGradient(w * .58, h * .42, 0, w * .58, h * .42, Math.max(w, h) * .8);
-    g.addColorStop(0, `rgba(${o.tint},.12)`);
-    g.addColorStop(.45, `rgba(${o.tint},.035)`);
+    g.addColorStop(0, `rgba(${tint},.12)`);
+    g.addColorStop(.45, `rgba(${tint},.035)`);
     g.addColorStop(1, 'rgba(4,7,10,0)');
     ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
 
@@ -852,21 +984,21 @@ function architecturalCanvas(canvas, opts) {
       const ey = py + Math.sin(b.ang) * b.len * h + h;
       const lg = ctx.createLinearGradient(px, py, ex, ey);
       const pulse = .55 + .45 * Math.sin(t * 2.1 + i);
-      lg.addColorStop(0, `rgba(${o.tint},0)`);
-      lg.addColorStop(.5, `rgba(${o.tint},${b.a * pulse})`);
-      lg.addColorStop(1, `rgba(${o.tint},0)`);
+      lg.addColorStop(0, `rgba(${tint},0)`);
+      lg.addColorStop(.5, `rgba(${tint},${b.a * pulse})`);
+      lg.addColorStop(1, `rgba(${tint},0)`);
       ctx.strokeStyle = lg; ctx.lineWidth = b.wdt; ctx.lineCap = 'round';
       ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(ex, ey); ctx.stroke();
     });
     ctx.globalCompositeOperation = 'source-over';
 
     /* architectural horizon lines */
-    ctx.strokeStyle = `rgba(${o.tint},.07)`; ctx.lineWidth = 1;
+    ctx.strokeStyle = `rgba(${tint},.07)`; ctx.lineWidth = 1;
     for (let i = 0; i < 7; i++) {
       const y = h * (.28 + i * .1) + Math.sin(t * .7 + i) * 5;
       ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
     }
-    ctx.fillStyle = 'rgba(4,7,10,.42)'; ctx.fillRect(0, 0, w, h);
+    ctx.fillStyle = THEME.veil; ctx.fillRect(0, 0, w, h);
     canvas._raf = requestAnimationFrame(frame);
   }
   frame();
@@ -1135,7 +1267,7 @@ ScrollTrigger.create({
   const EM = 0x17E4A0;
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true,
                                              powerPreference: 'high-performance' });
-  renderer.setClearColor(0x020507, 1);
+
 
   const scene = new THREE.Scene();
   scene.fog = new THREE.FogExp2(0x020507, 0.0115);
@@ -1143,7 +1275,7 @@ ScrollTrigger.create({
   const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 400);
   const target = new THREE.Vector3(0, 2.4, 0);
 
-  scene.add(new THREE.AmbientLight(0x415a69, 1.55));
+  const ambient = new THREE.AmbientLight(0x415a69, 1.55); scene.add(ambient);
   const key = new THREE.DirectionalLight(0xdfe9f2, 1.75); key.position.set(-16, 22, 14); scene.add(key);
   const fill= new THREE.DirectionalLight(0x9fc4d6, 0.65); fill.position.set(22, 14, 22);  scene.add(fill);
   const rim = new THREE.DirectionalLight(EM, 1.15);       rim.position.set(18, 8, -16);  scene.add(rim);
@@ -1156,16 +1288,27 @@ ScrollTrigger.create({
   );
   ground.rotation.x = -Math.PI / 2; ground.position.y = -.02; scene.add(ground);
 
-  const grid = new THREE.GridHelper(220, 88, EM, 0x0d1a1f);
-  grid.material.transparent = true; grid.material.opacity = .20; scene.add(grid);
+  let grid = null;
+  function buildGrid(em, minor) {
+    if (grid) { scene.remove(grid); grid.geometry.dispose(); grid.material.dispose(); }
+    grid = new THREE.GridHelper(220, 88, em, minor);
+    grid.material.transparent = true; grid.material.opacity = .20;
+    scene.add(grid);
+  }
 
   /* ── material helpers: everything starts invisible and is faded in ── */
   const fadeables = [];
-  const shell = (c = 0x222f39, r = .52, m = .45) =>
-    new THREE.MeshStandardMaterial({ color: c, roughness: r, metalness: m,
-                                     transparent: true, opacity: 0 });
-  const glow = () =>
-    new THREE.MeshBasicMaterial({ color: EM, transparent: true, opacity: 0 });
+  const shellMats = [], emMats = [];
+  const shell = (c = 0x222f39, r = .52, m = .45) => {
+    const mm = new THREE.MeshStandardMaterial({ color: c, roughness: r, metalness: m,
+                                                transparent: true, opacity: 0 });
+    mm.userData.darkColor = c;
+    shellMats.push(mm); return mm;
+  };
+  const glow = () => {
+    const mm = new THREE.MeshBasicMaterial({ color: EM, transparent: true, opacity: 0 });
+    emMats.push(mm); return mm;
+  };
 
   /* every stage is a group whose materials fade together */
   function stage(group) {
@@ -1180,6 +1323,7 @@ ScrollTrigger.create({
       new THREE.EdgesGeometry(mesh.geometry),
       new THREE.LineBasicMaterial({ color: EM, transparent: true, opacity: 0 })
     );
+    emMats.push(l.material);
     l.position.copy(mesh.position); l.rotation.copy(mesh.rotation);
     parent.add(l);
     return l;
@@ -1273,6 +1417,7 @@ ScrollTrigger.create({
     arm.position.set(x, 12.4, 0); gridConn.add(arm);
   }
   const wireMat = new THREE.LineBasicMaterial({ color: EM, transparent: true, opacity: 0 });
+  emMats.push(wireMat);
   for (const dz of [-3.2, 0, 3.2]) {
     const pts = [];
     for (let i = 0; i <= 60; i++) {
@@ -1302,6 +1447,7 @@ ScrollTrigger.create({
     new THREE.BufferGeometry().setFromPoints(linkPts),
     new THREE.LineBasicMaterial({ color: EM, transparent: true, opacity: 0 })
   );
+  emMats.push(links.material);
   scene.add(links);
   const S_LINK = stage(links);
 
@@ -1319,8 +1465,41 @@ ScrollTrigger.create({
     color: EM, size: .42, transparent: true, opacity: 0,
     blending: THREE.AdditiveBlending, depthWrite: false
   }));
+  emMats.push(flow.material);
   scene.add(flow);
   const S_FLOW = stage(flow);
+
+  /* ── palette ──────────────────────────────────────────────────────────────
+     The scene reads the same tokens as the stylesheet. On a light ground the
+     bright emerald disappears, so the accent darkens and the shells lift to a
+     mid grey that still separates from the pad. */
+  function applyTheme() {
+    const light = THEME.light;
+    const bg     = light ? 0xF5F2EB : 0x020507;
+    const em     = light ? 0x067A55 : 0x17E4A0;
+    const shellC = light ? 0x8B949B : 0x222f39;
+    const groundC= light ? 0xDED7C7 : 0x0b1116;
+    const minorC = light ? 0xC7BFAD : 0x0d1a1f;
+
+    renderer.setClearColor(bg, 1);
+    scene.fog.color.setHex(bg);
+    scene.fog.density = light ? 0.0075 : 0.0115;
+    ground.material.color.setHex(groundC);
+    buildGrid(em, minorC);
+
+    shellMats.forEach(m => m.color.setHex(shellC));
+    emMats.forEach(m => m.color.setHex(em));
+
+    ambient.color.setHex(light ? 0xE8E2D6 : 0x415a69);
+    ambient.intensity = light ? 2.1 : 1.55;
+    key.intensity     = light ? 1.15 : 1.75;
+    fill.intensity    = light ? 0.9  : 0.65;
+    rim.color.setHex(em);
+    rim.intensity     = light ? 0.45 : 1.15;
+    pulse.color.setHex(em);
+  }
+  applyTheme();
+  addEventListener('themechange', applyTheme);
 
   /* ── the ten assembly steps ───────────────────────────────────────────── */
   const STEPS = [
