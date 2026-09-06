@@ -781,7 +781,7 @@ footer{padding:clamp(60px,8vw,120px) var(--gut) 40px;border-top:var(--rule)}
     <div class="mark dsp" style="font-size:clamp(28px,4vw,58px)">Lucian<br>Vrînceanu</div>
     <div class="foot-links">
       <a id="lnLinkedin" href="#" target="_blank" rel="noopener">LinkedIn</a>
-      <a id="lnEmail" href="#">Email</a>
+      <a id="lnEmail" href="#"><span id="lnEmailText">Email</span></a>
     </div>
   </div>
   <div class="foot-meta">
@@ -843,7 +843,7 @@ const MEDIA = {
 
 const CONTACT = {
   email   : 'vrinceanulucian.vl@gmail.com',
-  linkedin: 'https://www.linkedin.com/in/lucian-vrinceanu'
+  linkedin: 'https://www.linkedin.com/in/lucian-vr%C3%AEnceanu-7913a8173/'
 };
 
 const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -906,7 +906,13 @@ if (window.Lenis && !RM) {
 }
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
-    const el = document.querySelector(a.getAttribute('href'));
+    /* The contact links ship as href="#" and are rewritten to mailto: and
+       https: further down, so the href has to be re-read at click time —
+       querySelector on "mailto:..." throws, and the listener died on every
+       click of the email and LinkedIn links. */
+    const href = a.getAttribute('href');
+    if (!href || href === '#' || href.charAt(0) !== '#') return;
+    const el = document.querySelector(href);
     if (!el) return;
     e.preventDefault();
     lenis ? lenis.scrollTo(el, { offset: 0 }) : el.scrollIntoView({ behavior: 'smooth' });
@@ -914,7 +920,24 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 });
 
 /* ─── 3. CONTACT WIRING ────────────────────────────────────────────────────*/
-document.getElementById('lnEmail').href    = 'mailto:' + CONTACT.email;
+const emailLink = document.getElementById('lnEmail');
+emailLink.href = 'mailto:' + CONTACT.email;
+document.getElementById('lnEmailText').textContent = CONTACT.email;
+
+/* The mailto still fires for anyone with a mail client. For everyone else the
+   address is now visible, and one click puts it on the clipboard so the link
+   is never a dead end. */
+emailLink.addEventListener('click', () => {
+  const label = document.getElementById('lnEmailText');
+  if (!navigator.clipboard) return;
+  navigator.clipboard.writeText(CONTACT.email).then(() => {
+    if (label.dataset.busy) return;
+    label.dataset.busy = '1';
+    const original = label.textContent;
+    label.textContent = 'Copied to clipboard';
+    setTimeout(() => { label.textContent = original; delete label.dataset.busy; }, 1800);
+  }).catch(() => { /* clipboard blocked; the mailto is still there */ });
+});
 document.getElementById('lnLinkedin').href = CONTACT.linkedin;
 document.getElementById('ctaPrimary').href = 'mailto:' + CONTACT.email + '?subject=Project%20enquiry';
 document.getElementById('yr').textContent  = '© ' + new Date().getFullYear();
