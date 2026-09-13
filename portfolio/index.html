@@ -333,13 +333,14 @@ html[data-theme="light"] .theme-t .ico-moon{display:block}
 /* ══════════════════════════════════════════════════════════════
    EXPERTISE
    ══════════════════════════════════════════════════════════════ */
-#expertise{height:380vh;position:relative}
+#expertise{height:640vh;position:relative}
 .exp-pin{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center}
 .exp-media{position:absolute;inset:0}
 .exp-media video,.exp-media canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .exp-media::after{content:'';position:absolute;inset:0;
   background:var(--exp-scrim)}
 .exp-inner{position:relative;z-index:2;width:100%}
+.exp-inner>.mono{margin-bottom:clamp(16px,2vw,24px)}
 .exp-head{font-size:clamp(30px,4.6vw,78px);max-width:14ch;margin-bottom:clamp(30px,4vw,64px)}
 .pillars{position:relative;max-width:660px;min-height:270px}
 .pillar{position:absolute;inset:0;opacity:0;pointer-events:none}
@@ -352,37 +353,110 @@ html[data-theme="light"] .theme-t .ico-moon{display:block}
 .exp-rail i{width:52px;height:2px;background:var(--cream-dim);position:relative;overflow:hidden}
 .exp-rail i b{position:absolute;inset:0;width:0;background:var(--em-fill);display:block}
 
-/* ══════════════════════════════════════════════════════════════
-   WORK
-   ══════════════════════════════════════════════════════════════ */
-.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.6vw,26px);
-  margin-top:clamp(44px,6vw,86px)}
-.card{
-  position:relative;padding:clamp(26px,2.6vw,44px);border:var(--rule);
-  background:var(--ink-glass);backdrop-filter:blur(11px);-webkit-backdrop-filter:blur(11px);
-  min-height:clamp(340px,34vw,470px);display:flex;flex-direction:column;
-  transform-style:preserve-3d;transition:border-color .5s var(--ease),background .5s var(--ease);
-  overflow:hidden;
+/* ── hero claim + profile note ─────────────────────────────── */
+.hero-claim{font-family:var(--display);font-weight:800;font-stretch:74%;
+  text-transform:uppercase;font-size:clamp(17px,2.1vw,34px);line-height:.98;
+  margin:clamp(18px,2.2vw,28px) 0 0;color:var(--em);max-width:20ch;opacity:0}
+.hero-claim i{font-style:normal}
+.about-body .note{font-size:14.5px;color:var(--cream-low);border-left:2px solid var(--hair);
+  padding-left:18px;margin-top:2em}
+
+/* ── coverage figures ──────────────────────────────────────── */
+.cover-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,2vw,34px)}
+.cover{border-top:var(--rule);padding-top:22px}
+.cfig{font-family:var(--display);font-weight:800;font-stretch:70%;
+  font-size:clamp(38px,5.2vw,88px);line-height:.86;letter-spacing:-.03em;color:var(--em)}
+.clab{display:block;margin-top:12px;font-family:var(--display);font-stretch:100%;
+  font-weight:500;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--cream-low);max-width:22ch}
+@media (max-width:860px){ .cover-grid{grid-template-columns:repeat(2,1fr)} }
+
+/* ── ten fields, as an expanding index ─────────────────────── */
+.dom-head{font-size:clamp(32px,4.6vw,74px);margin-top:22px;max-width:16ch}
+.domains{margin-top:clamp(36px,5vw,64px);border-top:var(--rule)}
+.dom{border-bottom:var(--rule)}
+.dom-head-btn{
+  width:100%;background:none;border:0;cursor:pointer;color:inherit;text-align:left;
+  display:grid;grid-template-columns:56px minmax(0,1fr) 28px;gap:clamp(12px,2vw,28px);
+  align-items:center;padding:clamp(20px,2.2vw,32px) 0;font:inherit;
 }
-.card::before{
-  content:'';position:absolute;inset:0;opacity:0;transition:opacity .5s var(--ease);
-  background:radial-gradient(340px circle at var(--mx,50%) var(--my,50%),
-    var(--em-wash),transparent 62%);
+.dom-num{font-family:var(--display);font-stretch:100%;font-weight:500;font-size:11px;
+  letter-spacing:.2em;color:var(--em)}
+.dom-eng{display:block;font-family:var(--display);font-stretch:100%;font-weight:500;
+  font-size:10.5px;letter-spacing:.19em;text-transform:uppercase;color:var(--cream-low);
+  margin-bottom:8px}
+.dom-title strong{display:block;font-family:var(--display);font-weight:800;font-stretch:74%;
+  text-transform:uppercase;font-size:clamp(18px,2.2vw,36px);line-height:.94;letter-spacing:-.012em}
+.dom-sign{position:relative;width:20px;height:20px;justify-self:end}
+.dom-sign::before,.dom-sign::after{content:'';position:absolute;background:var(--em);
+  transition:transform .45s var(--ease),opacity .45s var(--ease)}
+.dom-sign::before{left:0;right:0;top:9px;height:2px}
+.dom-sign::after{top:0;bottom:0;left:9px;width:2px}
+.dom[open] .dom-sign::after,.dom.is-open .dom-sign::after{transform:scaleY(0);opacity:0}
+.dom-head-btn:hover .dom-title strong{color:var(--em)}
+.dom-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s var(--ease)}
+.dom.is-open .dom-body{grid-template-rows:1fr}
+.dom-inner{overflow:hidden}
+.dom-inner>p{margin:0 0 22px;max-width:62ch;color:var(--cream-mid);font-size:16px}
+.dom-inner ul{list-style:none;margin:0;padding:0 0 clamp(26px,3vw,40px);
+  display:flex;flex-wrap:wrap;gap:8px}
+.dom-inner li{font-family:var(--display);font-stretch:100%;font-weight:500;font-size:10.5px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--cream-low);
+  border:1px solid var(--cream-dim);border-radius:999px;padding:7px 14px}
+@media (min-width:900px){ .dom-inner{padding-left:calc(56px + 2vw)} }
+@media (max-width:600px){ .dom-head-btn{grid-template-columns:40px minmax(0,1fr) 20px} }
+
+/* ── financing table ───────────────────────────────────────── */
+.fin-head{font-size:clamp(30px,4.4vw,70px);margin-top:22px;max-width:18ch}
+.fin-table{margin-top:clamp(36px,5vw,64px);border-top:var(--rule)}
+.fin-row{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr) minmax(0,1.3fr);
+  gap:clamp(14px,2.4vw,40px);padding:clamp(18px,2vw,28px) 0;border-bottom:var(--rule);
+  align-items:baseline}
+.fin-row--head .fin-c{font-family:var(--display);font-stretch:100%;font-weight:500;
+  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream-low)}
+.fin-c{font-size:15.5px;color:var(--cream-mid)}
+.fin-src{font-family:var(--display);font-weight:800;font-stretch:74%;text-transform:uppercase;
+  font-size:clamp(15px,1.5vw,23px);line-height:1.02;color:var(--cream);letter-spacing:-.008em}
+@media (max-width:820px){
+  .fin-row{grid-template-columns:1fr;gap:8px}
+  .fin-row--head{display:none}
 }
-.card:hover,.card:focus-visible{border-color:var(--em-glow);background:var(--card-hover)}
-.card:hover::before,.card:focus-visible::before{opacity:1}
-.card>*{position:relative;z-index:1;transform:translateZ(28px)}
-.card .num{font-family:var(--display);font-stretch:100%;font-weight:500;font-size:11px;
-  letter-spacing:.24em;color:var(--em)}
-.card h3{font-size:clamp(21px,2vw,34px);margin:22px 0 16px;max-width:14ch}
-.card p{margin:0;color:var(--cream-mid);font-size:15.5px}
-.card ul{list-style:none;margin:auto 0 0;padding:24px 0 0;display:flex;flex-wrap:wrap;gap:7px}
-.card li{
-  font-family:var(--display);font-stretch:100%;font-weight:500;font-size:10px;
-  letter-spacing:.15em;text-transform:uppercase;color:var(--cream-low);
-  border:1px solid var(--cream-dim);border-radius:999px;padding:6px 12px;
+
+/* ── sectors ───────────────────────────────────────────────── */
+.sect-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+  gap:clamp(34px,6vw,110px);align-items:start}
+#sectors h2{font-size:clamp(30px,4.4vw,72px);max-width:13ch;margin-top:26px}
+.sect-tags{display:flex;flex-wrap:wrap;gap:10px;align-content:flex-start}
+.sect-tags b{font-family:var(--display);font-stretch:100%;font-weight:500;font-size:11px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--cream-mid);
+  border:var(--rule);border-radius:999px;padding:12px 20px;
+  transition:color .35s var(--ease),border-color .35s var(--ease)}
+.sect-tags b:hover{color:var(--em);border-color:var(--em)}
+@media (max-width:900px){ .sect-grid{grid-template-columns:1fr} }
+
+/* ── check-up steps + rail lede ────────────────────────────── */
+.track-lede{margin:22px 0 0;max-width:52ch;color:var(--cream-mid);font-size:clamp(15px,1.3vw,19px)}
+.cta-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.4vw,40px);
+  margin-top:clamp(28px,3.4vw,48px);max-width:1000px}
+.cta-step{border-top:var(--rule);padding-top:18px}
+.csn{font-family:var(--display);font-stretch:100%;font-weight:500;font-size:11px;
+  letter-spacing:.2em;color:var(--em)}
+.cst{display:block;margin-top:12px;font-family:var(--display);font-weight:800;
+  font-stretch:74%;text-transform:uppercase;font-size:clamp(14px,1.4vw,21px);line-height:1}
+.csd{display:block;margin-top:10px;color:var(--cream-mid);font-size:14.5px}
+@media (max-width:820px){ .cta-steps{grid-template-columns:1fr;gap:18px} }
+
+/* ── language toggle ───────────────────────────────────────── */
+.lang-t{
+  height:40px;min-width:46px;padding:0 13px;border-radius:999px;
+  border:1px solid var(--hair);background:transparent;color:var(--cream-mid);
+  cursor:pointer;flex:none;
+  font-family:var(--display);font-stretch:100%;font-weight:600;font-size:11px;
+  letter-spacing:.14em;
+  transition:color .35s var(--ease),border-color .35s var(--ease);
 }
-@media (max-width:980px){ .proj-grid{grid-template-columns:1fr} .card{min-height:0} }
+.lang-t:hover{color:var(--cream);border-color:var(--em)}
+
 
 /* ══════════════════════════════════════════════════════════════
    BESS — signature 3D chapter
@@ -394,9 +468,11 @@ html[data-theme="light"] .theme-t .ico-moon{display:block}
   padding:calc(var(--gut) + 46px) var(--gut) var(--gut);
   display:flex;flex-direction:column;justify-content:space-between}
 .bess-head{max-width:640px}
+.bess-head .mono{margin-bottom:clamp(16px,2vw,26px)}
 .bess-head h2{font-size:clamp(34px,6.4vw,116px);line-height:.84}
-.bess-head h2 span{display:block;overflow:hidden}
-.bess-head h2 span i{display:inline-block;font-style:normal;transform:translateY(104%)}
+.bess-head h2 span{display:block;overflow:hidden;
+  padding:.16em 0 .10em;margin:-.16em 0 -.10em}
+.bess-head h2 span i{display:inline-block;font-style:normal;transform:translateY(112%)}
 .bess-head p{margin:24px 0 0;max-width:44ch;color:var(--cream-mid);
   font-size:clamp(15px,1.3vw,19px)}
 .bess-services{
@@ -476,8 +552,9 @@ html[data-theme="light"] .theme-t .ico-moon{display:block}
   line-height:.9}
 .stmt-b{font-size:clamp(34px,7.6vw,140px);line-height:.85;max-width:19ch}
 .stmt-b em{font-style:normal;color:var(--em)}
-.stmt-b .w{display:inline-block;overflow:hidden;padding-bottom:.06em}
-.stmt-b .w i{font-style:normal;transform:translateY(104%)}
+.stmt-b .w{display:inline-block;overflow:hidden;
+  padding:.16em 0 .12em;margin:-.16em 0 -.12em}
+.stmt-b .w i{font-style:normal;transform:translateY(112%)}
 
 /* ══════════════════════════════════════════════════════════════
    FINALE + FOOTER
@@ -486,9 +563,11 @@ html[data-theme="light"] .theme-t .ico-moon{display:block}
 #finale video,#finale canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 #finale::after{content:'';position:absolute;inset:0;background:var(--fin-scrim)}
 .fin-in{position:relative;z-index:2;width:100%;padding:clamp(80px,11vh,140px) var(--gut)}
+.fin-in .mono{margin-bottom:clamp(20px,2.6vw,40px)}
 .fin-in h2{font-size:clamp(40px,9.4vw,178px);line-height:.83}
-.fin-in h2 span{display:block;overflow:hidden}
-.fin-in h2 span i{display:inline-block;font-style:normal;transform:translateY(104%)}
+.fin-in h2 span{display:block;overflow:hidden;
+  padding:.17em 0 .11em;margin:-.17em 0 -.11em}
+.fin-in h2 span i{display:inline-block;font-style:normal;transform:translateY(112%)}
 .fin-in p{margin:clamp(24px,3vw,42px) 0 0;max-width:52ch;color:var(--cream-mid);
   font-size:clamp(16px,1.4vw,21px)}
 .cta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:clamp(32px,4vw,58px)}
@@ -543,21 +622,20 @@ footer{padding:clamp(60px,8vw,120px) var(--gut) 40px;border-top:var(--rule)}
   <a class="mark" href="#hero">LV<em>.</em></a>
   <div class="nav-right">
     <ul>
-      <li><a href="#about">Profile</a></li>
-      <li><a href="#expertise">Expertise</a></li>
-      <li><a href="#bess">Storage</a></li>
-      <li><a href="#capital">Capital</a></li>
-      <li><a href="#finale">Contact</a></li>
+      <li><a href="#about" data-i18n="k001">Profil</a></li>
+      <li><a href="#expertise" data-i18n="k002">Servicii</a></li>
+      <li><a href="#work" data-i18n="k003">Domenii</a></li>
+      <li><a href="#bess" data-i18n="k004">Stocare</a></li>
+      <li><a href="#finance" data-i18n="k005">Finanțare</a></li>
+      <li><a href="#finale" data-i18n="k006">Contact</a></li>
     </ul>
-    <button class="theme-t" id="themeBtn" type="button"
-            aria-label="Switch to light mode" title="Switch to light mode">
-      <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-           stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+    <button class="lang-t" id="langBtn" type="button" aria-label="Switch language"><span id="langLabel">EN</span></button>
+    <button class="theme-t" id="themeBtn" type="button" aria-label="Switch to light mode" title="Switch to light mode">
+      <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
         <circle cx="12" cy="12" r="4.2"/>
         <path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/>
       </svg>
-      <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-           stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M20.5 14.6A8.6 8.6 0 1 1 9.4 3.5a6.9 6.9 0 0 0 11.1 11.1Z"/>
       </svg>
     </button>
@@ -565,215 +643,362 @@ footer{padding:clamp(60px,8vw,120px) var(--gut) 40px;border-top:var(--rule)}
 </nav>
 
 <main>
-
-<!-- ══ HERO ══════════════════════════════════════════════════ -->
 <section id="hero">
  <div class="hero-pin">
-  <div id="heroStage">
-    <canvas id="heroFallback"></canvas>
-    <video id="heroVideo" muted playsinline preload="auto"></video>
-  </div>
-
+  <div id="heroStage"><canvas id="heroFallback"></canvas><video id="heroVideo" muted playsinline preload="auto"></video></div>
   <div class="hero-type">
-    <h1 class="hero-name">
-      <span class="ln" data-split>Lucian</span>
-      <span class="ln" data-split>Vrînceanu</span>
-    </h1>
+    <h1 class="hero-name"><span class="ln" data-split>Lucian</span><span class="ln" data-split>Vrînceanu</span></h1>
     <div class="hero-sub">
-      <span>Renewable Energy Investments</span>
-      <span>European Funding &amp; Project Finance</span>
-      <span>Battery Energy Storage</span>
+      <span data-i18n="k007">Investiții energetice</span>
+      <span data-i18n="k008">Finanțare &amp; fonduri europene</span>
+      <span data-i18n="k009">Stocare în baterii</span>
     </div>
-    <p class="hero-state">I secure the funding and structure the investments behind renewable energy projects — from European programmes and project finance through to utility-scale delivery, with battery storage as the sharpest edge of that work.</p>
+    <p class="hero-claim"><i data-i18n="k010">Dăm energie proiectelor tale.</i></p>
+    <p class="hero-state" data-i18n="k011">Nu vând soluții energetice standard. Ajut companiile să ia deciziile energetice corecte — de la prima factură analizată până la proiectul pus în funcțiune și optimizat.</p>
   </div>
-
   <div class="hero-cue"><span class="mono">Scroll</span><i></i></div>
  </div>
 </section>
-
-<!-- ══ ABOUT ═════════════════════════════════════════════════ -->
 <section class="sec wrap" id="about">
   <div class="about-grid">
     <div>
-      <div class="mono rv" style="margin-bottom:26px">Profile</div>
-      <h2 class="rv">Renewable energy, funded and built</h2>
+      <div class="mono rv"><span data-i18n="k012">Profil</span></div>
+      <h2 class="rv" data-i18n="k013">Consultantul energetic integrat</h2>
     </div>
     <div class="about-body">
-      <p class="rv">Over ten years <strong>raising investment capital</strong> — securing European funding, grants and project finance, and building the investment case that makes a project fundable in the first place. Energy is where I apply it: renewable investments, and at the sharpest end utility-scale battery storage.</p>
-      <p class="rv">My work covers the full investment lifecycle — identifying the opportunity, shaping the investment strategy, testing feasibility, securing financing and funding, running procurement, and carrying the project through implementation to delivery.</p>
-      <p class="rv">Most of that work sits where three disciplines meet: how renewable and storage assets are engineered, the financial structure that makes them viable, and the funding and regulatory frameworks that decide whether they get built at all. A project that is technically sound but unfunded is not a project. I coordinate energy investments end to end, including utility-scale developments delivered under confidentiality.</p>
-      <p class="rv">Engineering, design and permitting are delivered by specialist partners I select and coordinate. My work is the investment case, the funding and the execution that holds them together — and the responsibility for the result.</p>
-      <div class="role-line rv">
-        <b>Energy Investment Strategist</b><b>Funding &amp; Project Finance</b><b>BESS Specialist</b><b>Project Leader</b>
-      </div>
+      <p class="rv" data-i18n-html="k014">Nu doar consultanță pentru fonduri europene și nu instalator de echipamente. Acopăr întreg parcursul unei decizii energetice — de la prima factură analizată până la proiectul pus în funcțiune și optimizat.</p>
+      <p class="rv" data-i18n-html="k015">Peste zece ani în <strong>atragerea de capital de investiții</strong> — fonduri europene, granturi și finanțare de proiect, plus construirea cazului de investiție care face un proiect finanțabil. Energia este domeniul unde aplic asta.</p>
+      <p class="rv" data-i18n-html="k016">Nu înlocuiesc EPC-ul, banca sau avocatul. Îi selectez, îi pun în competiție reală și verific ce livrează — în numele clientului.</p>
+      <p class="rv note" data-i18n="k017">Serviciile rezervate prin lege profesiei de avocat, precum și proiectarea și execuția, sunt furnizate împreună cu parteneri specializați și autorizați, sub coordonarea mea.</p>
+      <div class="role-line rv"><b data-i18n="k018">Consultant energetic</b><b data-i18n="k019">Reprezentantul beneficiarului</b><b data-i18n="k020">Finanțare &amp; fonduri</b><b data-i18n="k021">Owner's Engineer</b></div>
     </div>
   </div>
 </section>
-
-<!-- ══ IMPACT ════════════════════════════════════════════════ -->
+<section class="sec wrap" id="capital">
+  <div class="life">
+    <div>
+      <div class="mono rv"><span data-i18n="k022">Cum lucrez</span></div>
+      <h2 class="rv" data-i18n="k023">Un singur punct de coordonare</h2>
+      <p class="lede rv" data-i18n="k024">Fiecare etapă poate fi contractată separat sau ca parte dintr-un mandat integrat. Rezultatul este același: deciziile se iau pe date, nu pe oferte primite.</p>
+    </div>
+    <div class="chain">
+      <div class="chain-row rv"><span class="k">01</span><span class="v" data-i18n="k025">Analiză</span><span class="m" data-i18n="k026">Facturi, contracte, profil de consum</span><i class="fill"></i></div>
+      <div class="chain-row rv"><span class="k">02</span><span class="v" data-i18n="k027">Strategie</span><span class="m" data-i18n="k028">Scenarii, business case, priorități</span><i class="fill"></i></div>
+      <div class="chain-row rv"><span class="k">03</span><span class="v" data-i18n="k029">Finanțare</span><span class="m" data-i18n="k030">Fonduri UE, bănci, ESCO, PPA</span><i class="fill"></i></div>
+      <div class="chain-row rv"><span class="k">04</span><span class="v" data-i18n="k031">Dezvoltare</span><span class="m" data-i18n="k032">Autorizare, racordare, Ready-to-Build</span><i class="fill"></i></div>
+      <div class="chain-row rv"><span class="k">05</span><span class="v" data-i18n="k033">Implementare</span><span class="m" data-i18n="k034">Licitații EPC, Owner's Engineer</span><i class="fill"></i></div>
+      <div class="chain-row rv"><span class="k">06</span><span class="v" data-i18n="k035">Optimizare</span><span class="m" data-i18n="k036">KPI, monitorizare, reducere continuă</span><i class="fill"></i></div>
+    </div>
+  </div>
+</section>
 <section class="sec sec--tight wrap" id="impact">
   <div class="stats">
-    <div class="stat rv"><div class="fig" data-count="10" data-suffix="+">0</div><div class="lab">Years raising investment capital</div></div>
-    <div class="stat stat--hero rv"><div class="fig" data-count="30" data-prefix="€" data-suffix="M">€0M</div><div class="lab">Investment value coordinated</div></div>
-    <div class="stat rv"><div class="fig" data-count="40" data-suffix="+">0</div><div class="lab">Energy projects</div></div>
-    <div class="stat stat--word rv"><div class="fig">Grant<br>to grid</div><div class="lab">Funding through to delivery</div></div>
+    <div class="stat rv"><div class="fig" data-count="10" data-suffix="+">0+</div><span class="lab" data-i18n="k037">Ani în atragerea de capital</span></div>
+    <div class="stat rv"><div class="fig" data-count="30" data-prefix="€" data-suffix="M">€0M</div><span class="lab" data-i18n="k038">Valoare investiții coordonate</span></div>
+    <div class="stat rv"><div class="fig" data-count="40" data-suffix="+">0+</div><span class="lab" data-i18n="k039">Proiecte energetice</span></div>
+    <div class="stat stat--word rv"><div class="fig">Grant<br>to grid</div><span class="lab" data-i18n="k040">De la finanțare la punere în funcțiune</span></div>
   </div>
 </section>
-
-<!-- ══ EXPERTISE ═════════════════════════════════════════════ -->
 <section id="expertise">
   <div class="exp-pin">
-    <div class="exp-media">
-      <canvas id="expFallback"></canvas>
-      <video id="expVideo" muted playsinline loop preload="auto"></video>
-    </div>
+    <div class="exp-media"><canvas id="expFallback"></canvas><video id="expVideo" muted playsinline loop preload="auto"></video></div>
     <div class="exp-inner wrap">
-      <div class="mono" style="margin-bottom:22px">Core expertise</div>
-      <h2 class="exp-head">Where capital, funding and delivery converge</h2>
+      <div class="mono"><span data-i18n="k041">Arhitectura serviciilor</span></div>
+      <h2 class="exp-head" data-i18n="k042">Șase direcții. Zece domenii.</h2>
       <div class="pillars">
         <article class="pillar" data-p="0">
-          <span class="idx">01</span>
-          <h3>Battery Energy Storage Systems</h3>
-          <p>Utility-scale BESS strategy, investment planning, grid integration, revenue modelling, project development and implementation management.</p>
+          <span class="idx">01 — Reduce Energy Costs</span>
+          <h3 data-i18n="k043">Reducerea costurilor cu energia</h3>
+          <p data-i18n="k044">Facturi, contracte, procurement, energy management. Prima economie vine din factură — nu din echipament.</p>
         </article>
         <article class="pillar" data-p="1">
-          <span class="idx">02</span>
-          <h3>Funding &amp; Project Finance</h3>
-          <p>European funding programmes, grants, blended and project finance for renewable energy investments — building the financial case that carries a project to a final decision, and defending it through to contract.</p>
+          <span class="idx">02 — Invest in Energy</span>
+          <h3 data-i18n="k045">Investiții energetice</h3>
+          <p data-i18n="k046">Solar, BESS, eficiență, e-mobility — ca reprezentant al beneficiarului, nu al vânzătorului.</p>
         </article>
         <article class="pillar" data-p="2">
-          <span class="idx">03</span>
-          <h3>Renewable Energy Investments</h3>
-          <p>Photovoltaic, hybrid and industrial renewable developments carried from opportunity and feasibility through procurement and implementation to an operating asset.</p>
+          <span class="idx">03 — Develop Energy Projects</span>
+          <h3 data-i18n="k047">Dezvoltare de proiecte</h3>
+          <p data-i18n="k048">De la idee la Ready-to-Build și până la tranzacție.</p>
+        </article>
+        <article class="pillar" data-p="3">
+          <span class="idx">04 — Finance Your Investment</span>
+          <h3 data-i18n="k049">Finanțarea investiției</h3>
+          <p data-i18n="k050">Fonduri UE, bănci, ESCO, PPA, capital privat. Investiția potrivită are nevoie de finanțarea potrivită.</p>
+        </article>
+        <article class="pillar" data-p="4">
+          <span class="idx">05 — Legal &amp; Regulatory</span>
+          <h3 data-i18n="k051">Juridic și reglementare</h3>
+          <p data-i18n="k052">ANRE, racordare, contracte, compliance. Reglementarea decide fezabilitatea.</p>
+        </article>
+        <article class="pillar" data-p="5">
+          <span class="idx">06 — Energy Strategy</span>
+          <h3 data-i18n="k053">Strategie energetică</h3>
+          <p data-i18n="k054">Energy Strategy 2030: roadmap de investiții pe 3–5 ani, cu buget și ținte.</p>
         </article>
       </div>
     </div>
-    <div class="exp-rail"><i><b></b></i><i><b></b></i><i><b></b></i></div>
+    <div class="exp-rail"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
   </div>
 </section>
-
-<!-- ══ PROJECTS ══════════════════════════════════════════════ -->
+<section class="sec sec--tight wrap" id="cover">
+  <div class="cover-grid">
+    <div class="cover rv"><div class="cfig">6</div><span class="clab" data-i18n="k055">direcții de servicii integrate</span></div>
+    <div class="cover rv"><div class="cfig">10</div><span class="clab" data-i18n="k056">domenii de expertiză energetică</span></div>
+    <div class="cover rv"><div class="cfig">3–5</div><span class="clab" data-i18n="k057">ani — orizontul unei strategii</span></div>
+    <div class="cover rv"><div class="cfig">1</div><span class="clab" data-i18n="k058">partener pentru tot parcursul</span></div>
+  </div>
+</section>
 <section class="sec wrap" id="work">
-  <div class="mono rv">Selected work</div>
-  <h2 class="rv" style="font-size:clamp(32px,4.6vw,74px);margin-top:22px;max-width:16ch">Assets built from strategy, not from templates</h2>
-  <div class="proj-grid">
-    <article class="card rv" tabindex="0">
-      <div class="num">01</div>
-      <h3>Utility-scale battery energy storage</h3>
-      <p>I build the investment case for grid-scale storage and carry it to financial close — sizing the asset against the connection it can actually get and the revenue it can realistically earn, stacking arbitrage and balancing services into one model, then assembling grant, debt and equity behind it. From there I run the procurement and hold the technical partners to the schedule through to commissioning.</p>
-      <ul><li>Revenue stacking</li><li>Grid connection</li><li>Capital structure</li><li>Financial close</li><li>Procurement</li><li>Commissioning</li></ul>
+  <div class="mono rv"><span data-i18n="k059">Zece domenii</span></div>
+  <h2 class="rv dom-head" data-i18n="k060">Ce fac, concret</h2>
+  <p class="lede rv" data-i18n="k061">Zece domenii de expertiză. Fiecare se poate contracta independent.</p>
+  <div class="domains">
+    <article class="dom rv">
+      <button class="dom-head-btn" type="button" aria-expanded="false">
+        <span class="dom-num">01</span>
+        <span class="dom-title">
+          <span class="dom-eng">Energy Cost &amp; Procurement</span>
+          <strong data-i18n="k062">Reducerea și controlul costurilor</strong>
+        </span>
+        <span class="dom-sign" aria-hidden="true"></span>
+      </button>
+      <div class="dom-body">
+        <div class="dom-inner">
+          <p data-i18n="k063">Analizez ce plătești astăzi, de ce plătești atât și ce se poate renegocia — de la componentele tarifare la strategia de achiziție pe termen mediu.</p>
+          <ul><li data-i18n="k064">analiză facturi energie și gaze</li><li data-i18n="k065">analiză contracte de furnizare</li><li data-i18n="k066">verificare componente tarifare</li><li data-i18n="k067">analiză profil și curbă de consum</li><li data-i18n="k068">benchmarking al prețurilor</li><li data-i18n="k069">comparare oferte furnizori</li><li data-i18n="k070">negocierea contractelor</li><li data-i18n="k071">contracte Fixed / Indexed / Mixed</li><li data-i18n="k072">analiză PZU + marjă furnizor</li><li data-i18n="k073">strategie la expirare contract</li><li data-i18n="k074">monitorizarea pieței</li><li data-i18n="k075">buget energetic anual</li></ul>
+        </div>
+      </div>
     </article>
-    <article class="card rv" tabindex="0">
-      <div class="num">02</div>
-      <h3>Industrial energy infrastructure</h3>
-      <p>For an industrial site the investment starts at the electricity bill. I read the load profile and the tariff exposure, size generation and storage against actual consumption rather than available roof, and model what the combination returns against peak charges and price volatility. Then I secure the funding that shortens the payback and take the build through procurement to handover.</p>
-      <ul><li>Load profile</li><li>Tariff exposure</li><li>Peak shaving</li><li>Sizing &amp; payback</li><li>Grant funding</li><li>Procurement</li><li>Handover</li></ul>
+    <article class="dom rv">
+      <button class="dom-head-btn" type="button" aria-expanded="false">
+        <span class="dom-num">02</span>
+        <span class="dom-title">
+          <span class="dom-eng">Energy Management &amp; Optimization</span>
+          <strong data-i18n="k076">Consumul, ca instrument de management</strong>
+        </span>
+        <span class="dom-sign" aria-hidden="true"></span>
+      </button>
+      <div class="dom-body">
+        <div class="dom-inner">
+          <p data-i18n="k077">Trec de la factură la proces: curbă de sarcină, putere contractată, intervale orare, flexibilitate și KPI energetici urmăriți lună de lună.</p>
+          <ul><li data-i18n="k078">audit energetic</li><li data-i18n="k079">analiza curbei de sarcină</li><li data-i18n="k080">consumuri ineficiente</li><li data-i18n="k081">optimizarea puterii contractate</li><li data-i18n="k082">load shifting</li><li data-i18n="k083">peak shaving</li><li data-i18n="k084">optimizare pe intervale orare</li><li data-i18n="k085">Demand Response</li><li data-i18n="k086">flexibilitate energetică</li><li data-i18n="k087">strategie de autoconsum</li><li data-i18n="k088">KPI energetici și raportare</li><li data-i18n="k089">plan anual de reducere costuri</li></ul>
+        </div>
+      </div>
     </article>
-    <article class="card rv" tabindex="0">
-      <div class="num">03</div>
-      <h3>European funding &amp; energy finance</h3>
-      <p>Funding is won before the application is written. I read the programme against the project — what it actually rewards, where the scoring is decided, which costs are eligible — then shape the investment so it scores, and assemble grant, debt and own contribution into a structure that survives both evaluation and audit. I write the file, defend it through the clarification rounds, and keep the project compliant once the money lands.</p>
-      <ul><li>Programme analysis</li><li>Eligibility</li><li>Scoring</li><li>Grant applications</li><li>Blended finance</li><li>Clarifications</li><li>Audit &amp; compliance</li></ul>
+    <article class="dom rv">
+      <button class="dom-head-btn" type="button" aria-expanded="false">
+        <span class="dom-num">03</span>
+        <span class="dom-title">
+          <span class="dom-eng">Solar / PV &amp; Self-consumption</span>
+          <strong data-i18n="k090">Produci energia unde o consumi</strong>
+        </span>
+        <span class="dom-sign" aria-hidden="true"></span>
+      </button>
+      <div class="dom-body">
+        <div class="dom-inner">
+          <p data-i18n="k091">De la analiza de oportunitate și simularea producției, la caietul de sarcini, compararea ofertelor EPC și verificarea performanței după punerea în funcțiune.</p>
+          <ul><li data-i18n="k092">analiză oportunitate PV</li><li data-i18n="k093">dimensionare preliminară</li><li data-i18n="k094">simulare producție</li><li data-i18n="k095">analiză autoconsum</li><li data-i18n="k096">CAPEX / OPEX</li><li data-i18n="k097">ROI, IRR, Payback</li><li data-i18n="k098">analiză prosumator</li><li data-i18n="k099">alegerea tehnologiei</li><li data-i18n="k100">caiet de sarcini</li><li data-i18n="k101">oferte EPC și negociere</li><li data-i18n="k102">Project Management</li><li data-i18n="k103">Owner's Engineer</li></ul>
+        </div>
+      </div>
+    </article>
+    <article class="dom rv">
+      <button class="dom-head-btn" type="button" aria-expanded="false">
+        <span class="dom-num">04</span>
+        <span class="dom-title">
+          <span class="dom-eng">BESS / Energy Storage</span>
+          <strong data-i18n="k104">Stocarea este un model de business</strong>
+        </span>
+        <span class="dom-sign" aria-hidden="true"></span>
+      </button>
+      <div class="dom-body">
+        <div class="dom-inner">
+          <p data-i18n="k105">Nu un echipament: venituri, piețe de participare, cicluri, degradare, garanții și strategie de racordare. Compar producătorii în competiție reală, în numele clientului.</p>
+          <ul><li data-i18n="k106">studiu de oportunitate BESS</li><li data-i18n="k107">dimensionare sisteme</li><li data-i18n="k108">PV + BESS / stand-alone</li><li data-i18n="k109">peak shaving, arbitraj, backup</li><li data-i18n="k110">piețe de participare</li><li data-i18n="k111">model financiar, ROI / IRR</li><li data-i18n="k112">due diligence tehnic</li><li data-i18n="k113">selecție baterii, PCS, EMS</li><li data-i18n="k114">analiza garanțiilor</li><li data-i18n="k115">degradation &amp; cycle analysis</li><li data-i18n="k116">strategie de racordare</li><li data-i18n="k117">suport pentru investitori</li></ul>
+        </div>
+      </div>
+    </article>
+    <article class="dom rv">
+      <button class="dom-head-btn" type="button" aria-expanded="false">
+        <span class="dom-num">05</span>
+        <span class="dom-title">
+          <span class="dom-eng">Energy Project Development</span>
+          <strong data-i18n="k118">De la idee la Ready-to-Build</strong>
+        </span>
+        <span class="dom-sign" aria-hidden="true"></span>
+      </button>
+      <div class="dom-body">
+        <div class="dom-inner">
+          <p data-i18n="k119">Solar, BESS și hibrid — coordonez teren, racordare, ATR, avize, proiectare, SPV, data room și pregătirea pentru finanțare sau tranzacție.</p>
+          <ul><li data-i18n="k120">feasibility study</li><li data-i18n="k121">due diligence &amp; teren</li><li data-i18n="k122">analiză racordare și ATR</li><li data-i18n="k123">avize, autorizații, proiectare</li><li data-i18n="k124">structurare SPV</li><li data-i18n="k125">pregătire Data Room</li><li data-i18n="k126">identificarea investitorilor</li><li data-i18n="k127">Project Management</li><li data-i18n="k128">Owner's Engineer</li></ul>
+        </div>
+      </div>
+    </article>
+    <article class="dom rv">
+      <button class="dom-head-btn" type="button" aria-expanded="false">
+        <span class="dom-num">06</span>
+        <span class="dom-title">
+          <span class="dom-eng">Finance Your Investment</span>
+          <strong data-i18n="k129">Finanțarea care se potrivește investiției</strong>
+        </span>
+        <span class="dom-sign" aria-hidden="true"></span>
+      </button>
+      <div class="dom-body">
+        <div class="dom-inner">
+          <p data-i18n="k130">Nu doar identific investiția potrivită. Ajut și la identificarea finanțării — fonduri europene, bănci, ESCO, PPA sau capital privat.</p>
+          <ul><li data-i18n="k131">verificare eligibilitate</li><li data-i18n="k132">cerere de finanțare</li><li data-i18n="k133">business plan</li><li data-i18n="k134">analiză financiară și dosar bancar</li><li data-i18n="k135">negociere finanțare</li><li data-i18n="k136">structurare contract ESCO / PPA</li><li data-i18n="k137">achiziții și rambursări</li><li data-i18n="k138">data room și investitori</li></ul>
+        </div>
+      </div>
+    </article>
+    <article class="dom rv">
+      <button class="dom-head-btn" type="button" aria-expanded="false">
+        <span class="dom-num">07</span>
+        <span class="dom-title">
+          <span class="dom-eng">Legal &amp; Regulatory</span>
+          <strong data-i18n="k139">Reglementarea decide fezabilitatea</strong>
+        </span>
+        <span class="dom-sign" aria-hidden="true"></span>
+      </button>
+      <div class="dom-body">
+        <div class="dom-inner">
+          <p data-i18n="k140">Un proiect corect tehnic și financiar poate fi blocat de racordare, de o clauză contractuală sau de o cerință ANRE. Le verific din prima fază.</p>
+          <ul><li data-i18n="k141">legislația energiei</li><li data-i18n="k142">regulatory advisory</li><li data-i18n="k143">ANRE</li><li data-i18n="k144">autorizarea proiectelor</li><li data-i18n="k145">racordare și ATR</li><li data-i18n="k146">prosumatori</li><li data-i18n="k147">relația cu operatorii de distribuție și transport</li><li data-i18n="k148">contracte de energie, PPA, EPC, O&amp;M</li><li data-i18n="k149">dispute privind facturarea</li><li data-i18n="k150">due diligence juridic</li></ul>
+        </div>
+      </div>
+    </article>
+    <article class="dom rv">
+      <button class="dom-head-btn" type="button" aria-expanded="false">
+        <span class="dom-num">08</span>
+        <span class="dom-title">
+          <span class="dom-eng">Energy Strategy 2030</span>
+          <strong data-i18n="k151">Energia ca decizie strategică</strong>
+        </span>
+        <span class="dom-sign" aria-hidden="true"></span>
+      </button>
+      <div class="dom-body">
+        <div class="dom-inner">
+          <p data-i18n="k152">Pentru companii medii și mari: o strategie energetică pe 3–5 ani, cu roadmap de investiții, buget, ținte de cost și de emisii.</p>
+          <ul><li data-i18n="k153">Energy Baseline</li><li data-i18n="k154">forecast consum și costuri</li><li data-i18n="k155">strategie de procurement</li><li data-i18n="k156">management risc energetic</li><li data-i18n="k157">roadmap investiții și CAPEX</li><li data-i18n="k158">ROI pe fiecare măsură</li><li data-i18n="k159">calendar de investiții</li><li data-i18n="k160">surse de finanțare identificate</li></ul>
+        </div>
+      </div>
+    </article>
+    <article class="dom rv">
+      <button class="dom-head-btn" type="button" aria-expanded="false">
+        <span class="dom-num">09</span>
+        <span class="dom-title">
+          <span class="dom-eng">Investor &amp; Transaction Advisory</span>
+          <strong data-i18n="k161">Proiecte verificate, nu promisiuni</strong>
+        </span>
+        <span class="dom-sign" aria-hidden="true"></span>
+      </button>
+      <div class="dom-body">
+        <div class="dom-inner">
+          <p data-i18n="k162">Sourcing, screening și due diligence tehnic, comercial și de reglementare — până la closing. Buyer side sau seller side, un singur standard de verificare.</p>
+          <ul><li data-i18n="k163">identificare proiecte PV și BESS</li><li data-i18n="k164">project sourcing &amp; screening</li><li data-i18n="k165">technical due diligence</li><li data-i18n="k166">commercial due diligence</li><li data-i18n="k167">regulatory due diligence</li><li data-i18n="k168">evaluare stadiu de dezvoltare</li><li data-i18n="k169">verificare condiții de racordare</li><li data-i18n="k170">analiză CAPEX și business case</li><li data-i18n="k171">pregătire Data Room</li><li data-i18n="k172">identificarea cumpărătorilor</li><li data-i18n="k173">negociere</li><li data-i18n="k174">suport până la closing</li></ul>
+        </div>
+      </div>
+    </article>
+    <article class="dom rv">
+      <button class="dom-head-btn" type="button" aria-expanded="false">
+        <span class="dom-num">10</span>
+        <span class="dom-title">
+          <span class="dom-eng">E-Mobility &amp; Electrification</span>
+          <strong data-i18n="k175">Infrastructură gândită cu rețeaua</strong>
+        </span>
+        <span class="dom-sign" aria-hidden="true"></span>
+      </button>
+      <div class="dom-body">
+        <div class="dom-inner">
+          <p data-i18n="k176">Infrastructura de încărcare se dimensionează împreună cu puterea disponibilă, cu producția proprie și cu stocarea. Electrificarea începe cu puterea disponibilă, nu cu stația.</p>
+          <ul><li data-i18n="k177">strategie infrastructură EV</li><li data-i18n="k178">stații de încărcare</li><li data-i18n="k179">analiză necesar putere</li><li data-i18n="k180">PV + BESS + EV</li><li data-i18n="k181">electrificarea flotelor</li><li data-i18n="k182">infrastructură pentru companii</li><li data-i18n="k183">parcări comerciale și industriale</li><li data-i18n="k184">analiză CAPEX / ROI</li><li data-i18n="k185">identificarea finanțării</li></ul>
+        </div>
+      </div>
     </article>
   </div>
-  <p class="mono" style="margin-top:26px">Client names, capacities and financial figures withheld under confidentiality.</p>
+  <p class="mono rv" style="margin-top:26px" data-i18n="k186">Denumirile clienților, capacitățile și valorile financiare rămân confidențiale.</p>
 </section>
-
-<!-- ══ BESS ══════════════════════════════════════════════════ -->
 <section id="bess">
   <div class="bess-pin">
     <canvas id="bessCanvas"></canvas>
     <div class="bess-ui">
       <div class="bess-head">
-        <div class="mono" style="margin-bottom:18px">Signature chapter</div>
-        <h2><span><i>Battery is</i></span><span><i>the new grid</i></span></h2>
-        <p>Storage stopped being an accessory to generation. Assembled correctly, it is the balancing layer the network runs on.</p>
+        <div class="mono"><span data-i18n="k187">Capitol dedicat</span></div>
+        <h2><span><i data-i18n="k188">Stocarea nu e</i></span><span><i data-i18n="k189">un echipament</i></span></h2>
+        <p data-i18n="k190">Este un model de business: venituri, piețe de participare, cicluri, degradare și o strategie de racordare. Așa se evaluează, nu după preț pe kilowatt-oră.</p>
       </div>
-
-      <div class="bess-services">
-        <b data-svc="0">Energy arbitrage</b>
-        <b data-svc="1">Frequency regulation</b>
-        <b data-svc="2">Grid balancing</b>
-        <b data-svc="3">Peak shaving</b>
-        <b data-svc="4">Renewable integration</b>
-        <b data-svc="5">Hybrid PV + BESS</b>
-        <b data-svc="6">Market optimisation</b>
-      </div>
-
+      <div class="bess-services"><b data-svc="0" data-i18n="k191">Arbitraj</b><b data-svc="1" data-i18n="k192">Reglaj de frecvență</b><b data-svc="2" data-i18n="k193">Echilibrarea rețelei</b><b data-svc="3" data-i18n="k194">Peak shaving</b><b data-svc="4" data-i18n="k195">Integrarea regenerabilelor</b><b data-svc="5" data-i18n="k196">Hibrid PV + BESS</b><b data-svc="6" data-i18n="k197">Optimizare de piață</b></div>
       <div class="bess-foot">
         <div class="bess-step">
           <div class="n" id="bessN">01 / 10</div>
-          <div class="t" id="bessT">Battery containers</div>
-          <div class="d" id="bessD">Enclosures land on the pad and set the footprint of the asset.</div>
+          <div class="t" id="bessT">Containere de baterii</div>
+          <div class="d" id="bessD">Ansamblurile ajung pe platformă și fixează amprenta activului.</div>
         </div>
         <div class="bess-prog"><i id="bessProg"></i></div>
       </div>
     </div>
   </div>
 </section>
-
-<!-- ══ CAPITAL ═══════════════════════════════════════════════ -->
-<section class="sec wrap" id="capital">
-  <div class="life">
-    <div>
-      <div class="mono rv" style="margin-bottom:26px">Investment management</div>
-      <h2 class="rv">From capital to infrastructure</h2>
-      <p class="lede rv">An investment thesis only becomes an energy asset if capital, technology, funding and execution stay connected at every stage. Losing one of them is how projects stall.</p>
-    </div>
-    <div class="chain">
-      <div class="chain-row rv"><span class="k">01</span><span class="v">Opportunity</span><span class="m">Screening, siting, grid position</span><i class="fill"></i></div>
-      <div class="chain-row rv"><span class="k">02</span><span class="v">Feasibility</span><span class="m">Technical and commercial validation</span><i class="fill"></i></div>
-      <div class="chain-row rv"><span class="k">03</span><span class="v">Investment strategy</span><span class="m">Structure, revenue stack, risk</span><i class="fill"></i></div>
-      <div class="chain-row rv"><span class="k">04</span><span class="v">Funding &amp; financing</span><span class="m">Grants, debt, blended capital</span><i class="fill"></i></div>
-      <div class="chain-row rv"><span class="k">05</span><span class="v">Technical development</span><span class="m">Design and permitting, with specialist partners</span><i class="fill"></i></div>
-      <div class="chain-row rv"><span class="k">06</span><span class="v">Procurement</span><span class="m">Tendering and supplier contracts</span><i class="fill"></i></div>
-      <div class="chain-row rv"><span class="k">07</span><span class="v">Implementation</span><span class="m">Construction and commissioning</span><i class="fill"></i></div>
-      <div class="chain-row rv"><span class="k">08</span><span class="v">Operational asset</span><span class="m">Revenue, performance, reporting</span><i class="fill"></i></div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ TIMELINE ══════════════════════════════════════════════ -->
 <section id="track">
   <div class="track-pin">
     <div class="track-head">
-      <div class="mono" style="margin-bottom:18px">Trajectory</div>
-      <h2>How the practice was built</h2>
+      <div class="mono"><span data-i18n="k198">Dezvoltare de proiecte</span></div>
+      <h2 data-i18n="k199">De la idee la activ operațional</h2>
+      <p class="track-lede" data-i18n="k200">Rezultatul: un proiect bancabil, cu documentație verificată, gata de finanțare sau de vânzare către un investitor.</p>
     </div>
     <div class="rail" id="rail">
-      <article class="stop"><div class="yr">Stage 01</div><h3>Technical foundations</h3><p>Learning how energy projects are actually engineered — and building the network of specialists who do that work.</p></article>
-      <article class="stop"><div class="yr">Stage 02</div><h3>Renewable energy</h3><p>Photovoltaic development, from rooftop industrial systems to ground-mounted plants.</p></article>
-      <article class="stop"><div class="yr">Stage 03</div><h3>European funding</h3><p>Programme architecture, eligibility and scoring across renewable energy calls — learning what actually makes a file bankable.</p></article>
-      <article class="stop"><div class="yr">Stage 04</div><h3>Strategic investment management</h3><p>Moving from writing applications to structuring the investments behind them.</p></article>
-      <article class="stop"><div class="yr">Stage 05</div><h3>Battery energy storage</h3><p>Revenue stacking, grid services and the commercial logic of storage assets.</p></article>
-      <article class="stop"><div class="yr">Stage 06</div><h3>Utility-scale infrastructure</h3><p>Coordinating renewable, storage and hybrid developments at network scale — and the funding that carries them.</p></article>
+      <article class="stop"><span class="yr" data-i18n="k201">Etapa 01</span><h3 data-i18n="k202">Idee</h3><p data-i18n="k203">Oportunitate, teren, racordare</p></article>
+      <article class="stop"><span class="yr" data-i18n="k204">Etapa 02</span><h3 data-i18n="k205">Dezvoltare</h3><p data-i18n="k206">Feasibility, avize, documentație</p></article>
+      <article class="stop"><span class="yr" data-i18n="k207">Etapa 03</span><h3 data-i18n="k208">Finanțare</h3><p data-i18n="k209">Fonduri, bănci, investitori</p></article>
+      <article class="stop"><span class="yr" data-i18n="k210">Etapa 04</span><h3 data-i18n="k211">Construcție</h3><p data-i18n="k212">EPC, project management, Owner's Engineer</p></article>
+      <article class="stop"><span class="yr" data-i18n="k213">Etapa 05</span><h3 data-i18n="k214">Operare</h3><p data-i18n="k215">Performanță, O&amp;M, optimizare</p></article>
     </div>
   </div>
 </section>
-
-<!-- ══ STATEMENT ═════════════════════════════════════════════ -->
-<section class="sec wrap" id="stmt">
-  <p class="stmt-a rv">I don't just develop energy projects.</p>
-  <h2 class="stmt-b" data-splitwords>I structure the <em>investments</em> that make them possible.</h2>
+<section class="sec wrap" id="finance">
+  <div class="mono rv"><span data-i18n="k216">Finanțare</span></div>
+  <h2 class="rv fin-head" data-i18n="k217">Finanțarea potrivită pentru investiția potrivită</h2>
+  <div class="fin-table rv">
+    <div class="fin-row fin-row--head"><span class="fin-c" data-i18n="k218">Sursa de finanțare</span><span class="fin-c" data-i18n="k219">Potrivit pentru</span><span class="fin-c" data-i18n="k220">Ce fac eu</span></div>
+    <div class="fin-row rv"><span class="fin-c fin-src" data-i18n="k221">Fondul pentru Modernizare</span><span class="fin-c" data-i18n="k222">Industrie, mari consumatori</span><span class="fin-c" data-i18n="k223">Eligibilitate, cerere, achiziții, rambursări</span></div>
+    <div class="fin-row rv"><span class="fin-c fin-src" data-i18n="k224">Programe UE · Tranziție Justă</span><span class="fin-c" data-i18n="k225">Regiuni și sectoare vizate</span><span class="fin-c" data-i18n="k226">Încadrare, business plan, implementare</span></div>
+    <div class="fin-row rv"><span class="fin-c fin-src" data-i18n="k227">AFIR · Electric Up</span><span class="fin-c" data-i18n="k228">Agricultură, IMM, HoReCa</span><span class="fin-c" data-i18n="k229">Verificare eligibilitate și depunere</span></div>
+    <div class="fin-row rv"><span class="fin-c fin-src" data-i18n="k230">Finanțare bancară · Leasing</span><span class="fin-c" data-i18n="k231">Investiții cu cash-flow predictibil</span><span class="fin-c" data-i18n="k232">Analiză financiară, dosar, negociere</span></div>
+    <div class="fin-row rv"><span class="fin-c fin-src" data-i18n="k233">ESCO · PPA</span><span class="fin-c" data-i18n="k234">Zero CAPEX pentru beneficiar</span><span class="fin-c" data-i18n="k235">Structurare contract, verificare termeni</span></div>
+    <div class="fin-row rv"><span class="fin-c fin-src" data-i18n="k236">Capital privat · Investitori</span><span class="fin-c" data-i18n="k237">Proiecte de dezvoltare</span><span class="fin-c" data-i18n="k238">Data room, identificare investitori, negociere</span></div>
+  </div>
 </section>
-
-<!-- ══ FINALE ════════════════════════════════════════════════ -->
+<section class="sec wrap" id="sectors">
+  <div class="sect-grid">
+    <div>
+      <div class="mono rv"><span data-i18n="k239">Pentru cine lucrez</span></div>
+      <h2 class="rv" data-i18n="k240">Companii care consumă, produc sau investesc</h2>
+      <p class="lede rv" data-i18n="k241">Lucrez cu companii pentru care energia este o linie de cost semnificativă sau o oportunitate de investiție — și cu investitorii care finanțează aceste proiecte.</p>
+    </div>
+    <div class="sect-tags rv"><b data-i18n="k242">Industrie</b><b data-i18n="k243">Retail</b><b data-i18n="k244">Logistică</b><b data-i18n="k245">Real estate</b><b data-i18n="k246">Ospitalitate</b><b data-i18n="k247">Agricultură</b><b data-i18n="k248">Sănătate</b><b data-i18n="k249">Autorități locale</b><b data-i18n="k250">Dezvoltatori</b><b data-i18n="k251">Investitori</b><b data-i18n="k252">Traderi de energie</b><b data-i18n="k253">Mari consumatori</b></div>
+  </div>
+</section>
+<section class="sec wrap" id="stmt">
+  <p class="stmt-a rv" data-i18n="k254">Energia nu mai este doar un cost.</p>
+  <h2 class="stmt-b" data-splitwords>Este o <em>decizie strategică</em> de business.</h2>
+</section>
 <section id="finale">
   <canvas id="finaleFallback"></canvas>
   <video id="finVideo" muted playsinline loop preload="auto"></video>
   <div class="fin-in">
-    <h2 data-splitlines>
-      <span><i>Build the next</i></span>
-      <span><i>energy landmark</i></span>
-    </h2>
-    <p>From securing European funding to commissioning utility-scale storage, I turn renewable energy investments into projects that are bankable, financed and built.</p>
+    <div class="mono"><span data-i18n="k255">Energy Check-Up</span></div>
+    <h2 data-splitlines><span><i data-i18n="k256">Cât te costă energia</i></span><span><i data-i18n="k257">cu adevărat?</i></span></h2>
+    <p data-i18n="k258">Începe cu o analiză a facturii, a contractului și a profilului tău de consum. Documentele rămân confidențiale.</p>
+    <div class="cta-steps">
+      <div class="cta-step"><span class="csn">1</span><span class="cst" data-i18n="k259">Trimiți documentele</span><span class="csd" data-i18n="k260">Factura de energie electrică sau gaze și contractul de furnizare. Nimic altceva.</span></div>
+      <div class="cta-step"><span class="csn">2</span><span class="cst" data-i18n="k261">Analizez</span><span class="csd" data-i18n="k262">Componente tarifare, profil de consum, clauze contractuale, preț raportat la piață.</span></div>
+      <div class="cta-step"><span class="csn">3</span><span class="cst" data-i18n="k263">Primești concluziile</span><span class="csd" data-i18n="k264">Unde pierzi bani, ce se poate renegocia, ce se poate optimiza și în ce ordine.</span></div>
+    </div>
     <div class="cta-row">
-      <a class="btn" id="ctaPrimary" href="#"><i class="dot"></i><span>Start a project</span></a>
-      <a class="btn btn--ghost" href="#work"><span>Explore my portfolio</span></a>
+      <a class="btn" id="ctaPrimary" href="#"><i class="dot"></i><span data-i18n="k265">Solicită Energy Check-Up</span></a>
+      <a class="btn btn--ghost" href="#work"><span data-i18n="k266">Discută cu mine</span></a>
     </div>
   </div>
 </section>
-
 </main>
 
 <footer>
@@ -785,7 +1010,7 @@ footer{padding:clamp(60px,8vw,120px) var(--gut) 40px;border-top:var(--rule)}
     </div>
   </div>
   <div class="foot-meta">
-    <span>Renewable energy investments · European funding &amp; project finance · Battery energy storage</span>
+    <span data-i18n="k267">Investiții energetice · Finanțare și fonduri europene · Stocare în baterii</span>
     <span id="yr">© 2026</span>
   </div>
 </footer>
@@ -893,6 +1118,46 @@ readTheme();
 const approach = (v, target, k, dt) => v + (target - v) * (1 - Math.pow(1 - k, dt * 60));
 const MOBILE = window.matchMedia('(max-width: 820px)').matches;
 
+/* ─── LANGUAGE ─────────────────────────────────────────────────────────────
+   Every string on the page exists once, in both languages, generated from a
+   single source so the two can never drift apart. Elements carry data-i18n
+   (text) or data-i18n-html (text with inline markup). */
+const I18N = {"k001": {"ro": "Profil","en": "Profile"},"k002": {"ro": "Servicii","en": "Services"},"k003": {"ro": "Domenii","en": "Fields"},"k004": {"ro": "Stocare","en": "Storage"},"k005": {"ro": "Finanțare","en": "Financing"},"k006": {"ro": "Contact","en": "Contact"},"k007": {"ro": "Investiții energetice","en": "Energy investments"},"k008": {"ro": "Finanțare & fonduri europene","en": "Financing & European funds"},"k009": {"ro": "Stocare în baterii","en": "Battery energy storage"},"k010": {"ro": "Dăm energie proiectelor tale.","en": "We give energy to your projects."},"k011": {"ro": "Nu vând soluții energetice standard. Ajut companiile să ia deciziile energetice corecte — de la prima factură analizată până la proiectul pus în funcțiune și optimizat.","en": "I don't sell standard energy solutions. I help companies make the right energy decisions — from the first invoice analysed to the project commissioned and optimised."},"k012": {"ro": "Profil","en": "Profile"},"k013": {"ro": "Consultantul energetic integrat","en": "The integrated energy consultant"},"k014": {"ro": "Nu doar consultanță pentru fonduri europene și nu instalator de echipamente. Acopăr întreg parcursul unei decizii energetice — de la prima factură analizată până la proiectul pus în funcțiune și optimizat.","en": "Not simply European-funds consultancy, and not an equipment installer. I cover the whole path of an energy decision — from the first invoice analysed to the project commissioned and optimised."},"k015": {"ro": "Peste zece ani în <strong>atragerea de capital de investiții</strong> — fonduri europene, granturi și finanțare de proiect, plus construirea cazului de investiție care face un proiect finanțabil. Energia este domeniul unde aplic asta.","en": "Over ten years <strong>raising investment capital</strong> — European funds, grants and project finance, plus building the investment case that makes a project fundable in the first place. Energy is where I apply it."},"k016": {"ro": "Nu înlocuiesc EPC-ul, banca sau avocatul. Îi selectez, îi pun în competiție reală și verific ce livrează — în numele clientului.","en": "I don't replace the EPC contractor, the bank or the lawyer. I select them, put them in real competition and verify what they deliver — on the client's behalf."},"k017": {"ro": "Serviciile rezervate prin lege profesiei de avocat, precum și proiectarea și execuția, sunt furnizate împreună cu parteneri specializați și autorizați, sub coordonarea mea.","en": "Services reserved by law to the legal profession, as well as design and execution, are delivered together with specialised and authorised partners, under my coordination."},"k018": {"ro": "Consultant energetic","en": "Energy consultant"},"k019": {"ro": "Reprezentantul beneficiarului","en": "Owner's representative"},"k020": {"ro": "Finanțare & fonduri","en": "Financing & funds"},"k021": {"ro": "Owner's Engineer","en": "Owner's Engineer"},"k022": {"ro": "Cum lucrez","en": "How I work"},"k023": {"ro": "Un singur punct de coordonare","en": "A single point of coordination"},"k024": {"ro": "Fiecare etapă poate fi contractată separat sau ca parte dintr-un mandat integrat. Rezultatul este același: deciziile se iau pe date, nu pe oferte primite.","en": "Each stage can be contracted on its own or as part of an integrated mandate. The result is the same: decisions made on data, not on whatever offers arrive."},"k025": {"ro": "Analiză","en": "Analysis"},"k026": {"ro": "Facturi, contracte, profil de consum","en": "Invoices, contracts, consumption profile"},"k027": {"ro": "Strategie","en": "Strategy"},"k028": {"ro": "Scenarii, business case, priorități","en": "Scenarios, business case, priorities"},"k029": {"ro": "Finanțare","en": "Financing"},"k030": {"ro": "Fonduri UE, bănci, ESCO, PPA","en": "EU funds, banks, ESCO, PPA"},"k031": {"ro": "Dezvoltare","en": "Development"},"k032": {"ro": "Autorizare, racordare, Ready-to-Build","en": "Permitting, grid connection, Ready-to-Build"},"k033": {"ro": "Implementare","en": "Implementation"},"k034": {"ro": "Licitații EPC, Owner's Engineer","en": "EPC tenders, Owner's Engineer"},"k035": {"ro": "Optimizare","en": "Optimisation"},"k036": {"ro": "KPI, monitorizare, reducere continuă","en": "KPIs, monitoring, continuous reduction"},"k037": {"ro": "Ani în atragerea de capital","en": "Years raising investment capital"},"k038": {"ro": "Valoare investiții coordonate","en": "Investment value coordinated"},"k039": {"ro": "Proiecte energetice","en": "Energy projects"},"k040": {"ro": "De la finanțare la punere în funcțiune","en": "From funding through to delivery"},"k041": {"ro": "Arhitectura serviciilor","en": "Service architecture"},"k042": {"ro": "Șase direcții. Zece domenii.","en": "Six directions. Ten fields."},"k043": {"ro": "Reducerea costurilor cu energia","en": "Reducing energy costs"},"k044": {"ro": "Facturi, contracte, procurement, energy management. Prima economie vine din factură — nu din echipament.","en": "Invoices, contracts, procurement, energy management. The first saving comes out of the invoice, not out of equipment."},"k045": {"ro": "Investiții energetice","en": "Energy investments"},"k046": {"ro": "Solar, BESS, eficiență, e-mobility — ca reprezentant al beneficiarului, nu al vânzătorului.","en": "Solar, BESS, efficiency, e-mobility — as the owner's representative, never the vendor's."},"k047": {"ro": "Dezvoltare de proiecte","en": "Project development"},"k048": {"ro": "De la idee la Ready-to-Build și până la tranzacție.","en": "From idea to Ready-to-Build, and through to transaction."},"k049": {"ro": "Finanțarea investiției","en": "Financing the investment"},"k050": {"ro": "Fonduri UE, bănci, ESCO, PPA, capital privat. Investiția potrivită are nevoie de finanțarea potrivită.","en": "EU funds, banks, ESCO, PPA, private capital. The right investment needs the right financing behind it."},"k051": {"ro": "Juridic și reglementare","en": "Legal and regulatory"},"k052": {"ro": "ANRE, racordare, contracte, compliance. Reglementarea decide fezabilitatea.","en": "ANRE, grid connection, contracts, compliance. Regulation is what decides feasibility."},"k053": {"ro": "Strategie energetică","en": "Energy strategy"},"k054": {"ro": "Energy Strategy 2030: roadmap de investiții pe 3–5 ani, cu buget și ținte.","en": "Energy Strategy 2030: a three-to-five-year investment roadmap, with budget and targets."},"k055": {"ro": "direcții de servicii integrate","en": "integrated service directions"},"k056": {"ro": "domenii de expertiză energetică","en": "fields of energy expertise"},"k057": {"ro": "ani — orizontul unei strategii","en": "years — the horizon of a strategy"},"k058": {"ro": "partener pentru tot parcursul","en": "partner for the whole journey"},"k059": {"ro": "Zece domenii","en": "Ten fields"},"k060": {"ro": "Ce fac, concret","en": "What I actually do"},"k061": {"ro": "Zece domenii de expertiză. Fiecare se poate contracta independent.","en": "Ten fields of expertise. Each can be contracted on its own."},"k062": {"ro": "Reducerea și controlul costurilor","en": "Reducing and controlling cost"},"k063": {"ro": "Analizez ce plătești astăzi, de ce plătești atât și ce se poate renegocia — de la componentele tarifare la strategia de achiziție pe termen mediu.","en": "I analyse what you pay today, why you pay it, and what can be renegotiated — from the tariff components to a medium-term procurement strategy."},"k064": {"ro": "analiză facturi energie și gaze","en": "electricity and gas invoice analysis"},"k065": {"ro": "analiză contracte de furnizare","en": "supply contract analysis"},"k066": {"ro": "verificare componente tarifare","en": "tariff component review"},"k067": {"ro": "analiză profil și curbă de consum","en": "consumption profile and load curve"},"k068": {"ro": "benchmarking al prețurilor","en": "price benchmarking"},"k069": {"ro": "comparare oferte furnizori","en": "supplier offer comparison"},"k070": {"ro": "negocierea contractelor","en": "contract negotiation"},"k071": {"ro": "contracte Fixed / Indexed / Mixed","en": "Fixed / Indexed / Mixed contracts"},"k072": {"ro": "analiză PZU + marjă furnizor","en": "day-ahead price plus supplier margin"},"k073": {"ro": "strategie la expirare contract","en": "contract expiry strategy"},"k074": {"ro": "monitorizarea pieței","en": "market monitoring"},"k075": {"ro": "buget energetic anual","en": "annual energy budget"},"k076": {"ro": "Consumul, ca instrument de management","en": "Consumption as a management tool"},"k077": {"ro": "Trec de la factură la proces: curbă de sarcină, putere contractată, intervale orare, flexibilitate și KPI energetici urmăriți lună de lună.","en": "I move from the invoice to the process: load curve, contracted power, time bands, flexibility and energy KPIs tracked month by month."},"k078": {"ro": "audit energetic","en": "energy audit"},"k079": {"ro": "analiza curbei de sarcină","en": "load curve analysis"},"k080": {"ro": "consumuri ineficiente","en": "inefficient consumption"},"k081": {"ro": "optimizarea puterii contractate","en": "contracted power optimisation"},"k082": {"ro": "load shifting","en": "load shifting"},"k083": {"ro": "peak shaving","en": "peak shaving"},"k084": {"ro": "optimizare pe intervale orare","en": "time-band optimisation"},"k085": {"ro": "Demand Response","en": "demand response"},"k086": {"ro": "flexibilitate energetică","en": "energy flexibility"},"k087": {"ro": "strategie de autoconsum","en": "self-consumption strategy"},"k088": {"ro": "KPI energetici și raportare","en": "energy KPIs and reporting"},"k089": {"ro": "plan anual de reducere costuri","en": "annual cost reduction plan"},"k090": {"ro": "Produci energia unde o consumi","en": "Generate where you consume"},"k091": {"ro": "De la analiza de oportunitate și simularea producției, la caietul de sarcini, compararea ofertelor EPC și verificarea performanței după punerea în funcțiune.","en": "From opportunity analysis and yield simulation to the technical specification, EPC offer comparison, and performance verification after commissioning."},"k092": {"ro": "analiză oportunitate PV","en": "PV opportunity analysis"},"k093": {"ro": "dimensionare preliminară","en": "preliminary sizing"},"k094": {"ro": "simulare producție","en": "yield simulation"},"k095": {"ro": "analiză autoconsum","en": "self-consumption analysis"},"k096": {"ro": "CAPEX / OPEX","en": "CAPEX / OPEX"},"k097": {"ro": "ROI, IRR, Payback","en": "ROI, IRR, payback"},"k098": {"ro": "analiză prosumator","en": "prosumer analysis"},"k099": {"ro": "alegerea tehnologiei","en": "technology selection"},"k100": {"ro": "caiet de sarcini","en": "technical specification"},"k101": {"ro": "oferte EPC și negociere","en": "EPC offers and negotiation"},"k102": {"ro": "Project Management","en": "project management"},"k103": {"ro": "Owner's Engineer","en": "Owner's Engineer"},"k104": {"ro": "Stocarea este un model de business","en": "Storage is a business model"},"k105": {"ro": "Nu un echipament: venituri, piețe de participare, cicluri, degradare, garanții și strategie de racordare. Compar producătorii în competiție reală, în numele clientului.","en": "Not a piece of equipment: revenues, participation markets, cycles, degradation, warranties and a connection strategy. I compare manufacturers in real competition, on the client's behalf."},"k106": {"ro": "studiu de oportunitate BESS","en": "BESS opportunity study"},"k107": {"ro": "dimensionare sisteme","en": "system sizing"},"k108": {"ro": "PV + BESS / stand-alone","en": "PV + BESS / stand-alone"},"k109": {"ro": "peak shaving, arbitraj, backup","en": "peak shaving, arbitrage, backup"},"k110": {"ro": "piețe de participare","en": "participation markets"},"k111": {"ro": "model financiar, ROI / IRR","en": "financial model, ROI / IRR"},"k112": {"ro": "due diligence tehnic","en": "technical due diligence"},"k113": {"ro": "selecție baterii, PCS, EMS","en": "battery, PCS and EMS selection"},"k114": {"ro": "analiza garanțiilor","en": "warranty analysis"},"k115": {"ro": "degradation & cycle analysis","en": "degradation and cycle analysis"},"k116": {"ro": "strategie de racordare","en": "grid connection strategy"},"k117": {"ro": "suport pentru investitori","en": "investor support"},"k118": {"ro": "De la idee la Ready-to-Build","en": "From idea to Ready-to-Build"},"k119": {"ro": "Solar, BESS și hibrid — coordonez teren, racordare, ATR, avize, proiectare, SPV, data room și pregătirea pentru finanțare sau tranzacție.","en": "Solar, BESS and hybrid — I coordinate land, grid connection, connection permits, approvals, design, the SPV, the data room and the preparation for financing or sale."},"k120": {"ro": "feasibility study","en": "feasibility study"},"k121": {"ro": "due diligence & teren","en": "due diligence and land"},"k122": {"ro": "analiză racordare și ATR","en": "grid connection and permit analysis"},"k123": {"ro": "avize, autorizații, proiectare","en": "approvals, permits, design"},"k124": {"ro": "structurare SPV","en": "SPV structuring"},"k125": {"ro": "pregătire Data Room","en": "data room preparation"},"k126": {"ro": "identificarea investitorilor","en": "investor identification"},"k127": {"ro": "Project Management","en": "project management"},"k128": {"ro": "Owner's Engineer","en": "Owner's Engineer"},"k129": {"ro": "Finanțarea care se potrivește investiției","en": "Financing matched to the investment"},"k130": {"ro": "Nu doar identific investiția potrivită. Ajut și la identificarea finanțării — fonduri europene, bănci, ESCO, PPA sau capital privat.","en": "I don't only identify the right investment. I help identify the financing too — European funds, banks, ESCO, PPA or private capital."},"k131": {"ro": "verificare eligibilitate","en": "eligibility assessment"},"k132": {"ro": "cerere de finanțare","en": "funding application"},"k133": {"ro": "business plan","en": "business plan"},"k134": {"ro": "analiză financiară și dosar bancar","en": "financial analysis and bank file"},"k135": {"ro": "negociere finanțare","en": "financing negotiation"},"k136": {"ro": "structurare contract ESCO / PPA","en": "ESCO / PPA contract structuring"},"k137": {"ro": "achiziții și rambursări","en": "procurement and reimbursement"},"k138": {"ro": "data room și investitori","en": "data room and investors"},"k139": {"ro": "Reglementarea decide fezabilitatea","en": "Regulation decides feasibility"},"k140": {"ro": "Un proiect corect tehnic și financiar poate fi blocat de racordare, de o clauză contractuală sau de o cerință ANRE. Le verific din prima fază.","en": "A project that is technically and financially sound can still be stopped by the grid connection, a contract clause or an ANRE requirement. I check those from the first phase."},"k141": {"ro": "legislația energiei","en": "energy legislation"},"k142": {"ro": "regulatory advisory","en": "regulatory advisory"},"k143": {"ro": "ANRE","en": "ANRE"},"k144": {"ro": "autorizarea proiectelor","en": "project authorisation"},"k145": {"ro": "racordare și ATR","en": "grid connection and permits"},"k146": {"ro": "prosumatori","en": "prosumers"},"k147": {"ro": "relația cu operatorii de distribuție și transport","en": "relations with DSOs and the TSO"},"k148": {"ro": "contracte de energie, PPA, EPC, O&M","en": "energy, PPA, EPC and O&M contracts"},"k149": {"ro": "dispute privind facturarea","en": "billing disputes"},"k150": {"ro": "due diligence juridic","en": "legal due diligence"},"k151": {"ro": "Energia ca decizie strategică","en": "Energy as a strategic decision"},"k152": {"ro": "Pentru companii medii și mari: o strategie energetică pe 3–5 ani, cu roadmap de investiții, buget, ținte de cost și de emisii.","en": "For mid-size and large companies: a three-to-five-year energy strategy, with an investment roadmap, a budget, and cost and emissions targets."},"k153": {"ro": "Energy Baseline","en": "energy baseline"},"k154": {"ro": "forecast consum și costuri","en": "consumption and cost forecast"},"k155": {"ro": "strategie de procurement","en": "procurement strategy"},"k156": {"ro": "management risc energetic","en": "energy risk management"},"k157": {"ro": "roadmap investiții și CAPEX","en": "investment roadmap and CAPEX"},"k158": {"ro": "ROI pe fiecare măsură","en": "ROI per measure"},"k159": {"ro": "calendar de investiții","en": "investment calendar"},"k160": {"ro": "surse de finanțare identificate","en": "identified funding sources"},"k161": {"ro": "Proiecte verificate, nu promisiuni","en": "Verified projects, not promises"},"k162": {"ro": "Sourcing, screening și due diligence tehnic, comercial și de reglementare — până la closing. Buyer side sau seller side, un singur standard de verificare.","en": "Sourcing, screening and technical, commercial and regulatory due diligence — through to closing. Buy side or sell side, one standard of verification."},"k163": {"ro": "identificare proiecte PV și BESS","en": "PV and BESS project identification"},"k164": {"ro": "project sourcing & screening","en": "project sourcing and screening"},"k165": {"ro": "technical due diligence","en": "technical due diligence"},"k166": {"ro": "commercial due diligence","en": "commercial due diligence"},"k167": {"ro": "regulatory due diligence","en": "regulatory due diligence"},"k168": {"ro": "evaluare stadiu de dezvoltare","en": "development-stage assessment"},"k169": {"ro": "verificare condiții de racordare","en": "connection condition review"},"k170": {"ro": "analiză CAPEX și business case","en": "CAPEX and business case analysis"},"k171": {"ro": "pregătire Data Room","en": "data room preparation"},"k172": {"ro": "identificarea cumpărătorilor","en": "buyer identification"},"k173": {"ro": "negociere","en": "negotiation"},"k174": {"ro": "suport până la closing","en": "support through to closing"},"k175": {"ro": "Infrastructură gândită cu rețeaua","en": "Infrastructure designed around the grid"},"k176": {"ro": "Infrastructura de încărcare se dimensionează împreună cu puterea disponibilă, cu producția proprie și cu stocarea. Electrificarea începe cu puterea disponibilă, nu cu stația.","en": "Charging infrastructure is sized together with the available power, on-site generation and storage. Electrification starts with available power, not with the charger."},"k177": {"ro": "strategie infrastructură EV","en": "EV infrastructure strategy"},"k178": {"ro": "stații de încărcare","en": "charging stations"},"k179": {"ro": "analiză necesar putere","en": "power requirement analysis"},"k180": {"ro": "PV + BESS + EV","en": "PV + BESS + EV"},"k181": {"ro": "electrificarea flotelor","en": "fleet electrification"},"k182": {"ro": "infrastructură pentru companii","en": "corporate infrastructure"},"k183": {"ro": "parcări comerciale și industriale","en": "commercial and industrial car parks"},"k184": {"ro": "analiză CAPEX / ROI","en": "CAPEX / ROI analysis"},"k185": {"ro": "identificarea finanțării","en": "funding identification"},"k186": {"ro": "Denumirile clienților, capacitățile și valorile financiare rămân confidențiale.","en": "Client names, capacities and financial figures remain confidential."},"k187": {"ro": "Capitol dedicat","en": "Signature chapter"},"k188": {"ro": "Stocarea nu e","en": "Storage is not"},"k189": {"ro": "un echipament","en": "a piece of equipment"},"k190": {"ro": "Este un model de business: venituri, piețe de participare, cicluri, degradare și o strategie de racordare. Așa se evaluează, nu după preț pe kilowatt-oră.","en": "It is a business model: revenues, participation markets, cycles, degradation and a connection strategy. That is how it gets evaluated, not on price per kilowatt-hour."},"k191": {"ro": "Arbitraj","en": "Arbitrage"},"k192": {"ro": "Reglaj de frecvență","en": "Frequency regulation"},"k193": {"ro": "Echilibrarea rețelei","en": "Grid balancing"},"k194": {"ro": "Peak shaving","en": "Peak shaving"},"k195": {"ro": "Integrarea regenerabilelor","en": "Renewable integration"},"k196": {"ro": "Hibrid PV + BESS","en": "Hybrid PV + BESS"},"k197": {"ro": "Optimizare de piață","en": "Market optimisation"},"k198": {"ro": "Dezvoltare de proiecte","en": "Project development"},"k199": {"ro": "De la idee la activ operațional","en": "From idea to operating asset"},"k200": {"ro": "Rezultatul: un proiect bancabil, cu documentație verificată, gata de finanțare sau de vânzare către un investitor.","en": "The result: a bankable project, with verified documentation, ready for financing or for sale to an investor."},"k201": {"ro": "Etapa 01","en": "Stage 01"},"k202": {"ro": "Idee","en": "Idea"},"k203": {"ro": "Oportunitate, teren, racordare","en": "Opportunity, land, grid connection"},"k204": {"ro": "Etapa 02","en": "Stage 02"},"k205": {"ro": "Dezvoltare","en": "Development"},"k206": {"ro": "Feasibility, avize, documentație","en": "Feasibility, approvals, documentation"},"k207": {"ro": "Etapa 03","en": "Stage 03"},"k208": {"ro": "Finanțare","en": "Financing"},"k209": {"ro": "Fonduri, bănci, investitori","en": "Funds, banks, investors"},"k210": {"ro": "Etapa 04","en": "Stage 04"},"k211": {"ro": "Construcție","en": "Construction"},"k212": {"ro": "EPC, project management, Owner's Engineer","en": "EPC, project management, Owner's Engineer"},"k213": {"ro": "Etapa 05","en": "Stage 05"},"k214": {"ro": "Operare","en": "Operation"},"k215": {"ro": "Performanță, O&M, optimizare","en": "Performance, O&M, optimisation"},"k216": {"ro": "Finanțare","en": "Financing"},"k217": {"ro": "Finanțarea potrivită pentru investiția potrivită","en": "The right financing for the right investment"},"k218": {"ro": "Sursa de finanțare","en": "Funding source"},"k219": {"ro": "Potrivit pentru","en": "Suited to"},"k220": {"ro": "Ce fac eu","en": "What I do"},"k221": {"ro": "Fondul pentru Modernizare","en": "Fondul pentru Modernizare"},"k222": {"ro": "Industrie, mari consumatori","en": "Industry, large consumers"},"k223": {"ro": "Eligibilitate, cerere, achiziții, rambursări","en": "Eligibility, application, procurement, reimbursement"},"k224": {"ro": "Programe UE · Tranziție Justă","en": "EU programmes · Just Transition"},"k225": {"ro": "Regiuni și sectoare vizate","en": "Targeted regions and sectors"},"k226": {"ro": "Încadrare, business plan, implementare","en": "Positioning, business plan, implementation"},"k227": {"ro": "AFIR · Electric Up","en": "AFIR · Electric Up"},"k228": {"ro": "Agricultură, IMM, HoReCa","en": "Agriculture, SMEs, hospitality"},"k229": {"ro": "Verificare eligibilitate și depunere","en": "Eligibility check and submission"},"k230": {"ro": "Finanțare bancară · Leasing","en": "Bank financing · Leasing"},"k231": {"ro": "Investiții cu cash-flow predictibil","en": "Investments with predictable cash flow"},"k232": {"ro": "Analiză financiară, dosar, negociere","en": "Financial analysis, file, negotiation"},"k233": {"ro": "ESCO · PPA","en": "ESCO · PPA"},"k234": {"ro": "Zero CAPEX pentru beneficiar","en": "Zero CAPEX for the beneficiary"},"k235": {"ro": "Structurare contract, verificare termeni","en": "Contract structuring, terms review"},"k236": {"ro": "Capital privat · Investitori","en": "Private capital · Investors"},"k237": {"ro": "Proiecte de dezvoltare","en": "Development projects"},"k238": {"ro": "Data room, identificare investitori, negociere","en": "Data room, investor identification, negotiation"},"k239": {"ro": "Pentru cine lucrez","en": "Who I work with"},"k240": {"ro": "Companii care consumă, produc sau investesc","en": "Companies that consume, generate or invest"},"k241": {"ro": "Lucrez cu companii pentru care energia este o linie de cost semnificativă sau o oportunitate de investiție — și cu investitorii care finanțează aceste proiecte.","en": "I work with companies for which energy is either a significant cost line or an investment opportunity — and with the investors who finance those projects."},"k242": {"ro": "Industrie","en": "Industry"},"k243": {"ro": "Retail","en": "Retail"},"k244": {"ro": "Logistică","en": "Logistics"},"k245": {"ro": "Real estate","en": "Real estate"},"k246": {"ro": "Ospitalitate","en": "Hospitality"},"k247": {"ro": "Agricultură","en": "Agriculture"},"k248": {"ro": "Sănătate","en": "Healthcare"},"k249": {"ro": "Autorități locale","en": "Local authorities"},"k250": {"ro": "Dezvoltatori","en": "Developers"},"k251": {"ro": "Investitori","en": "Investors"},"k252": {"ro": "Traderi de energie","en": "Energy traders"},"k253": {"ro": "Mari consumatori","en": "Large consumers"},"k254": {"ro": "Energia nu mai este doar un cost.","en": "Energy is no longer just a cost."},"k255": {"ro": "Energy Check-Up","en": "Energy Check-Up"},"k256": {"ro": "Cât te costă energia","en": "What is energy really"},"k257": {"ro": "cu adevărat?","en": "costing you?"},"k258": {"ro": "Începe cu o analiză a facturii, a contractului și a profilului tău de consum. Documentele rămân confidențiale.","en": "It starts with an analysis of your invoice, your contract and your consumption profile. The documents stay confidential."},"k259": {"ro": "Trimiți documentele","en": "You send the documents"},"k260": {"ro": "Factura de energie electrică sau gaze și contractul de furnizare. Nimic altceva.","en": "Your electricity or gas invoice and the supply contract. Nothing else."},"k261": {"ro": "Analizez","en": "I analyse"},"k262": {"ro": "Componente tarifare, profil de consum, clauze contractuale, preț raportat la piață.","en": "Tariff components, consumption profile, contract clauses, price against the market."},"k263": {"ro": "Primești concluziile","en": "You get the conclusions"},"k264": {"ro": "Unde pierzi bani, ce se poate renegocia, ce se poate optimiza și în ce ordine.","en": "Where you lose money, what can be renegotiated, what can be optimised, and in what order."},"k265": {"ro": "Solicită Energy Check-Up","en": "Request an Energy Check-Up"},"k266": {"ro": "Discută cu mine","en": "Talk to me"},"k267": {"ro": "Investiții energetice · Finanțare și fonduri europene · Stocare în baterii","en": "Energy investments · Financing and European funds · Battery storage"}};
+const BESS_COPY = [{"ro": ["Containere de baterii", "Ansamblurile ajung pe platformă și fixează amprenta activului."], "en": ["Battery containers", "The enclosures land on the pad and set the footprint of the asset."]}, {"ro": ["Rack-uri de baterii", "Modulele și celulele se stivuiesc în rack-uri — energia propriu-zisă."], "en": ["Battery racks", "Modules and cells stack into racks — the energy itself arrives."]}, {"ro": ["Sisteme de conversie", "PCS-urile convertesc între stocarea în curent continuu și rețeaua de curent alternativ."], "en": ["Power conversion systems", "The PCS units convert between DC storage and the AC network."]}, {"ro": ["Transformatoare MT", "Stația de ridicare duce situl la tensiunea de distribuție."], "en": ["Medium-voltage transformers", "Step-up plant lifts the site to distribution voltage."]}, {"ro": ["Celule de medie tensiune", "Protecție și separare — activul poate fi acum operat în siguranță."], "en": ["Switchgear", "Protection and isolation — the asset can now be operated safely."]}, {"ro": ["Sistem de management al energiei", "EMS-ul decide ce face fiecare megawatt-oră, și când."], "en": ["Energy management system", "The EMS decides what every megawatt-hour does, and when."]}, {"ro": ["SCADA", "Control și telemetrie pe întreaga instalație."], "en": ["SCADA", "Supervisory control and telemetry across the whole facility."]}, {"ro": ["Racordarea la rețea", "Linia de transport leagă activul de sistemul energetic."], "en": ["Grid connection", "Overhead transmission ties the asset into the network."]}, {"ro": ["Stratul de management", "Logica de control, piață și dispecerizare leagă componentele într-un singur activ."], "en": ["Energy management layer", "Control, market and dispatch logic bind the components into one asset."]}, {"ro": ["BESS la scară de rețea", "Complet. Încarcă, descarcă și echilibrează rețeaua în timp real."], "en": ["Utility-scale BESS", "Complete. Charging, discharging and balancing the grid in real time."]}];
+const STMT_COPY = {"ro": ["Este o ", "decizie strategică", " de business."], "en": ["It is a ", "strategic business", " decision."]};
+let LANG = 'ro';
+try { const v = localStorage.getItem('lv-lang'); if (v === 'en' || v === 'ro') LANG = v; }
+catch (e) { /* private mode */ }
+
+function applyLang(l) {
+  LANG = l;
+  document.documentElement.setAttribute('lang', l);
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const e = I18N[el.getAttribute('data-i18n')];
+    if (e) el.textContent = e[l];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const e = I18N[el.getAttribute('data-i18n-html')];
+    if (e) el.innerHTML = e[l];
+  });
+  const btn = document.getElementById('langLabel');
+  if (btn) btn.textContent = l === 'ro' ? 'EN' : 'RO';
+  window.dispatchEvent(new CustomEvent('langchange'));
+}
+
+(function langToggle() {
+  const b = document.getElementById('langBtn');
+  if (!b) return;
+  b.addEventListener('click', () => {
+    const next = LANG === 'ro' ? 'en' : 'ro';
+    try { localStorage.setItem('lv-lang', next); } catch (e) { /* private mode */ }
+    applyLang(next);
+    ScrollTrigger.refresh();
+  });
+})();
+
+applyLang(LANG);
+
 /* ─── 2. SCROLL ENGINE ─────────────────────────────────────────────────────*/
 gsap.registerPlugin(ScrollTrigger);
 
@@ -957,7 +1222,7 @@ function splitChars(node) {
 document.querySelectorAll('[data-split]').forEach(splitChars);
 
 /* statement — word by word, keeps <em> colouring */
-(function splitStatement() {
+function splitStatement() {
   const h = document.querySelector('[data-splitwords]');
   if (!h) return;
   const frag = document.createDocumentFragment();
@@ -973,7 +1238,18 @@ document.querySelectorAll('[data-split]').forEach(splitChars);
     });
   });
   h.textContent = ''; h.appendChild(frag);
-})();
+}
+
+/* The statement carries inline emphasis, so it is rebuilt from its three
+   parts and re-split whenever the language changes. */
+function buildStatement() {
+  const h = document.querySelector('[data-splitwords]');
+  if (!h) return;
+  const c = STMT_COPY[LANG];
+  h.innerHTML = c[0] + '<em>' + c[1] + '</em>' + c[2];
+  splitStatement();
+}
+buildStatement();
 
 /* ─── 5. PROCEDURAL FALLBACK FILM ──────────────────────────────────────────
    Architectural light sweeps + volumetric haze, used whenever a clip is
@@ -1157,6 +1433,7 @@ gsap.to('.hero-type, .hero-cue', {
         .to('.hero-sub span', {
           opacity: 1, duration: .8, ease: 'power2.out', stagger: .09
         }, '-=0.62')
+        .to('.hero-claim', { opacity: 1, duration: .8, ease: 'power2.out' }, '-=0.58')
         .to('.hero-state', { opacity: 1, duration: .9, ease: 'power2.out' }, '-=0.5');
     }
   });
@@ -1212,25 +1489,6 @@ gsap.utils.toArray('[data-count]').forEach(el => {
   });
 })();
 
-/* ─── 11. PROJECT CARDS — parallax tilt + cursor light ─────────────────────*/
-gsap.utils.toArray('.card').forEach(card => {
-  if (MOBILE) return;
-  card.addEventListener('pointermove', e => {
-    const r = card.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width;
-    const py = (e.clientY - r.top) / r.height;
-    card.style.setProperty('--mx', (px * 100) + '%');
-    card.style.setProperty('--my', (py * 100) + '%');
-    gsap.to(card, {
-      rotateY: (px - .5) * 9, rotateX: (.5 - py) * 9,
-      duration: .6, ease: 'power2.out', transformPerspective: 900
-    });
-  });
-  card.addEventListener('pointerleave', () => {
-    gsap.to(card, { rotateY: 0, rotateX: 0, duration: .85, ease: 'expo.out' });
-  });
-});
-
 /* ─── 12. INVESTMENT CHAIN ─────────────────────────────────────────────────*/
 gsap.utils.toArray('.chain-row').forEach((row, i) => {
   ScrollTrigger.create({
@@ -1258,10 +1516,16 @@ gsap.utils.toArray('.chain-row').forEach((row, i) => {
 })();
 
 /* ─── 14. STATEMENT + FINALE KINETICS ──────────────────────────────────────*/
-gsap.to('[data-splitwords] .w i', {
-  y: 0, duration: 1.15, ease: 'expo.out', stagger: .045,
-  scrollTrigger: { trigger: '#stmt', start: 'top 72%' }
-});
+let stmtTween = null;
+function stmtReveal() {
+  if (stmtTween) { stmtTween.scrollTrigger && stmtTween.scrollTrigger.kill(); stmtTween.kill(); }
+  stmtTween = gsap.to('[data-splitwords] .w i', {
+    y: 0, duration: 1.15, ease: 'expo.out', stagger: .045,
+    scrollTrigger: { trigger: '#stmt', start: 'top 72%' }
+  });
+}
+stmtReveal();
+addEventListener('langchange', () => { buildStatement(); stmtReveal(); });
 gsap.to('[data-splitlines] span i', {
   y: 0, duration: 1.35, ease: 'expo.out', stagger: .13,
   scrollTrigger: { trigger: '#finale', start: 'top 62%' }
@@ -1284,6 +1548,26 @@ gsap.utils.toArray('.btn').forEach(btn => {
   });
   btn.addEventListener('pointerleave', () => {
     gsap.to(btn, { x: 0, y: 0, duration: .85, ease: 'elastic.out(1,.42)' });
+  });
+});
+
+/* ─── 15b. THE TEN FIELDS ──────────────────────────────────────────────────
+   Opened one at a time. grid-template-rows animates from 0fr to 1fr, so the
+   panel measures itself and keeps working when the language swaps the text
+   for a longer line. */
+gsap.utils.toArray('.dom').forEach(dom => {
+  const btn = dom.querySelector('.dom-head-btn');
+  btn.addEventListener('click', () => {
+    const open = dom.classList.contains('is-open');
+    gsap.utils.toArray('.dom').forEach(d => {
+      d.classList.remove('is-open');
+      d.querySelector('.dom-head-btn').setAttribute('aria-expanded', 'false');
+    });
+    if (!open) {
+      dom.classList.add('is-open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+    setTimeout(() => ScrollTrigger.refresh(), 600);
   });
 });
 
@@ -1538,18 +1822,10 @@ ScrollTrigger.create({
   addEventListener('themechange', applyTheme);
 
   /* ── the ten assembly steps ───────────────────────────────────────────── */
-  const STEPS = [
-    [S_CONT,  'Battery containers',        'Enclosures land on the pad and set the footprint of the asset.'],
-    [S_RACK,  'Battery racks',             'Modules and cells stack into racks — the energy itself arrives.'],
-    [S_PCS,   'Power conversion systems',  'PCS units convert between DC storage and AC network.'],
-    [S_TR,    'Medium-voltage transformers','Step-up plant lifts the site to distribution voltage.'],
-    [S_SW,    'Switchgear',                'Protection and isolation — the asset can now be operated safely.'],
-    [S_EMS,   'Energy management system',  'The EMS decides what every megawatt-hour does, and when.'],
-    [S_SCADA, 'SCADA',                     'Supervisory control and telemetry across the whole facility.'],
-    [S_GRID,  'Grid connection',           'Overhead transmission ties the asset into the network.'],
-    [S_LINK,  'Energy management layer',   'Control, market and dispatch logic bind the components into one asset.'],
-    [S_FLOW,  'Utility-scale BESS',        'Complete. Charging, discharging and balancing the grid in real time.']
-  ];
+  /* Caption copy lives in the shared dictionary so the chapter follows the
+     language toggle like the rest of the page. The stage groups it used to
+     name are already held in `fadeables`, in the same order. */
+  const STEPS = () => BESS_COPY.map(x => x[LANG]);
   const elN = document.getElementById('bessN');
   const elT = document.getElementById('bessT');
   const elD = document.getElementById('bessD');
@@ -1567,7 +1843,7 @@ ScrollTrigger.create({
     const settled = (now - lastStepAt) > 420 && shownStep !== -1;
     lastStepAt = now;
     shownStep = i;
-    const [, title, desc] = STEPS[i];
+    const [title, desc] = STEPS()[i];
     elN.textContent = String(i + 1).padStart(2, '0') + ' / 10';
     gsap.killTweensOf([elT, elD]);
     if (settled) {
@@ -1580,6 +1856,7 @@ ScrollTrigger.create({
     gsap.fromTo(pulse, { intensity: 2.6 }, { intensity: 0, duration: 1.1, ease: 'power2.out' });
   }
   setStep(0);
+  addEventListener('langchange', () => { const i = shownStep; shownStep = -1; setStep(i < 0 ? 0 : i); });
 
   /* ── scroll driver ────────────────────────────────────────────────────── */
   let prog = 0, progEased = 0;

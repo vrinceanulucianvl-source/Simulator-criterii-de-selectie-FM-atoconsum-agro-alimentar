@@ -10,6 +10,28 @@ fonts/            Archivo + Newsreader, self-hosted woff2 (latin + latin-ext)
 assets/           optional local copies of the three cinematic clips
 ```
 
+## Language
+
+The page is bilingual, Romanian by default, with a toggle in the nav beside the
+theme switch. The choice is stored and applied on the next visit.
+
+Every string exists once, in both languages, in the `I18N` dictionary at the
+top of the script block. Elements carry `data-i18n` (plain text) or
+`data-i18n-html` (text with inline markup) and are rewritten in place; nothing
+is duplicated in the HTML, so the two languages cannot drift apart.
+
+Three pieces need more than a text swap and are handled explicitly:
+
+- the storage chapter's captions come from `BESS_COPY` and re-render on change;
+- the closing statement carries inline emphasis, so it is rebuilt from
+  `STMT_COPY` and re-split into words, and its reveal tween is rebuilt with it;
+- proper nouns stay untranslated in both languages — ANRE, AFIR, Electric Up,
+  Fondul pentru Modernizare.
+
+Romanian sets marks above cap height (Â Î Ă) and below the baseline (Ș Ț), so
+every rise-up mask opens at both ends with matching negative margins. Without
+that the headline diacritics are sheared off.
+
 ## Fonts
 
 Archivo and Newsreader are self-hosted from `fonts/` — no third-party request,
