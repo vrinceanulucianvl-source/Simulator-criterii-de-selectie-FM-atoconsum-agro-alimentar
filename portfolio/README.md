@@ -91,6 +91,10 @@ Two things fix it, and both are needed:
    seek that has to make a network round trip can never feel immediate, no
    matter how the file is encoded.
 
+   The server has to answer range requests, or the browser reports the file as
+   unseekable and the hero freezes on frame one however well it is encoded.
+   `npx http-server` does; Python's `http.server` does not.
+
 The all-intra hero file is several times larger than the original. That is the
 trade: size for seekability. The two ambient clips only ever play forward, so
 they get a normal encode and stay small.
@@ -100,7 +104,37 @@ decoder to finish each seek before requesting the next one, instead of writing
 `currentTime` on every frame and making the browser abort a seek it had
 already started.
 
+## Every control does something
+
+No button on the page is allowed to be a dead end. A bare `mailto:` looks like
+a working button and does nothing at all on a machine with no mail client
+registered — and says nothing either. So the two closing calls to action, and
+the email in the footer, open a contact panel instead:
+
+- it composes the message for the track it was opened from (self-consumption
+  or investment), with its own subject line, its own prompt and its own
+  placeholder;
+- **Trimite pe e-mail** fires the `mailto:` with subject and body already
+  written, for anyone who does have a client;
+- **Copiază mesajul** puts the same text on the clipboard, and the address
+  under it copies on click — so the panel still works when the `mailto:` does
+  not;
+- every action answers with a toast, in the current language;
+- the name and contact fields are checked before either action, and the panel
+  closes on Escape, on the backdrop, and on its own ×.
+
+`navigator.clipboard` does not exist on `file://` or on any insecure origin,
+and this page is meant to be opened straight from disk, so the copy falls back
+to a hidden textarea and `execCommand`.
+
+The panel sits above the nav (z-index 940) and stops Lenis while it is open,
+which also makes it properly modal: the nav behind it is not clickable.
+
+The rest of the inventory: the nav links and the LV mark scroll, the `Scroll`
+cue in the hero is a link to the first section, the ten service rows expand,
+and the language and theme toggles persist their choice.
+
 ## Contact details
 
 `CONTACT` at the top of the script block holds the email, LinkedIn and company
-URLs used by the footer and the primary call to action.
+URLs used by the footer and the contact panel.
