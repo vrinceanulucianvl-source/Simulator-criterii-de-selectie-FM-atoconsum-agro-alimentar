@@ -505,10 +505,44 @@ html[data-theme="light"] .theme-t .ico-moon{display:block}
    annotation on top. The WebGL scene stays underneath as the fallback: if the
    film does not load, nothing about the chapter is missing. */
 #bessVideo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0}
-/* Light mode inverts the film rather than washing it: the drawing is pure
-   line on near-black, so inverting gives ink on paper — which is what a
-   blueprint wants to be anyway. The hue rotation puts the emerald back. */
-html[data-theme="light"] #bessVideo{filter:invert(1) hue-rotate(180deg)}
+/* The film's own ground is not constant — it is pale in some passages and
+   near-black in others — so no single inversion can make it agree with the
+   page. Instead it is pulled toward the page: dimmed on the dark theme so the
+   pale passages stop glaring, lifted on the light one so the dark passages
+   stop punching holes in the sheet. */
+#bessVideo{filter:brightness(.6) contrast(1.04)}
+html[data-theme="light"] #bessVideo{filter:brightness(1.12) contrast(.92) opacity(.82)}
+
+/* And because the film cannot be trusted to be dark where the words are, the
+   words bring their own sheet: the page ground, at full strength down the
+   reading column and along the foot, fading out over the drawing. Without it
+   the headline sat cream on cream and disappeared. */
+.bess-veil{position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(96deg, var(--bess-bg) 0%, var(--bess-bg) 24%,
+      rgba(0,0,0,0) 56%),
+    linear-gradient(to top, var(--bess-bg) 0%, rgba(0,0,0,0) 26%),
+    linear-gradient(to bottom, var(--bess-bg) 0%, rgba(0,0,0,0) 14%);}
+html[data-theme="light"] .bess-veil{
+  background:
+    linear-gradient(96deg, var(--bess-bg) 0%, var(--bess-bg) 24%,
+      rgba(255,255,255,0) 56%),
+    linear-gradient(to top, var(--bess-bg) 0%, rgba(255,255,255,0) 26%),
+    linear-gradient(to bottom, var(--bess-bg) 0%, rgba(255,255,255,0) 14%);}
+@media (max-width:820px){
+  /* On a phone the column is the whole width, so the sheet runs edge to edge
+     behind the headline and the caption instead of down one side. */
+  .bess-veil{background:
+    linear-gradient(to bottom, var(--bess-bg) 0%, var(--bess-bg) 34%,
+      rgba(0,0,0,0) 52%),
+    linear-gradient(to top, var(--bess-bg) 0%, var(--bess-bg) 26%,
+      rgba(0,0,0,0) 46%);}
+  html[data-theme="light"] .bess-veil{background:
+    linear-gradient(to bottom, var(--bess-bg) 0%, var(--bess-bg) 34%,
+      rgba(255,255,255,0) 52%),
+    linear-gradient(to top, var(--bess-bg) 0%, var(--bess-bg) 26%,
+      rgba(255,255,255,0) 46%);}
+}
 #bessOverlay{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;
   opacity:0;transition:opacity .7s var(--ease)}
 #bessOverlay.on{opacity:1}
@@ -521,19 +555,12 @@ html[data-theme="light"] #bessVideo{filter:invert(1) hue-rotate(180deg)}
   font-size:12.5px;letter-spacing:.16em;text-transform:uppercase}
 #bessOverlay .ov-dim{fill:var(--cream-mid);font-family:var(--display);font-weight:500;
   font-size:11px;letter-spacing:.12em}
-#bessOverlay .det{opacity:0;transition:opacity .5s var(--ease)}
-#bessOverlay .det.on{opacity:1}
-/* The detail sits over the film, so it carries its own sheet under it. */
-#bessOverlay .det-bg{fill:var(--bess-bg);opacity:.9}
-#bessOverlay .det-frame{fill:none;stroke:var(--cream-dim);stroke-width:1}
-#bessOverlay .det-rack{fill:none;stroke:var(--cream-mid);stroke-width:1.2}
-#bessOverlay .det-mod{fill:none;stroke:var(--cream-dim);stroke-width:1;
-  transition:fill .45s var(--ease),stroke .45s var(--ease)}
-#bessOverlay .det-mod.lit{fill:var(--em-wash);stroke:var(--em)}
-#bessOverlay .det-t{fill:var(--cream-mid);font-family:var(--display);font-weight:500;
-  font-size:11px;letter-spacing:.18em;text-transform:uppercase}
-#bessOverlay .det-n{fill:var(--em-read);font-family:var(--display);font-weight:600;
-  font-size:12px;letter-spacing:.1em;font-variant-numeric:tabular-nums}
+/* Every word of the annotation is drawn with the page ground around it, the
+   way a map label survives whatever it crosses. The film underneath changes
+   tone from passage to passage; the labels cannot. */
+#bessOverlay .ov-lab,#bessOverlay .ov-num,#bessOverlay .ov-dim{
+  paint-order:stroke fill;stroke:var(--bess-bg);stroke-width:3.5px;
+  stroke-linejoin:round;stroke-opacity:.92}
 #bessOverlay g.mk{opacity:0;transition:opacity .45s var(--ease)}
 #bessOverlay g.mk.on{opacity:1}
 .bess-ui{position:absolute;inset:0;pointer-events:none;
@@ -556,7 +583,8 @@ html[data-theme="light"] #bessVideo{filter:invert(1) hue-rotate(180deg)}
 }
 .bess-services b{
   font-family:var(--display);font-stretch:100%;font-weight:500;font-size:11px;
-  letter-spacing:.2em;text-transform:uppercase;color:var(--cream-dim);
+  letter-spacing:.2em;text-transform:uppercase;color:var(--cream-low);
+  text-shadow:0 0 10px var(--bess-bg),0 0 3px var(--bess-bg);
   transition:color .5s var(--ease),transform .5s var(--ease);
 }
 .bess-services b.on{color:var(--em);transform:translateX(-8px)}
@@ -567,6 +595,7 @@ html[data-theme="light"] #bessVideo{filter:invert(1) hue-rotate(180deg)}
 .bess-step .t{font-family:var(--display);font-weight:800;font-stretch:74%;
   text-transform:uppercase;font-size:clamp(20px,2.5vw,40px);line-height:.92;margin-top:14px}
 .bess-step .d{margin-top:12px;color:var(--cream-mid);font-size:15.5px}
+.bess-head,.bess-step{text-shadow:0 0 18px var(--bess-bg),0 0 6px var(--bess-bg)}
 .bess-plate{
   border:var(--rule);padding:14px 18px 0;min-width:min(42vw,300px);
   font-family:var(--display);font-stretch:100%;font-weight:500;font-size:10.5px;
@@ -593,9 +622,6 @@ html[data-theme="light"] #bessVideo{filter:invert(1) hue-rotate(180deg)}
   #bessOverlay .ov-lab{font-size:19px;letter-spacing:.1em}
   #bessOverlay .ov-num{font-size:19px}
   #bessOverlay .ov-dim,#bessOverlay .ov-rule{display:none}
-  #bessOverlay .det-t{font-size:17px}
-  #bessOverlay .det-n{font-size:19px}
-  #bessOverlay .det-rack,#bessOverlay .det-mod{stroke-width:1.8}
 }
 @media (prefers-reduced-motion:reduce){
   #bessVideo{opacity:1}
@@ -1097,6 +1123,7 @@ footer{padding:clamp(60px,8vw,120px) var(--gut) 40px;border-top:var(--rule)}
     <canvas id="bessCanvas"></canvas>
     <video id="bessVideo" muted playsinline preload="auto"></video>
     <svg id="bessOverlay" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+    <div class="bess-veil"></div>
     <div class="bess-ui">
       <div class="bess-head">
         <div class="mono"><span data-i18n="k187">Capitol dedicat</span></div>
@@ -2525,67 +2552,9 @@ ScrollTrigger.create({
     dimNodes.push({ g: g, line: line, text: t, span: span, step: d.step, copy: d });
   });
 
-  /* ── DETAIL A: the rack, cut open ─────────────────────────────────────
-     The film shows the cabinets from outside, which is all a film can show.
-     What sells the chapter is what is inside one of them, so the drawing puts
-     a section detail beside it, the way a real sheet would: the rack frame,
-     its modules stacked as horizontal trays, and each tray coming online as
-     the asset fills up. It is drawn, not filmed — sharp at any size, in the
-     reader's language, and free to change. */
-  const DET = TALL
-    ? { x: 240, y: 548, w: 600, h: 430, lead: null }
-    : { x: 660, y: 512, w: 348, h: 344, lead: [512, 392] };
-  const MODS = 8;
-  const detail = mk('g', { class: 'det' });
-  detail.appendChild(mk('rect', { class: 'det-bg',
-    x: DET.x, y: DET.y, width: DET.w, height: DET.h, rx: 2 }));
-  detail.appendChild(mk('rect', { class: 'det-frame',
-    x: DET.x, y: DET.y, width: DET.w, height: DET.h, rx: 2 }));
-  if (DET.lead) {
-    detail.appendChild(mk('path', { class: 'ov-lead',
-      d: 'M' + DET.x + ' ' + DET.y + 'L' + DET.lead[0] + ' ' + DET.lead[1] }));
-    detail.appendChild(mk('circle', { class: 'ov-ring',
-      cx: DET.lead[0], cy: DET.lead[1], r: 3.5 }));
-  }
-  const padX = TALL ? 40 : 26, headY = DET.y + (TALL ? 46 : 34);
-  const detTitle = mk('text', { class: 'det-t', x: DET.x + padX, y: headY });
-  detail.appendChild(detTitle);
-  const detCount = mk('text', { class: 'det-n', x: DET.x + DET.w - padX, y: headY,
-    'text-anchor': 'end' });
-  detail.appendChild(detCount);
-
-  /* the rack frame, then the module trays inside it */
-  const rTop = headY + (TALL ? 34 : 24), rBot = DET.y + DET.h - (TALL ? 42 : 30);
-  const rX = DET.x + padX, rW = DET.w - padX * 2;
-  detail.appendChild(mk('rect', { class: 'det-rack',
-    x: rX, y: rTop, width: rW, height: rBot - rTop }));
-  const gap = TALL ? 5 : 4, inset = TALL ? 10 : 7;
-  const mh = ((rBot - rTop) - inset * 2 - gap * (MODS - 1)) / MODS;
-  const mods = [];
-  for (let i = 0; i < MODS; i++) {
-    /* drawn bottom-up: a rack fills from the floor, and so does the asset */
-    const y = rBot - inset - mh - i * (mh + gap);
-    const r = mk('rect', { class: 'det-mod',
-      x: rX + inset, y: y, width: rW - inset * 2, height: mh });
-    detail.appendChild(r);
-    mods.push(r);
-  }
-  svg.appendChild(detail);
-
-  function paintDetail(p) {
-    /* p is 0..1 across the three stages the detail belongs to */
-    const on = Math.round(Math.min(1, Math.max(0, p)) * MODS);
-    mods.forEach((r, i) => r.classList.toggle('lit', i < on));
-    detCount.textContent = String(on).padStart(2, '0') + ' / ' +
-      String(MODS).padStart(2, '0');
-  }
-
   function writeLabels() {
     BESS_COPY.forEach((c, i) => { if (labels[i]) labels[i].textContent = c[LANG][0]; });
     dimNodes.forEach(d => { d.text.textContent = d.copy[LANG]; });
-    detTitle.textContent = LANG === 'ro'
-      ? 'Detaliu A · rack și module'
-      : 'Detail A · rack and modules';
   }
   writeLabels();
   addEventListener('langchange', writeLabels);
@@ -2610,19 +2579,10 @@ ScrollTrigger.create({
     onUpdate: self => { prog = self.progress; }
   });
 
-  /* The detail belongs to the three stages that build the asset: capacity,
-     conversion, and the complete asset. It fills across all three rather than
-     resetting at each, so the rack is full exactly when the asset is. */
-  const DET_FROM = 1, DET_TO = 3;
   function show(step) {
     if (step === shown) return;
     shown = step;
-    detail.classList.toggle('on', step >= DET_FROM && step <= DET_TO);
-    /* While the detail is open it is the annotation for those stages: a
-       callout as well would collide with the box and only repeat the caption
-       that is already on screen. */
-    groups.forEach((g, i) => g.classList.toggle('on',
-      i === step && !(i >= DET_FROM && i <= DET_TO)));
+    groups.forEach((g, i) => g.classList.toggle('on', i === step));
     dimNodes.forEach(d => {
       const on = d.step === step;
       d.g.classList.toggle('on', on);
@@ -2650,12 +2610,7 @@ ScrollTrigger.create({
       };
       settle();
       video.addEventListener('loadedmetadata', settle, { once: true });
-      /* Same rule as the scrubbed path: the detail speaks for its stages. */
-      groups.forEach((g, i) => {
-        if (i < DET_FROM || i > DET_TO) g.classList.add('on');
-      });
-      detail.classList.add('on');
-      paintDetail(1);
+      groups.forEach(g => g.classList.add('on'));
       dimNodes.forEach(d => {
         d.g.classList.add('on');
         d.line.setAttribute('stroke-dashoffset', 0);
@@ -2669,7 +2624,6 @@ ScrollTrigger.create({
   const scrub = { target: 0, current: 0 };
   gsap.ticker.add((time, dt) => {
     show(Math.min(9, Math.max(0, Math.floor(prog * 10))));
-    paintDetail((prog - DET_FROM / 10) / ((DET_TO - DET_FROM + 1) / 10));
     if (!ready) return;
     const d = video.duration;
     if (!d || !isFinite(d)) return;
