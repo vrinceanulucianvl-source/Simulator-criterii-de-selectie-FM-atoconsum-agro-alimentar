@@ -16,6 +16,10 @@
 set -euo pipefail
 
 CDN="https://d8j0ntlcm91z4.cloudfront.net/user_3IGCVkXvjejfKQewPn4ej8wH0Op"
+# The hero is not a raw generation: the delivered clip carried a hard cut a
+# third of the way in, so it was trimmed and re-encoded, and the result lives
+# in the upload bucket instead.
+UP="https://d2ol7oe51mr4n9.cloudfront.net/user_3IGCVkXvjejfKQewPn4ej8wH0Op"
 mkdir -p assets
 
 fetch_and_encode() {
@@ -36,7 +40,7 @@ fetch_and_encode() {
   rm -f "assets/.raw-$out"
 }
 
-fetch_and_encode "$CDN/hf_20260905_190803_dbdbef35-8730-4060-a64b-e9298cb753d4.mp4"  01-boardroom.mp4  yes
+fetch_and_encode "$UP/1da60123-e29d-4927-b3c9-b1f12128de31.mp4"                      01-boardroom.mp4  yes
 fetch_and_encode "$CDN/hf_20260905_101239_161b5b35-5dc4-4154-b76e-b445b079ec0e.mp4" 02-strategist.mp4 no
 fetch_and_encode "$CDN/hf_20260904_191420_26cce321-dd86-4623-9a6f-cf385221504b.mp4"  03-execution.mp4  no
 
