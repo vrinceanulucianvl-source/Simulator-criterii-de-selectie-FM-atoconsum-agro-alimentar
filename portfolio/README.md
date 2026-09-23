@@ -7,7 +7,7 @@ host (or `npx http-server portfolio`) — there is no framework and no build ste
 index.html        the whole site: markup, styles and behaviour
 vendor/           GSAP + ScrollTrigger, Lenis, Three.js (self-hosted, pinned)
 fonts/            Archivo + Newsreader, self-hosted woff2 (latin + latin-ext)
-assets/           optional local copies of the three cinematic clips
+assets/           optional local copies of the cinematic clips
 ```
 
 ## Language
@@ -103,6 +103,42 @@ The player already avoids the other common cause of stutter — it waits for the
 decoder to finish each seek before requesting the next one, instead of writing
 `currentTime` on every frame and making the browser abort a seek it had
 already started.
+
+## The storage chapter
+
+The chapter is a blueprint film, scrubbed frame by frame like the hero: the
+plant is drawn, lifted off its site plan and rearranged into a revenue stack,
+and the last thing standing is the net column. It replaces a WebGL scene that
+assembled the plant component by component — which argued the opposite of the
+headline, because a list of equipment is exactly what the chapter says storage
+is not.
+
+The scene is still there and still carries the chapter whenever the film does
+not load. When the film does load, the render loop keeps driving the captions
+and stops doing 3D work nobody can see.
+
+Three things are worth knowing before changing any of it.
+
+**The scroll does not map linearly onto the film.** Ten equal stages of scroll
+run over four equal clips, split 4 / 1 / 2 / 3, so the playhead is mapped
+piecewise through `MAP` in the chapter's module. A linear map drifts a whole
+clip out of step by the end.
+
+**The annotation is SVG, not footage.** Numbered callouts, leaders, dimension
+lines and the title block are drawn over the film from `MARKS`, in the film's
+own 1600×900 coordinates — so they stay sharp type in the reader's language at
+any viewport, and no video model has to render legible text. If the film is
+ever regenerated with a different layout, `MARKS` is the one thing to re-tune.
+
+**The vertical cut is a different picture.** A 4:3-tall film on a phone is
+cropped left and right, and the caption owns the bottom third, so the vertical
+annotation has its own coordinates in `MARKS_TALL`, inside the band that
+survives both crops.
+
+Light mode inverts the film rather than washing it: line on near-black becomes
+ink on paper, which is what a blueprint wants to be, and the hue rotation keeps
+the emerald emerald. Reduced motion parks the film on the resolved drawing with
+every callout named.
 
 ## Every control does something
 

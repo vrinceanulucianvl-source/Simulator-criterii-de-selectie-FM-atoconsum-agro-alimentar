@@ -1237,6 +1237,10 @@ footer{padding:clamp(60px,8vw,120px) var(--gut) 40px;border-top:var(--rule)}
 const USE_LOCAL_ASSETS = false;
 
 const CDN = 'https://d8j0ntlcm91z4.cloudfront.net/user_3IGCVkXvjejfKQewPn4ej8wH0Op';
+/* The storage chapter is not a raw generation: it is four clips concatenated
+   and re-encoded all-intra, so it lives in the upload bucket rather than
+   beside the model's own output. */
+const UP  = 'https://d2ol7oe51mr4n9.cloudfront.net/user_3IGCVkXvjejfKQewPn4ej8wH0Op';
 
 /* Seedance 2.0 · STD · 16:9 · silent · identity-locked to the five reference
    portraits. The hero is 1080p because it is scrubbed frame by frame and seen
@@ -1272,8 +1276,8 @@ const MEDIA = {
      all-intra encode — see the README. Until the film is published the list is
      empty on purpose: mountVideo falls through immediately and the procedural
      WebGL scene keeps the chapter, rather than a failed request per visit. */
-  bess      : USE_LOCAL_ASSETS ? ['assets/04-bess-blueprint.mp4'] : [],
-  bessTall  : USE_LOCAL_ASSETS ? ['assets/04-bess-blueprint-4x5.mp4'] : []
+  bess      : slot('04-bess-blueprint.mp4',      UP + '/5bfa76a5-b9d7-4a5b-9d7b-c9441869a816.mp4'),
+  bessTall  : slot('04-bess-blueprint-tall.mp4', UP + '/d4e93021-2576-4422-8541-b8d9e5c4d38a.mp4')
 };
 
 const CONTACT = {
@@ -2441,7 +2445,7 @@ ScrollTrigger.create({
     { a: [712, 638], l: [372, 638] }
   ];
   const TALL = !!(MOBILE && MEDIA.bessTall.length);
-  const BOX  = TALL ? [1080, 1350] : [1600, 900];
+  const BOX  = TALL ? [1080, 1440] : [1600, 900];
   const PTS  = TALL ? MARKS_TALL : MARKS;
   if (TALL) svg.setAttribute('viewBox', '0 0 ' + BOX[0] + ' ' + BOX[1]);
 
