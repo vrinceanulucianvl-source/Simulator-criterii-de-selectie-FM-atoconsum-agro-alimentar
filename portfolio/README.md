@@ -172,5 +172,41 @@ and the language and theme toggles persist their choice.
 
 ## Contact details
 
-`CONTACT` at the top of the script block holds the email, LinkedIn and company
-URLs used by the footer and the contact panel.
+`CONTACT` at the top of the script block holds the name, title, email, phone,
+tagline and LinkedIn URL. The footer, the contact panel, the downloadable
+contact card and the QR all read from it.
+
+## The contact card and its QR
+
+The footer offers **Save contact**, which writes a vCard 3.0 file in the
+browser and hands it over as `lucian-vrinceanu.vcf`. Version 3.0 rather than
+4.0: enough address books still refuse 4.0 to make it a bad bet. Lines are
+folded at 75 octets on a character boundary and joined with CRLF, as the format
+requires — an unfolded long `NOTE` is exactly where parsers give up.
+
+Beside it sits a QR carrying the same contact, so someone reading the page on a
+desktop can take it away with their phone, and so the image can go on a printed
+business card. It is hidden below 760px, because a phone cannot scan its own
+screen and the button already does that job there.
+
+The file is built from `CONTACT` at click time and can never fall out of step.
+The QR is a picture and can, so it lives between `<!-- QR:BEGIN -->` and
+`<!-- QR:END -->` and is redrawn by:
+
+```bash
+pip install segno && python3 make-qr.py
+```
+
+**Run it after any change to `CONTACT`** — above all when the phone number is
+filled in — or the code keeps handing out the old details. The script mirrors
+those fields at the top; edit both.
+
+Two numbers govern the design. The QR deliberately carries less than the file:
+name, title, phone, email and LinkedIn, but not the tagline. Every character
+costs modules and modules cost millimetres, and dropping one line of marketing
+takes the symbol from version 14 to 11 — 0.49mm per module on a 30mm business
+card instead of 0.41, which is the difference between a card that scans first
+time and one that does not. On screen the code is never smaller than 152px,
+because below roughly 150px a decoder stops reading it reliably; that floor
+came from screenshotting the rendered code and decoding it back at a range of
+sizes, not from taste.
