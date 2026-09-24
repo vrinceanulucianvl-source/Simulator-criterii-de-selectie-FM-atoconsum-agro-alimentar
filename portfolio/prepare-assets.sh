@@ -42,7 +42,7 @@ fetch_and_encode() {
 
 fetch_and_encode "$UP/17fc177f-5ddd-488b-b0ba-072eb44cad37.mp4"                      01-boardroom.mp4  yes
 fetch_and_encode "$CDN/hf_20260905_101239_161b5b35-5dc4-4154-b76e-b445b079ec0e.mp4" 02-strategist.mp4 no
-fetch_and_encode "$CDN/hf_20260904_191420_26cce321-dd86-4623-9a6f-cf385221504b.mp4"  03-execution.mp4  no
+fetch_and_encode "$UP/edc78f0d-af6a-4c3a-970b-32e95100d197.mp4"                      03-execution.mp4  no
 
 echo
 echo "Done. Now set USE_LOCAL_ASSETS = true in index.html."
