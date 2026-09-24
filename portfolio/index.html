@@ -191,21 +191,32 @@ h1,h2,h3,h4,.dsp{
 /* ══════════════════════════════════════════════════════════════
    NAV
    ══════════════════════════════════════════════════════════════ */
-/* ── chapter rail ──────────────────────────────────────────── */
-#chapRail{position:fixed;left:clamp(12px,1.4vw,26px);top:25vh;bottom:22vh;width:1px;
-  z-index:790;pointer-events:none}
-#chapRail::before{content:'';position:absolute;inset:0;background:var(--hair)}
-#chapFill{position:absolute;left:0;top:0;width:1px;height:0;background:var(--em)}
-#chapTicks{list-style:none;margin:0;padding:0}
-#chapTicks li{position:absolute;left:0;transform:translateY(-50%)}
-/* The hit area is far larger than the mark, or a one-pixel line would be
-   unclickable; the mark itself stays 9px. */
-#chapTicks a{pointer-events:auto;display:block;padding:9px 12px 9px 0;margin-left:-2px}
-#chapTicks a::before{content:'';display:block;width:9px;height:1px;background:var(--cream-low);
-  transition:width .4s var(--ease),background .4s var(--ease)}
-#chapTicks a:hover::before{width:17px;background:var(--cream)}
-#chapTicks li.is-here a::before{width:17px;background:var(--em)}
-@media (max-width:820px){ #chapRail{left:8px;top:18vh;bottom:14vh} #chapTicks a{padding-right:9px} }
+/* ── chapter rail ──────────────────────────────────────────────
+   Six cells, one per chapter, charging as the page is read: the reader is
+   filling a battery, which is the thing this practice is about. The cells are
+   equal because they count chapters, not distance — the figure underneath
+   counts the distance. */
+#chapRail{position:fixed;left:clamp(12px,1.4vw,26px);top:24vh;bottom:20vh;z-index:790;
+  pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:9px}
+.rail-cap{flex:none;width:4px;height:3px;border-radius:2px 2px 0 0;background:var(--cream-low)}
+#chapCells{list-style:none;margin:0;padding:0;flex:1;width:8px;
+  display:flex;flex-direction:column;gap:5px}
+#chapCells li{flex:1;position:relative}
+#chapCells li::before{content:'';position:absolute;inset:0;border-radius:4px;
+  border:1px solid var(--hair);transition:border-color .4s var(--ease)}
+#chapCells li i{position:absolute;left:1.5px;right:1.5px;top:1.5px;height:calc(100% - 3px);
+  border-radius:2.5px;background:var(--em);transform:scaleY(0);transform-origin:top}
+/* a one-pixel cell is unclickable, so the hit area reaches well past it */
+#chapCells a{pointer-events:auto;position:absolute;inset:-3px -10px;display:block}
+#chapCells li:hover::before{border-color:var(--cream-low)}
+#chapCells li.is-here::before{border-color:var(--em)}
+#chapPct{flex:none;font-family:var(--display);font-stretch:100%;font-weight:500;
+  font-size:9px;letter-spacing:.1em;color:var(--cream-low);font-variant-numeric:tabular-nums}
+@media (max-width:820px){
+  #chapRail{left:7px;top:18vh;bottom:13vh;gap:7px}
+  #chapCells{width:6px;gap:4px}
+  #chapPct{display:none}
+}
 
 #nav{
   position:fixed;top:0;left:0;right:0;z-index:800;
@@ -847,7 +858,7 @@ footer{padding:clamp(60px,8vw,120px) var(--gut) 40px;border-top:var(--rule)}
      where each chapter starts. It is hidden from screen readers and skipped by
      the keyboard on purpose: every tick repeats a link the nav already carries,
      and a second copy of the same six destinations only gets in the way. -->
-<div id="chapRail" aria-hidden="true"><i id="chapFill"></i><ol id="chapTicks"></ol></div>
+<div id="chapRail" aria-hidden="true"><i class="rail-cap"></i><ol id="chapCells"></ol><span id="chapPct">0%</span></div>
 
 <!-- ══ PRELOADER ══ -->
 <div id="pre">
@@ -2059,58 +2070,70 @@ gsap.utils.toArray('.rv').forEach(el => {
 });
 
 /* ─── 9. CHAPTER RAIL ──────────────────────────────────────────────────────
-   One pass drives both markers: the thread on the left margin and the lit
-   entry in the nav. They read the same six chapters, so they can never
-   disagree about where you are. */
+   One pass drives both markers: the cells on the left margin and the lit entry
+   in the nav. They read the same six chapters, so they cannot disagree.
+
+   A cell fills with how far through its own chapter you are. Which cell counts
+   as current is a separate question, and answered the same way for the nav: a
+   chapter is the one being read once its top has come up past three fifths of
+   the screen, which is roughly where the eye sits. So nothing is marked while
+   the hero is still running, even though the first cell has begun to charge. */
 (function chapterRail() {
   /* not 'rail': the stage-by-stage strip further down already owns that id */
   const rail = document.getElementById('chapRail');
-  const fill = document.getElementById('chapFill');
-  const list = document.getElementById('chapTicks');
-  if (!rail || !fill || !list) return;
+  const list = document.getElementById('chapCells');
+  const pct  = document.getElementById('chapPct');
+  if (!rail || !list || !pct) return;
 
   const CH = ['about', 'expertise', 'work', 'bess', 'finance', 'finale'];
   const navLinks = CH.map(id => document.querySelector('#nav ul a[href="#' + id + '"]'));
-  const ticks = CH.map(id => {
+  const cells = [], fills = [];
+  CH.forEach(id => {
     const li = document.createElement('li');
+    const fill = document.createElement('i');
     const a = document.createElement('a');
     a.href = '#' + id;
     a.tabIndex = -1;
+    li.appendChild(fill);
     li.appendChild(a);
     list.appendChild(li);
-    return li;
+    cells.push(li);
+    fills.push(fill);
   });
 
-  let starts = [];
+  /* bounds[i] .. bounds[i+1] is the stretch of page the i-th cell stands for.
+     The first one starts at zero, so the hero charges it and the column is
+     never blank while there is still page above the first chapter. */
+  let bounds = [], starts = [];
   function measure() {
     const span = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-    starts = CH.map((id, i) => {
+    starts = CH.map(id => {
       const el = document.getElementById(id);
-      const top = el ? el.getBoundingClientRect().top + window.scrollY : 0;
-      /* the tick sits where the chapter reaches the top of the screen, on the
-         same scale as the fill, so the mark and the thread agree */
-      ticks[i].style.top = (Math.min(1, Math.max(0, top / span)) * 100).toFixed(3) + '%';
-      return top;
+      return el ? el.getBoundingClientRect().top + window.scrollY : 0;
     });
+    bounds = [0].concat(starts.slice(1)).concat([span]);
   }
 
-  let shownFill = -1, shownAt = -2;
+  let shownPct = -1, shownAt = -2;
   function paint() {
-    if (!starts.length) return;
+    if (!bounds.length) return;
     const span = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
     const y = window.scrollY;
-    const p = Math.min(1, Math.max(0, y / span));
-    if (Math.abs(p - shownFill) > 0.0005) {
-      fill.style.height = (p * 100).toFixed(2) + '%';
-      shownFill = p;
+
+    for (let i = 0; i < fills.length; i++) {
+      const a = bounds[i], b = bounds[i + 1];
+      const f = Math.min(1, Math.max(0, (y - a) / Math.max(1, b - a)));
+      fills[i].style.transform = 'scaleY(' + f.toFixed(4) + ')';
     }
-    /* a chapter counts as the one being read once its top has come up past
-       three fifths of the screen, which is roughly where the eye sits */
+
+    const whole = Math.round(Math.min(1, Math.max(0, y / span)) * 100);
+    if (whole !== shownPct) { pct.textContent = whole + '%'; shownPct = whole; }
+
     const eye = y + window.innerHeight * 0.6;
     let at = -1;
     for (let i = 0; i < starts.length; i++) if (eye >= starts[i]) at = i;
     if (at !== shownAt) {
-      ticks.forEach((t, i) => t.classList.toggle('is-here', i === at));
+      cells.forEach((c, i) => c.classList.toggle('is-here', i === at));
       navLinks.forEach((a, i) => { if (a) a.classList.toggle('is-here', i === at); });
       shownAt = at;
     }
@@ -2119,8 +2142,9 @@ gsap.utils.toArray('.rv').forEach(el => {
   measure();
   paint();
   gsap.ticker.add(paint);
-  window.addEventListener('resize', () => { measure(); shownFill = -1; shownAt = -2; });
-  ScrollTrigger.addEventListener('refresh', () => { measure(); shownFill = -1; shownAt = -2; });
+  const remeasure = () => { measure(); shownPct = -1; shownAt = -2; paint(); };
+  window.addEventListener('resize', remeasure);
+  ScrollTrigger.addEventListener('refresh', remeasure);
 })();
 
 /* ─── 10. COUNTERS ─────────────────────────────────────────────────────────*/
