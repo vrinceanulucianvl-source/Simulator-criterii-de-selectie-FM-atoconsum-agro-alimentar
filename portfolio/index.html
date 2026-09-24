@@ -191,6 +191,22 @@ h1,h2,h3,h4,.dsp{
 /* ══════════════════════════════════════════════════════════════
    NAV
    ══════════════════════════════════════════════════════════════ */
+/* ── chapter rail ──────────────────────────────────────────── */
+#chapRail{position:fixed;left:clamp(12px,1.4vw,26px);top:25vh;bottom:22vh;width:1px;
+  z-index:790;pointer-events:none}
+#chapRail::before{content:'';position:absolute;inset:0;background:var(--hair)}
+#chapFill{position:absolute;left:0;top:0;width:1px;height:0;background:var(--em)}
+#chapTicks{list-style:none;margin:0;padding:0}
+#chapTicks li{position:absolute;left:0;transform:translateY(-50%)}
+/* The hit area is far larger than the mark, or a one-pixel line would be
+   unclickable; the mark itself stays 9px. */
+#chapTicks a{pointer-events:auto;display:block;padding:9px 12px 9px 0;margin-left:-2px}
+#chapTicks a::before{content:'';display:block;width:9px;height:1px;background:var(--cream-low);
+  transition:width .4s var(--ease),background .4s var(--ease)}
+#chapTicks a:hover::before{width:17px;background:var(--cream)}
+#chapTicks li.is-here a::before{width:17px;background:var(--em)}
+@media (max-width:820px){ #chapRail{left:8px;top:18vh;bottom:14vh} #chapTicks a{padding-right:9px} }
+
 #nav{
   position:fixed;top:0;left:0;right:0;z-index:800;
   display:flex;align-items:center;justify-content:space-between;
@@ -222,8 +238,8 @@ h1,h2,h3,h4,.dsp{
   content:'';position:absolute;left:0;right:100%;bottom:0;height:1px;
   background:var(--em);transition:right .45s var(--ease);
 }
-#nav ul a:hover{color:var(--cream)}
-#nav ul a:hover::after{right:0}
+#nav ul a:hover,#nav ul a.is-here{color:var(--cream)}
+#nav ul a:hover::after,#nav ul a.is-here::after{right:0}
 .nav-right{display:flex;align-items:center;gap:clamp(16px,2.4vw,40px)}
 .theme-t{
   width:40px;height:40px;border-radius:50%;border:1px solid var(--hair);
@@ -827,6 +843,11 @@ footer{padding:clamp(60px,8vw,120px) var(--gut) 40px;border-top:var(--rule)}
 <body>
 <div id="grain"></div>
 <div id="vig"></div>
+<!-- A hairline down the left margin that fills as the page runs, with a tick
+     where each chapter starts. It is hidden from screen readers and skipped by
+     the keyboard on purpose: every tick repeats a link the nav already carries,
+     and a second copy of the same six destinations only gets in the way. -->
+<div id="chapRail" aria-hidden="true"><i id="chapFill"></i><ol id="chapTicks"></ol></div>
 
 <!-- ══ PRELOADER ══ -->
 <div id="pre">
@@ -2037,7 +2058,72 @@ gsap.utils.toArray('.rv').forEach(el => {
   });
 });
 
-/* ─── 9. COUNTERS ──────────────────────────────────────────────────────────*/
+/* ─── 9. CHAPTER RAIL ──────────────────────────────────────────────────────
+   One pass drives both markers: the thread on the left margin and the lit
+   entry in the nav. They read the same six chapters, so they can never
+   disagree about where you are. */
+(function chapterRail() {
+  /* not 'rail': the stage-by-stage strip further down already owns that id */
+  const rail = document.getElementById('chapRail');
+  const fill = document.getElementById('chapFill');
+  const list = document.getElementById('chapTicks');
+  if (!rail || !fill || !list) return;
+
+  const CH = ['about', 'expertise', 'work', 'bess', 'finance', 'finale'];
+  const navLinks = CH.map(id => document.querySelector('#nav ul a[href="#' + id + '"]'));
+  const ticks = CH.map(id => {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = '#' + id;
+    a.tabIndex = -1;
+    li.appendChild(a);
+    list.appendChild(li);
+    return li;
+  });
+
+  let starts = [];
+  function measure() {
+    const span = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    starts = CH.map((id, i) => {
+      const el = document.getElementById(id);
+      const top = el ? el.getBoundingClientRect().top + window.scrollY : 0;
+      /* the tick sits where the chapter reaches the top of the screen, on the
+         same scale as the fill, so the mark and the thread agree */
+      ticks[i].style.top = (Math.min(1, Math.max(0, top / span)) * 100).toFixed(3) + '%';
+      return top;
+    });
+  }
+
+  let shownFill = -1, shownAt = -2;
+  function paint() {
+    if (!starts.length) return;
+    const span = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    const y = window.scrollY;
+    const p = Math.min(1, Math.max(0, y / span));
+    if (Math.abs(p - shownFill) > 0.0005) {
+      fill.style.height = (p * 100).toFixed(2) + '%';
+      shownFill = p;
+    }
+    /* a chapter counts as the one being read once its top has come up past
+       three fifths of the screen, which is roughly where the eye sits */
+    const eye = y + window.innerHeight * 0.6;
+    let at = -1;
+    for (let i = 0; i < starts.length; i++) if (eye >= starts[i]) at = i;
+    if (at !== shownAt) {
+      ticks.forEach((t, i) => t.classList.toggle('is-here', i === at));
+      navLinks.forEach((a, i) => { if (a) a.classList.toggle('is-here', i === at); });
+      shownAt = at;
+    }
+  }
+
+  measure();
+  paint();
+  gsap.ticker.add(paint);
+  window.addEventListener('resize', () => { measure(); shownFill = -1; shownAt = -2; });
+  ScrollTrigger.addEventListener('refresh', () => { measure(); shownFill = -1; shownAt = -2; });
+})();
+
+/* ─── 10. COUNTERS ─────────────────────────────────────────────────────────*/
 gsap.utils.toArray('[data-count]').forEach(el => {
   const end = +el.dataset.count;
   const pre = el.dataset.prefix || '';
