@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Lucian Vrînceanu">
+  <rect width="32" height="32" rx="7" fill="#04070A"/>
+  <rect x="13" y="4.6" width="6" height="2.6" rx="1.1" fill="#17E4A0"/>
+  <rect x="9.6" y="7.6" width="12.8" height="19.6" rx="2.6" fill="none" stroke="#17E4A0" stroke-width="2"/>
+  <rect x="12.3" y="10.6" width="7.4" height="3.5" rx=".8" fill="#17E4A0"/>
+  <rect x="12.3" y="15.6" width="7.4" height="3.5" rx=".8" fill="#17E4A0"/>
+  <rect x="12.3" y="20.6" width="7.4" height="3.5" rx=".8" fill="#17E4A0"/>
+</svg>

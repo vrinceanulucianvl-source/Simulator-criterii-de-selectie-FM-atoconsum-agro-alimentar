@@ -44,6 +44,12 @@ fetch_and_encode "$UP/17fc177f-5ddd-488b-b0ba-072eb44cad37.mp4"                 
 fetch_and_encode "$CDN/hf_20260905_101239_161b5b35-5dc4-4154-b76e-b445b079ec0e.mp4" 02-strategist.mp4 no
 fetch_and_encode "$UP/edc78f0d-af6a-4c3a-970b-32e95100d197.mp4"                      03-execution.mp4  no
 
+# The storage chapter is scrubbed like the hero, so it needs the same all-intra
+# treatment — and it ships in two cuts, wide and tall, because a 16:9 blueprint
+# on a phone loses both ends of the drawing.
+fetch_and_encode "$UP/007b88b9-8eb3-40ab-9e99-f0f5e54842cf.mp4"                      04-bess-blueprint.mp4      yes
+fetch_and_encode "$UP/4248c926-502a-47c0-8131-c1632fdc215e.mp4"                      04-bess-blueprint-tall.mp4 yes
+
 echo
 echo "Done. Now set USE_LOCAL_ASSETS = true in index.html."
 ls -lh assets/*.mp4

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ro"><head><meta charset="utf-8">
+<title>share.png — the card LinkedIn draws</title>
+<!--
+  The source of share.png, the 1200×630 image that LinkedIn, WhatsApp and
+  Slack draw when the address is pasted. It is a page rather than a drawing so
+  that it stays made of the site's own material: the same typeface, the same
+  palette, and the same field that runs under the sector list, frozen with the
+  pointer parked off to the right.
+
+  To regenerate — after changing the address, above all:
+    1. serve this folder (npx http-server -p 8099 -c-1 .)
+    2. open http://127.0.0.1:8099/make-share.html
+    3. screenshot exactly 1200×630 and save it as share.png
+
+  With Playwright to hand, this does the same thing without the eyeballing:
+    npx playwright screenshot --viewport-size=1200,630 \
+      http://127.0.0.1:8099/make-share.html share.png
+-->
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1200px;height:630px}
+  body{background:#04070A;color:#EFE9DD;font-family:"Archivo",system-ui,sans-serif;
+       position:relative;overflow:hidden}
+  canvas{position:absolute;inset:0;width:1200px;height:630px}
+  .in{position:absolute;inset:0;padding:70px 76px;display:flex;flex-direction:column;
+      justify-content:space-between}
+  .kick{font-weight:500;font-size:16px;letter-spacing:.22em;text-transform:uppercase;
+        color:rgba(239,233,221,.56);display:flex;align-items:center;gap:16px}
+  .kick i{display:block;width:34px;height:2px;background:#17E4A0}
+  h1{font-weight:800;font-stretch:74%;font-size:95px;line-height:1.02;letter-spacing:-.018em;
+     text-transform:uppercase;max-width:15ch}
+  h1 em{font-style:normal;color:#17E4A0}
+  .foot{display:flex;align-items:baseline;justify-content:space-between;gap:30px;
+        border-top:1px solid rgba(239,233,221,.16);padding-top:22px}
+  .svc{display:flex;gap:26px;font-size:17px;color:rgba(239,233,221,.70)}
+  .svc span{display:flex;align-items:center;gap:12px}
+  .svc span::before{content:"";width:6px;height:6px;border-radius:50%;background:#17E4A0}
+  .url{font-weight:500;font-size:16px;letter-spacing:.14em;text-transform:uppercase;
+       color:rgba(239,233,221,.50)}
+</style></head>
+<body>
+<canvas id="fx" width="1200" height="630"></canvas>
+<div class="in">
+  <div class="kick"><i></i>Lucian Vrînceanu · Consultant energetic</div>
+  <h1>Partener în investiții energetice<em>.</em></h1>
+  <div class="foot">
+    <div class="svc">
+      <span>Investiții energetice</span>
+      <span>Finanțare și fonduri europene</span>
+      <span>Stocare în baterii</span>
+    </div>
+    <!-- change this with the address, or the card advertises the old one -->
+    <div class="url">lucian-vrinceanu.pages.dev</div>
+  </div>
+</div>
+<script>
+const W = 1200, H = 630, g = document.getElementById('fx').getContext('2d');
+const px = 980, py = 300, R = 210, PUSH = 74, CORE = 34, N = 34;
+const rows = [];
+for (let i = 0; i < N; i++) {
+  const t = (i + .5) / N, gap = H / N;
+  rows.push({ y: t * H, a1: gap * .55 * Math.sin(i * 1.31 + .4), w1: .0036, p1: i * .81,
+              a2: gap * .28 * Math.cos(i * .53), w2: .0091, p2: i * 1.93 });
+}
+const base = (i, x) => rows[i].y + rows[i].a1 * Math.sin(x * rows[i].w1 + rows[i].p1)
+                                 + rows[i].a2 * Math.sin(x * rows[i].w2 - rows[i].p2);
+function warp(x, y) {
+  const dx = x - px, dy = y - py, d2 = dx * dx + dy * dy;
+  const f = 1 / (1 + d2 / (R * R));
+  const k = PUSH * f * f / (Math.sqrt(d2) + CORE);   // the soft core, as on the page
+  return { x: x + dx * k * .38, y: y + dy * k, f };
+}
+const gr = g.createRadialGradient(px, py, 0, px, py, R * 1.7);
+gr.addColorStop(0, 'rgba(23,228,160,.10)'); gr.addColorStop(.45, 'rgba(23,228,160,.035)');
+gr.addColorStop(1, 'rgba(23,228,160,0)');
+g.fillStyle = gr; g.fillRect(0, 0, W, H);
+const B = 10, paths = [];
+for (let b = 0; b < B; b++) paths.push(new Path2D());
+for (let i = 0; i < N; i++) {
+  let prev = null, pf = 0;
+  for (let s = 0; s <= 340; s++) {
+    const x = s / 340 * W, p = warp(x, base(i, x));
+    if (prev) { const f = Math.max(pf, p.f), b = Math.min(B - 1, Math.floor(f * f * B));
+                paths[b].moveTo(prev.x, prev.y); paths[b].lineTo(p.x, p.y); }
+    prev = p; pf = p.f;
+  }
+}
+g.lineCap = 'round';
+for (let b = 0; b < B; b++) {
+  const f = b / (B - 1);
+  g.lineWidth = .8 + f * 1.1;
+  g.strokeStyle = 'rgba(' + Math.round(239 - 216 * f) + ',233,' +
+                  Math.round(221 - 61 * f) + ',' + (.13 + f * .62).toFixed(3) + ')';
+  g.stroke(paths[b]);
+}
+for (let i = 0; i < 90; i++) {
+  const r = i % N, x = Math.random() * W, p = warp(x, base(r, x));
+  g.fillStyle = 'rgba(23,228,160,' + (.25 + p.f * .55).toFixed(3) + ')';
+  g.beginPath(); g.arc(p.x, p.y, 1.1 + p.f * 1.5, 0, 7); g.fill();
+}
+/* the type needs a floor to sit on, or the lines run through the words */
+const veil = g.createLinearGradient(0, 0, W * .92, H);
+veil.addColorStop(0, 'rgba(4,7,10,.92)'); veil.addColorStop(.55, 'rgba(4,7,10,.62)');
+veil.addColorStop(1, 'rgba(4,7,10,.20)');
+g.fillStyle = veil; g.fillRect(0, 0, W, H);
+</script>
+</body></html>

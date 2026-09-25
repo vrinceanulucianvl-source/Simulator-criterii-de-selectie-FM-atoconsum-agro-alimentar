@@ -199,6 +199,42 @@ The rest of the inventory: the nav links and the LV mark scroll, the `Scroll`
 cue in the hero is a link to the first section, the ten service rows expand,
 and the language and theme toggles persist their choice.
 
+## Publishing it
+
+The site is static: a folder, no build step and no server logic. Any host that
+serves files over HTTPS and answers a Range request will do — and every one of
+them does, which matters because the scrubbed films are seeked, not played.
+
+The shortest route is a drag and drop onto Cloudflare Pages (Workers & Pages →
+Create → Pages → Upload assets) or Netlify Drop. Both read the `_headers` file
+in this folder, in the same format, so the fonts come back cached for a year
+and the HTML is never cached at all — otherwise a republish would not reach
+anyone who has already visited.
+
+**The address is written down in five places.** A share card cannot be drawn
+from a relative path, so the head carries four absolute URLs — `canonical`,
+`og:url`, `og:image`, `twitter:image` — and the fifth is the address printed
+along the bottom of the card itself. They currently say
+`lucian-vrinceanu.pages.dev`, which assumes a Cloudflare Pages project of that
+name. Moving the site means changing those four lines, changing the `.url` line
+in `make-share.html`, and regenerating `share.png`. `robots.txt` and
+`sitemap.xml` name the address too.
+
+**`share.png` is generated, not drawn.** `make-share.html` is its source: the
+same typeface, the same palette and the same field that runs under the sector
+list, frozen with the pointer parked to the right. Serve the folder, open it,
+and screenshot 1200×630 — the instructions are in the file. Without the image,
+a link pasted into LinkedIn renders as a bare line of text.
+
+**Run `prepare-assets.sh` before going public.** Until it is run the five films
+stream from the model vendor's CDN, which are generation URLs, not hosting: if
+they expire, the hero disappears from a live site with no warning. The script
+downloads all five, re-encodes the three scrubbed ones all-intra, and writes
+them into `assets/`; then set `USE_LOCAL_ASSETS = true`. It needs ffmpeg.
+
+The icon is `favicon.svg`, a battery seen side on — the same object as the
+chapter rail in the margin — with `apple-touch-icon.png` for iOS home screens.
+
 ## Contact details
 
 `CONTACT` at the top of the script block holds the name, title, email, phone,
