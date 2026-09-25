@@ -140,6 +140,35 @@ ink on paper, which is what a blueprint wants to be, and the hue rotation keeps
 the emerald emerald. Reduced motion parks the film on the resolved drawing with
 every callout named.
 
+## The field under the sector list
+
+The band beneath „Companii care consumă, produc sau investesc" used to be empty
+black. It now holds a field: hairlines with a current running left to right,
+which part around the pointer the way field lines part around a body. Lines
+near the pointer bunch, warm from cream to emerald and thicken, and the current
+speeds up through the crowding. It says nothing about the work — it is there so
+a hand that stops moving finds something under it.
+
+Four things keep it cheap and polite.
+
+**The shove has a soft core.** The displacement falls off as `1/(1+(d/R)²)`,
+squared, and is divided by `d + CORE` rather than by `d`. Divided by `d` alone,
+the one line that runs straight through the pointer flips direction as it
+crosses, which shows up as a sharp V — the first draft had exactly that.
+
+**Ten strokes a frame, not eight thousand.** Every segment is sorted into one
+of ten brightness buckets and each bucket is stroked once, so the whole field
+costs ten draw calls no matter how many samples go into it.
+
+**It only runs when it is on screen.** An IntersectionObserver starts and stops
+the loop, and a hidden tab stops it too. Off screen it costs nothing.
+
+**It holds still when asked.** Reduced motion gets the field at rest and no
+pointer handling at all; a coarse pointer gets the drift without the bend, and
+fewer particles. The colours are read from `--cream` and `--em` at runtime and
+re-read on `themechange`, so light mode is ink on paper rather than a second
+palette.
+
 ## Every control does something
 
 No button on the page is allowed to be a dead end. A bare `mailto:` looks like
