@@ -1,0 +1,16 @@
+# Read by Cloudflare Pages and by Netlify, in this same format.
+# index.html is deliberately absent: it must be re-fetched, or a republish
+# would not reach anyone who has already visited.
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/vendor/*
+  Cache-Control: public, max-age=2592000
+
+/assets/*
+  Cache-Control: public, max-age=2592000
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
