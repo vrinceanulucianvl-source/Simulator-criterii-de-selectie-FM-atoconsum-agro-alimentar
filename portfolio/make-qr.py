@@ -31,6 +31,7 @@ NAME_FAMILY = "Vrînceanu"
 ROLE = "Consultant energetic"
 EMAIL = "vrinceanulucian.vl@gmail.com"
 PHONE = ""  # e.g. "+40712345678"
+SITE = "https://lucianvrinceanu.com"
 LINKEDIN = "https://www.linkedin.com/in/lucian-vr%C3%AEnceanu-7913a8173/"
 
 HTML = "index.html"
@@ -47,7 +48,7 @@ def payload() -> str:
     ]
     if PHONE:
         lines.append(f"TEL;TYPE=CELL:{PHONE}")
-    lines += [f"EMAIL:{EMAIL}", f"URL:{LINKEDIN}", "END:VCARD"]
+    lines += [f"EMAIL:{EMAIL}", f"URL:{SITE}", f"URL:{LINKEDIN}", "END:VCARD"]
     return "\r\n".join(lines) + "\r\n"
 
 

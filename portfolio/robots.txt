@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://lucian-vrinceanu.pages.dev/sitemap.xml
+Sitemap: https://lucianvrinceanu.com/sitemap.xml

@@ -214,11 +214,13 @@ anyone who has already visited.
 **The address is written down in five places.** A share card cannot be drawn
 from a relative path, so the head carries four absolute URLs — `canonical`,
 `og:url`, `og:image`, `twitter:image` — and the fifth is the address printed
-along the bottom of the card itself. They currently say
-`lucian-vrinceanu.pages.dev`, which assumes a Cloudflare Pages project of that
-name. Moving the site means changing those four lines, changing the `.url` line
-in `make-share.html`, and regenerating `share.png`. `robots.txt` and
-`sitemap.xml` name the address too.
+along the bottom of the card itself. They say
+`lucianvrinceanu.com`, the domain the site is served from — a Cloudflare Pages
+project connected to this repository, publishing the `portfolio/` directory on
+every push to `main`. Moving the site means changing those four lines, changing
+the `.url` line in `make-share.html`, and regenerating `share.png`. `robots.txt`
+and `sitemap.xml` name the address too, and so does `CONTACT.site`, which the
+vCard and the QR both carry — rerun `make-qr.py` after touching it.
 
 **`share.png` is generated, not drawn.** `make-share.html` is its source: the
 same typeface, the same palette and the same field that runs under the sector
